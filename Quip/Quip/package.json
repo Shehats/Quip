@@ -34,6 +34,7 @@
     "gulp-rename": "1.2.x",
     "gulp-run": "1.7.x",
     "hammerjs": "^2.0.8",
+    "ng2-avatar": "^2.2.1",
     "ngm-cli": "0.5.x",
     "rxjs": "^5.5.2",
     "screenfull": "3.3.x",
