@@ -7,6 +7,9 @@ import { MDBBootstrapModule } from './typescripts/free';
 import { AgmCoreModule } from '@agm/core';
 import { AppComponent } from './app.component';
 
+// Local modules
+import { ProfileModule } from './modules/profile/profile.module';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -16,6 +19,7 @@ import { AppComponent } from './app.component';
     BrowserAnimationsModule,
     FormsModule,
     HttpModule,
+    ProfileModule,
     MDBBootstrapModule.forRoot(),
     AgmCoreModule.forRoot({
       // https://developers.google.com/maps/documentation/javascript/get-api-key?hl=en#key
