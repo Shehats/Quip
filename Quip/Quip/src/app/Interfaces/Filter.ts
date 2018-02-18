@@ -1,4 +1,4 @@
-import { Instance } from '../models/Instance';
+import { Instance } from './Instance';
 
 export interface Filter {
   isOf (target: Instance): boolean;
