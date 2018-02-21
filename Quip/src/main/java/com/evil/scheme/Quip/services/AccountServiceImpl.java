@@ -3,13 +3,14 @@ package com.evil.scheme.Quip.services;
 import com.evil.scheme.Quip.control.AccountService;
 import com.evil.scheme.Quip.entities.accounts.Account;
 import com.evil.scheme.Quip.repositories.AccountRepository;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Stream;
 
+@Service
 public class AccountServiceImpl implements AccountService{
-
     @Resource
     private AccountRepository repository;
 
@@ -30,7 +31,7 @@ public class AccountServiceImpl implements AccountService{
 
     @Override
     public List<Account> findAll() {
-        return null;
+        return this.repository.findAll();
     }
 
     @Override

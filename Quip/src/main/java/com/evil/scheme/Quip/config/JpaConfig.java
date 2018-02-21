@@ -25,7 +25,7 @@ import com.evil.scheme.Quip.QuipApplication;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackageClasses = QuipApplication.class)
+@EnableJpaRepositories("com.evil.scheme.Quip")
 class JpaConfig {
     @Value("${dataSource.driverClassName}")
     private String driver;
@@ -45,6 +45,8 @@ class JpaConfig {
     private String formatSql;
     @Value("${hibernate.use_sql_comments}")
     private String useSqlComments;
+    @Value("${entitymanager.packages.to.scan}")
+    private String entitymanagerPackagesToScan;
 
     @Bean
     public DataSource dataSource() {
@@ -65,10 +67,9 @@ class JpaConfig {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(dataSource);
 
-        String entities = ClassUtils.getPackageName(QuipApplication.class);
-        String converters = ClassUtils.getPackageName(Jsr310JpaConverters.class);
-        entityManagerFactoryBean.setPackagesToScan(entities, converters);
-
+//        String entities = ClassUtils.getPackageName(QuipApplication.class);
+//        String converters = ClassUtils.getPackageName(Jsr310JpaConverters.class);
+        entityManagerFactoryBean.setPackagesToScan(this.entitymanagerPackagesToScan);
         entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
 
         Properties jpaProperties = new Properties();
@@ -86,4 +87,6 @@ class JpaConfig {
     public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);
     }
+
+
 }

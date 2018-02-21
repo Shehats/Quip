@@ -4,14 +4,45 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
-@Entity(name = "account")
+@Entity
+@Table
 public class Account {
+    private Long id;
     private String username;
     private String password;
     private String fname;
     private String lname;
     private String email;
     private byte[] profilePic;
+
+    public Account() {
+    }
+
+    public Account(String username, String password, String fname, String lname, String email) {
+        this.username = username;
+        this.password = password;
+        this.fname = fname;
+        this.lname = lname;
+        this.email = email;
+    }
+
+    public Account(String username, String password, String fname, String lname, String email, byte[] profilePic) {
+        this.username = username;
+        this.password = password;
+        this.fname = fname;
+        this.lname = lname;
+        this.email = email;
+        this.profilePic = profilePic;
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     @Column(name = "username")
     public String getUsername() {

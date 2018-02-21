@@ -11,10 +11,10 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
 @EnableWebMvc
+@ComponentScan("com.evil.scheme.Quip")
 @PropertySource("classpath:application.properties")
 @PropertySource("classpath:persistence.properties")
 @EnableJpaRepositories("com.evil.scheme.Quip.repositories")
-@ComponentScan(basePackageClasses = QuipApplication.class)
 class ApplicationConfig {
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
