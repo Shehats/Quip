@@ -8,6 +8,17 @@ button {
     background-color: $dark-blue;
 }
 
-body {
-    background-color: rgba($color: $light-grey, $alpha: 0.5);
+#login-form {
+    // background: linear-gradient(45deg, $lime-green, $dark-blue);
+    padding: 16px;
+    border-radius: 10px;
+    align-content: center;
+
+    label, i, h3, p{
+        color: $dark-blue !important;
+    }
+    a{
+        color:$lime-green;
+    }
+   
 }
