@@ -2,8 +2,10 @@ package com.evil.scheme.Quip.services;
 
 import com.evil.scheme.Quip.control.AccountService;
 import com.evil.scheme.Quip.entities.accounts.Account;
+import com.evil.scheme.Quip.exceptions.AccountNotFountException;
 import com.evil.scheme.Quip.repositories.AccountRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -15,18 +17,24 @@ public class AccountServiceImpl implements AccountService{
     private AccountRepository repository;
 
     @Override
+    @Transactional
     public Account create(Account obj) {
-        return null;
+        return this.repository.save(obj);
     }
 
     @Override
-    public boolean delete(Long id) {
-        return false;
+    @Transactional(rollbackFor = AccountNotFountException.class)
+    public boolean delete(Long id) throws AccountNotFountException {
+        Account account = this.repository.findOne(id);
+        if (account == null)
+            throw new AccountNotFountException("Account not found.");
+        this.repository.delete(account);
+        return true;
     }
 
     @Override
     public Stream<Account> streamAll() {
-        return null;
+        return this.repository.findAll().stream();
     }
 
     @Override
@@ -35,12 +43,22 @@ public class AccountServiceImpl implements AccountService{
     }
 
     @Override
-    public Account update(Account obj) {
-        return null;
+    @Transactional(rollbackFor = AccountNotFountException.class)
+    public Account update(Account obj) throws AccountNotFountException {
+        Account account = this.repository.findOne(obj.getId());
+        if (account == null)
+            throw new AccountNotFountException("Account not found.");
+        account.setUsername(obj.getUsername());
+        account.setEmail(obj.getEmail());
+        account.setFname(obj.getFname());
+        account.setPassword(obj.getPassword());
+        account.setLname(obj.getLname());
+        account.setProfilePic(obj.getProfilePic());
+        return account;
     }
 
     @Override
     public Account findById(Long id) {
-        return null;
+        return this.repository.findOne(id);
     }
 }
