@@ -3,47 +3,45 @@
   "project": {
     "name": "quickstart-angular2"
   },
-  "apps": [
-    {
-      "root": "src",
-      "outDir": "dist",
-      "assets": [
-        "assets",
-        "favicon.ico"
-      ],
-      "index": "index.html",
-      "main": "main.ts",
-      "polyfills": "polyfills.ts",
-      "test": "test.ts",
-      "tsconfig": "tsconfig.app.json",
-      "testTsconfig": "tsconfig.spec.json",
-      "prefix": "app",
-      "styles": [
-        "../node_modules/font-awesome/scss/font-awesome.scss",
-        "../scss/bootstrap/bootstrap.scss",
-        "../scss/mdb-free.scss",
-        "./styles.scss"
-      ],
-      "scripts": [
-        "../node_modules/chart.js/dist/Chart.js",
-        "../node_modules/easy-pie-chart/dist/easypiechart.js",
-        "../node_modules/screenfull/dist/screenfull.js",
-        "../node_modules/hammerjs/hammer.min.js"
-      ],
-      "environmentSource": "environments/environment.ts",
-      "environments": {
-        "dev": "environments/environment.ts",
-        "prod": "environments/environment.prod.ts"
-      }
+  "apps": [{
+    "root": "src",
+    "outDir": "dist",
+    "assets": [
+      "assets",
+      "favicon.ico",
+      "assets/logo1.png"
+    ],
+    "index": "index.html",
+    "main": "main.ts",
+    "polyfills": "polyfills.ts",
+    "test": "test.ts",
+    "tsconfig": "tsconfig.app.json",
+    "testTsconfig": "tsconfig.spec.json",
+    "prefix": "app",
+    "styles": [
+      "../node_modules/font-awesome/scss/font-awesome.scss",
+      "../scss/bootstrap/bootstrap.scss",
+      "../scss/mdb-free.scss",
+      "./styles.scss"
+    ],
+    "scripts": [
+      "../node_modules/chart.js/dist/Chart.js",
+      "../node_modules/easy-pie-chart/dist/easypiechart.js",
+      "../node_modules/screenfull/dist/screenfull.js",
+      "../node_modules/hammerjs/hammer.min.js"
+    ],
+    "environmentSource": "environments/environment.ts",
+    "environments": {
+      "dev": "environments/environment.ts",
+      "prod": "environments/environment.prod.ts"
     }
-  ],
+  }],
   "e2e": {
     "protractor": {
       "config": "./protractor.conf.js"
     }
   },
-  "lint": [
-    {
+  "lint": [{
       "project": "src/tsconfig.app.json"
     },
     {
@@ -60,7 +58,6 @@
   },
   "defaults": {
     "styleExt": "scss",
-    "component": {
-    }
+    "component": {}
   }
 }
