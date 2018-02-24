@@ -14,6 +14,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @ComponentScan("com.evil.scheme.Quip")
 @PropertySource("classpath:application.properties")
 @PropertySource("classpath:persistence.properties")
+@PropertySource("classpath:security.properties")
 @EnableJpaRepositories("com.evil.scheme.Quip.repositories")
 class ApplicationConfig {
     @Bean
