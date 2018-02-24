@@ -15,70 +15,26 @@ import javax.persistence.Table;
 import com.evil.scheme.Quip.entities.accounts.Account;
 import com.evil.scheme.Quip.entities.posts.Post;
 
+import java.util.List;
+import java.util.stream.Stream;
+
 @Entity
 @Table
 public class Profile {
 	private Long profileId;
 	private Account account;
-	private Post[] posts;
-	private Account[] friends;
-	private Account[] recomendedFriends;
-	
-	
+	private List<Post> posts;
+	private List<Account> friends;
+	private List<Account> recomendedFriends;
+
 	public Profile() {
-		
 	}
 
-
-	public Profile(Account account) {
-		super();
-		this.account = account;
-	}
-
-
-	public Profile(Account account, Post[] posts) {
-		super();
-		this.account = account;
-		this.posts = posts;
-	}
-
-
-	public Profile(Account account, Account[] friends) {
-		super();
-		this.account = account;
-		this.friends = friends;
-	}
-
-
-	public Profile(Account account, Post[] posts, Account[] friends) {
-		super();
-		this.account = account;
-		this.posts = posts;
-		this.friends = friends;
-	}
-	
-	public Profile(Account account, Account[] friends, Account[] recomendedFriends) {
-		super();
-		this.account = account;
-		this.friends = friends;
-		this.recomendedFriends = recomendedFriends;
-	}
-
-
-	public Profile(Account account, Post[] posts, Account[] friends, Account[] recomendedFriends) {
-		super();
-		this.account = account;
-		this.posts = posts;
-		this.friends = friends;
-		this.recomendedFriends = recomendedFriends;
-	}
-	
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 	public Long getProfileId() {
 		return profileId;
 	}
-
 
 	public void setProfileId(Long profileId) {
 		this.profileId = profileId;
@@ -89,48 +45,34 @@ public class Profile {
 		return account;
 	}
 
-
 	public void setAccount(Account account) {
 		this.account = account;
 	}
 
-	@OneToMany(targetEntity = Post.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@OrderColumn()
-	public Post[] getPosts() {
+	@OneToMany(targetEntity = Post.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	public List<Post> getPosts() {
 		return posts;
 	}
 
-
-	public void setPosts(Post[] posts) {
+	public void setPosts(List<Post> posts) {
 		this.posts = posts;
 	}
 
-	@OneToMany(targetEntity = Account.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@OrderColumn()
-	public Account[] getFriends() {
+	@OneToMany(targetEntity = Account.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	public List<Account> getFriends() {
 		return friends;
 	}
 
-
-	public void setFriends(Account[] friends) {
+	public void setFriends(List<Account> friends) {
 		this.friends = friends;
 	}
 
-	@OneToMany(targetEntity = Account.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@OrderColumn()
-	public Account[] getRecomendedFriends() {
+	@OneToMany(targetEntity = Account.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	public List<Account> getRecomendedFriends() {
 		return recomendedFriends;
 	}
 
-
-	public void setRecomendedFriends(Account[] recomendedFriends) {
+	public void setRecomendedFriends(List<Account> recomendedFriends) {
 		this.recomendedFriends = recomendedFriends;
 	}
-
-
-
-
-	
-	
-	
 }
