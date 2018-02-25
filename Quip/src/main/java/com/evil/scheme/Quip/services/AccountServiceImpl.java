@@ -2,7 +2,7 @@ package com.evil.scheme.Quip.services;
 
 import com.evil.scheme.Quip.control.AccountService;
 import com.evil.scheme.Quip.entities.accounts.Account;
-import com.evil.scheme.Quip.exceptions.AccountNotFountException;
+import com.evil.scheme.Quip.exceptions.AccountNotFoundException;
 import com.evil.scheme.Quip.repositories.AccountRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,11 +23,11 @@ public class AccountServiceImpl implements AccountService{
     }
 
     @Override
-    @Transactional(rollbackFor = AccountNotFountException.class)
-    public boolean delete(Long id) throws AccountNotFountException {
+    @Transactional(rollbackFor = AccountNotFoundException.class)
+    public boolean delete(Long id) throws AccountNotFoundException {
         Account account = this.repository.findOne(id);
         if (account == null)
-            throw new AccountNotFountException("Account not found.");
+            throw new AccountNotFoundException("Account not found.");
         this.repository.delete(account);
         return true;
     }
@@ -43,11 +43,11 @@ public class AccountServiceImpl implements AccountService{
     }
 
     @Override
-    @Transactional(rollbackFor = AccountNotFountException.class)
-    public Account update(Account obj) throws AccountNotFountException {
+    @Transactional(rollbackFor = AccountNotFoundException.class)
+    public Account update(Account obj) throws AccountNotFoundException {
         Account account = this.repository.findOne(obj.getId());
         if (account == null)
-            throw new AccountNotFountException("Account not found.");
+            throw new AccountNotFoundException("Account not found.");
         account.setUsername(obj.getUsername());
         account.setEmail(obj.getEmail());
         account.setFname(obj.getFname());

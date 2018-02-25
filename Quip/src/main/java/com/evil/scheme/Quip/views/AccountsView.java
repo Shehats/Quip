@@ -3,7 +3,7 @@ package com.evil.scheme.Quip.views;
 import com.evil.scheme.Quip.control.AccountService;
 
 import com.evil.scheme.Quip.entities.accounts.Account;
-import com.evil.scheme.Quip.exceptions.AccountNotFountException;
+import com.evil.scheme.Quip.exceptions.AccountNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +35,7 @@ public class AccountsView {
     public Account update(@ModelAttribute Account account) {
         try {
             return this.accountService.update(account);
-        } catch (AccountNotFountException e) {
+        } catch (AccountNotFoundException e) {
             return null;
         }
     }
@@ -44,7 +44,7 @@ public class AccountsView {
     public boolean delete(@PathVariable Long id) {
         try {
             return this.accountService.delete(id);
-        } catch (AccountNotFountException e) {
+        } catch (AccountNotFoundException e) {
             return false;
         }
     }

@@ -50,20 +50,20 @@ public class Authentication {
             if (this.passwordEncoder.matches(loginForm.getPassword(), account.getPassword())) {
                 try {
                     authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginForm.getUsername(),loginForm.getPassword()));
-                    return new Token(jwtTokenProvider.createToken(account.getUsername(), account.getRoles()));
+                    return new Token(jwtTokenProvider.createToken(account.getUsername(), account.getRoles()), new Long(604800000));
                 } catch (AuthenticationException e) {
                     throw new AuthException("Invalid Credentials", HttpStatus.UNPROCESSABLE_ENTITY);
                 }
             }
         }
-        throw new AuthException("Invalid Credentials", HttpStatus.UNPROCESSABLE_ENTITY);
+        throw new AuthException("User not found", HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     @PostMapping("/signup")
     @ResponseBody
     public Token signUp(@RequestBody RegisterationForm registerationForm) throws AuthException{
-        if (this.accountRepository.exists(registerationForm.getUsername())
-                || this.accountRepository.exists(registerationForm.getEmail())) {
+        if (!(this.accountRepository.exists(registerationForm.getUsername())
+                || this.accountRepository.exists(registerationForm.getEmail()))) {
             try {
                 Account account = new Account(registerationForm.getUsername(),
                         registerationForm.getPassword(),
@@ -75,7 +75,7 @@ public class Authentication {
                 this.accountService.create(account);
                 authenticationManager.authenticate(
                         new UsernamePasswordAuthenticationToken(account.getUsername(), registerationForm.getPassword()));
-                return new Token(jwtTokenProvider.createToken(account.getUsername(), account.getRoles()));
+                return new Token(jwtTokenProvider.createToken(account.getUsername(), account.getRoles()), new Long(604800000));
             } catch (AuthenticationException e) {
                 throw new AuthException("Invalid Credentials", HttpStatus.UNPROCESSABLE_ENTITY);
             }
