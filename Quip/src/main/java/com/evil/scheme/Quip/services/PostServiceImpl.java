@@ -47,7 +47,7 @@ public class PostServiceImpl implements PostService {
     public Post update(Post obj) throws PostNotFoundException{
         Post post = this.repository.findOne(obj.getId());
         if (post == null)
-            throw new PostNotFoundException("Account not found.");
+            throw new PostNotFoundException("Post not found.");
         post.setTitle(post.getTitle());
         post.setDescription(post.getDescription());
         post.setMediaUrl(post.getMediaUrl());

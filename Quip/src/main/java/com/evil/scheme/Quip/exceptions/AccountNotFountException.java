@@ -1,7 +1,12 @@
 package com.evil.scheme.Quip.exceptions;
 
 public class AccountNotFountException extends Exception{
-    public AccountNotFountException() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8407756978020621015L;
+
+	public AccountNotFountException() {
         super();
     }
 
