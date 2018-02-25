@@ -1,12 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
-import { MDBBootstrapModule } from './typescripts/free';
+import { AppRoutingModule } from './modules/app-routing/app-routing.module';
 import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
 import { SearchPipe } from './pipes/search.pipe';
 import { ReqInterceptorService } from './services/interceptors/req-interceptor.service';
 import { ActionsService } from './services/http/actions.service';
@@ -18,12 +15,9 @@ import { ActionsService } from './services/http/actions.service';
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
-    FormsModule,
     HttpModule,
     HttpClientModule,
-    AppRoutingModule,
-    MDBBootstrapModule.forRoot()
+    AppRoutingModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, 
@@ -33,6 +27,6 @@ import { ActionsService } from './services/http/actions.service';
     ActionsService
   ],
   bootstrap: [AppComponent],
-  schemas: [ NO_ERRORS_SCHEMA ]
+  schemas: [NO_ERRORS_SCHEMA]
 })
 export class AppModule { }

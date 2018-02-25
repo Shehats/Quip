@@ -3,6 +3,7 @@ package com.evil.scheme.Quip.entities.accounts;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table
@@ -14,6 +15,7 @@ public class Account {
     private String lname;
     private String email;
     private byte[] profilePic;
+    List<Role> roles;
 
     public Account() {
     }
@@ -91,5 +93,14 @@ public class Account {
     }
     public void setProfilePic(byte[] profilePic) {
         this.profilePic = profilePic;
+    }
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 }

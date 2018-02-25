@@ -1,1 +1,48 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import url('https://fonts.googleapis.com/css?family=Jura:400,500,600');
+// Palette Colors
+$dark-blue: #2d5c56;
+$red: #f84e4c;
+$light-blue: #b8c6c9;
+$light-grey: #cccccc;
+$lime-green: #73cf45;
+$turquoise-blue: #005555;
+body {
+    // background-color: $dark-blue;
+    background: linear-gradient(45deg, $lime-green, $dark-blue);
+    height: 100vh;
+    h1 {
+        font-family: 'Jura', sans-serif;
+        color: #cccccc;
+        font-size: 50pt;
+        strong {
+            color: $lime-green;
+            font-weight: 600;
+        }
+    }
+    h8 {
+        color: $light-grey;
+    }
+}
+
+// #form {
+//     background: white;
+//     padding: 32px;
+//     border-radius: 10px;
+// }
+// section {
+//     height: 100vh;
+// }
+
+.logo-full {
+    max-width: auto;
+}
+
+.logo-256 {
+    max-width: 256px;
+}
+
+.logo-128 {
+    max-width: 128px;
+}
