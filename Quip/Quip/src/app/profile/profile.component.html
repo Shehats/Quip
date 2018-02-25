@@ -1,0 +1,122 @@
+<style>
+    #section {
+        max-height: 100%;
+        padding: 16px;
+    }
+
+    #sidebar {
+        /* background-color: red; */
+        /* padding-right: 0; */
+    }
+
+    #feed {
+        background-color: white;
+        /* padding: 8px; */
+    }
+</style>
+<section id="section">
+    <div class="row">
+        <div class="col-3" id="sidebar">
+            <!--Card-->
+            <div class="card card-personal">
+
+                <!--Card image-->
+                <div class="view overlay">
+                    <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(26).jpg" alt="Card image cap">
+                    <a href="#!">
+                        <div class="mask rgba-white-slight"></div>
+                    </a>
+                </div>
+                <!--Card image-->
+
+                <!--Card content-->
+                <div class="card-body">
+                    <!--Title-->
+                    <a>
+                        <h4 class="card-title">Anna</h4>
+                    </a>
+                    <a class="card-meta">Friends</a>
+
+                    <!--Text-->
+                    <p class="card-text">Anna is a web designer living in New York.</p>
+                    <hr>
+                    <a class="card-meta">
+                        <span>
+                            <i class="fa fa-user"></i>83 Friends</span>
+                    </a>
+                    <p class="card-meta float-right">Joined in 2012</p>
+                </div>
+                <!--Card content-->
+
+            </div>
+            <!--Card-->
+        </div>
+
+
+
+        <div class="col" id="feed">
+            <!--Grid row-->
+            <div class="row">
+
+                <!--Grid column-->
+                <div class="col-lg-6">
+
+                    <!--Newsfeed-->
+                    <div class="mdb-feed">
+
+                        <!--First news-->
+                        <div class="news">
+
+                            <!--Label-->
+                            <div class="label">
+                                <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-1-mini.jpg" class="rounded-circle z-depth-1-half">
+                            </div>
+
+                            <!--Excert-->
+                            <div class="excerpt">
+
+                                <!--Brief-->
+                                <div class="brief">
+                                    <a class="name">John Doe</a> added you as a friend
+                                    <div class="date">1 hour ago</div>
+                                </div>
+
+                                <!--Feed footer-->
+                                <div class="feed-footer">
+                                    <a class="comment" data-toggle="collapse" href="#collapseExample-1" aria-expanded="false" aria-controls="collapseExample-1">Comment</a> &middot;
+                                    <span>
+                                        <a>7</a>
+                                    </span>
+                                    <a class="thumbs" data-toggle="tooltip" data-placement="top" title="I like it">
+                                        <i class="fa fa-thumbs-up"></i>
+                                    </a>
+                                    <a class="thumbs" data-toggle="tooltip" data-placement="top" title="I don't like it">
+                                        <i class="fa fa-thumbs-down"></i>
+                                    </a>
+                                    <div class="collapse" id="collapseExample-1">
+                                        <div class="card card-body mt-1">
+                                            <!--Add comment-->
+                                            <div class="md-form mt-1 mb-1">
+                                                <textarea type="text" id="form7" class="md-textarea"></textarea>
+                                                <label for="form7">Add comment</label>
+                                            </div>
+                                            <div class="d-flex justify-content-end">
+                                                <button type="button" class="btn-flat waves-effect" data-toggle="collapse" data-target="#collapseExample-1" aria-expanded="false"
+                                                    aria-controls="collapseExample-1">Cancel</button>
+                                                <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#collapseExample-1" aria-expanded="false"
+                                                    aria-controls="collapseExample-1">Reply</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <!--First news-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
