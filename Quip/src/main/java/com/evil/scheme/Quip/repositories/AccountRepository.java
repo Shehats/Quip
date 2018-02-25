@@ -8,6 +8,15 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Long> {
-    @Query("select count(a) > 0 from Account a where a.email = :username or a.username = :username")
+    @Query("select case when count(a) > 0 then true else false end from Account a where a.username = :username or a.email = :username")
     boolean exists(@Param("username") String username);
+
+    @Query("select a from Account a where a.username = :username")
+    Account findByUsername(@Param("username") String username);
+
+    @Query("select a from Account a where a.email = :email")
+    Account findByEmail(@Param("email") String email);
+
+    @Query("select a from Account a where a.username = :username or a.email = :username")
+    Account findByEmailOrUsername(@Param("username") String username);
 }
