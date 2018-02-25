@@ -11,7 +11,7 @@ $turquoise-blue: #005555;
 body {
     // background-color: $dark-blue;
     background: linear-gradient(45deg, $lime-green, $dark-blue);
-    height: 100%;
+    height: 100vh;
     h1 {
         font-family: 'Jura', sans-serif;
         color: #cccccc;
@@ -21,7 +21,7 @@ body {
             font-weight: 600;
         }
     }
-    h8 { 
+    h8 {
         color: $light-grey;
     }
 }
@@ -31,13 +31,15 @@ body {
 //     padding: 32px;
 //     border-radius: 10px;
 // }
+// section {
+//     height: 100vh;
+// }
 
-.logo-full{
-    
+.logo-full {
     max-width: auto;
 }
 
-.logo-256{
+.logo-256 {
     max-width: 256px;
 }
 

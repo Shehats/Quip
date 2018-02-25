@@ -1,34 +1,24 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { MDBBootstrapModule } from './typescripts/free';
+import { AppRoutingModule } from './modules/app-routing/app-routing.module'
+
+
 import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
-import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
-import { ProfileComponent } from './profile/profile.component';
+
 
 @NgModule({
   declarations: [
-    AppComponent,
-    LoginComponent,
-    RegisterComponent,
-    ForgotPasswordComponent,
-    ProfileComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
-    ReactiveFormsModule,
     HttpModule,
     AppRoutingModule,
-    MDBBootstrapModule.forRoot()
+
   ],
   providers: [],
   bootstrap: [AppComponent],
-  schemas: [ NO_ERRORS_SCHEMA ]
+  schemas: [NO_ERRORS_SCHEMA]
 })
 export class AppModule { }
