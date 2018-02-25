@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -17,11 +17,26 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.registerForm = new FormGroup({
-      firstname: new FormControl(),
-      lastname: new FormControl(),
-      username: new FormControl(),
-      email: new FormControl(),
-      pass: new FormControl(),
+      fname: new FormControl("", Validators.compose([
+        Validators.required,
+        Validators.minLength(3)
+      ])),
+      lname: new FormControl("", Validators.compose([
+        Validators.required,
+        Validators.minLength(3)
+      ])),
+      username: new FormControl("", Validators.compose([
+        Validators.required,
+        Validators.minLength(3)
+      ])),
+      email: new FormControl("", Validators.compose([
+        Validators.required,
+        Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"),
+      ])),
+      pass: new FormControl("", Validators.compose([
+        Validators.required,
+        Validators.pattern("(?=^.{6,255}$)((?=.*\d)(?=.*[A-Z])(?=.*[a-z])|(?=.*\d)(?=.*[^A-Za-z0-9])(?=.*[a-z])|(?=.*[^A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z])|(?=.*\d)(?=.*[A-Z])(?=.*[^A-Za-z0-9]))^.*"),
+      ])),
 
     })
   }

@@ -1,7 +1,13 @@
 package com.evil.scheme.Quip.exceptions;
 
 public class PostNotFoundException extends Exception{
-    public PostNotFoundException() {
+	
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1297890872473632521L;
+
+	public PostNotFoundException() {
         super();
     }
 
