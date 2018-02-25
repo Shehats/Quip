@@ -1,8 +1,5 @@
 *.idea
 /target
-<<<<<<< HEAD
 .settings/
-=======
 .classpath
 .project
->>>>>>> fb9ee3c17c3886012c5f7baacfd721f5c2b56e7b
