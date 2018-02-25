@@ -6,34 +6,33 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class ActionsService {
-  private actionUrl: string;
   constructor(private http: HttpClient){
-    this.actionUrl = 'https://127.0.0.1:8990';
-  }
-  public fetch <T> (url: string): Observable<T> {
-    return this.http.get<T>(this.actionUrl + '/' + url);
   }
 
-  public fetchAll <T> (url: string): Observable<T[]> {
-    return this.http.get<T[]>(this.actionUrl + '/' + url);
+  public fetch <T> (actionUrl: string): Observable<T> {
+    return this.http.get<T>(actionUrl);
   }
 
-  public fetchById <T> (url: string, id: number): Observable<T> {
-    return this.http.get<T>(this.actionUrl + '/' + url + '/' +id);            
+  public fetchAll <T> (actionUrl: string): Observable<T[]> {
+    return this.http.get<T[]>(actionUrl);
   }
 
-  public save <T> (url: string, obj: T): Observable<T> {
-    return this.http.post<T>(this.actionUrl + '/' + url, JSON.stringify(obj));
+  public fetchById <T> (actionUrl: string, id: number): Observable<T> {
+    return this.http.get<T>(actionUrl + '/' +id);            
   }
 
-  public update <T> (url: string, obj: T) {
-    return this.http.put<T>(this.actionUrl + '/' + url, JSON.stringify(obj));
+  public save <T> (actionUrl: string, obj: T): Observable<T> {
+    return this.http.post<T>(actionUrl, JSON.stringify(obj));
   }
 
-  public updateById <T> (url: string, id: number, obj: T): Observable<T> {
-    return this.http.put<T>(this.actionUrl + '/' + url + '/' + id, JSON.stringify(obj));
+  public update <T> (actionUrl: string, obj: T) {
+    return this.http.put<T>(actionUrl, JSON.stringify(obj));
   }
-  public deleteById <T> (url: string, id: number): Observable<T> {
-    return this.http.delete<T>(this.actionUrl + '/' + url + '/' +id);
+
+  public updateById <T> (actionUrl: string, id: number, obj: T): Observable<T> {
+    return this.http.put<T>(actionUrl + '/' + id, JSON.stringify(obj));
+  }
+  public deleteById <T> (actionUrl: string, id: number): Observable<T> {
+    return this.http.delete<T>(actionUrl + '/' +id);
   }
 }
