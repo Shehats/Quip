@@ -1,6 +1,5 @@
 package com.evil.scheme.Quip.control;
 
-
 import java.util.List;
 import java.util.stream.Stream;
 
