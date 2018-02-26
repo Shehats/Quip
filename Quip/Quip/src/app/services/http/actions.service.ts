@@ -22,18 +22,15 @@ export class ActionsService {
   }
 
   public save <T> (actionUrl: string, obj: T): Observable<T> {
-    console.log(actionUrl);
-    console.log(obj);
-    console.log(this.http);
     return this.http.post<T>(actionUrl, obj);
   }
 
   public update <T> (actionUrl: string, obj: T) {
-    return this.http.put<T>(actionUrl, JSON.stringify(obj));
+    return this.http.put<T>(actionUrl, obj);
   }
 
   public updateById <T> (actionUrl: string, id: number, obj: T): Observable<T> {
-    return this.http.put<T>(actionUrl + '/' + id, JSON.stringify(obj));
+    return this.http.put<T>(actionUrl + '/' + id, obj);
   }
   public deleteById <T> (actionUrl: string, id: number): Observable<T> {
     return this.http.delete<T>(actionUrl + '/' +id);
