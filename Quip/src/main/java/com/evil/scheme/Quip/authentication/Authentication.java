@@ -2,6 +2,7 @@ package com.evil.scheme.Quip.authentication;
 
 import com.evil.scheme.Quip.entities.accounts.Account;
 import com.evil.scheme.Quip.entities.accounts.Role;
+import com.evil.scheme.Quip.entities.profiles.Profile;
 import com.evil.scheme.Quip.exceptions.AuthException;
 import com.evil.scheme.Quip.forms.LoginForm;
 import com.evil.scheme.Quip.forms.RegisterationForm;
@@ -9,6 +10,7 @@ import com.evil.scheme.Quip.forms.Token;
 import com.evil.scheme.Quip.repositories.AccountRepository;
 import com.evil.scheme.Quip.security.JwtTokenProvider;
 import com.evil.scheme.Quip.services.AccountServiceImpl;
+import com.evil.scheme.Quip.services.ProfileServiceImpl;
 import org.codehaus.jackson.annotate.JsonValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -29,6 +31,9 @@ import java.util.List;
 public class Authentication {
     @Resource
     private AccountServiceImpl accountService;
+
+    @Resource
+    private ProfileServiceImpl profileService;
 
     @Resource
     private BCryptPasswordEncoder passwordEncoder;
@@ -62,6 +67,7 @@ public class Authentication {
     @PostMapping("/signup")
     @ResponseBody
     public Token signUp(@RequestBody RegisterationForm registerationForm) throws AuthException{
+        System.out.println("sdkjdkfsddhfdjdhdvdjhjdhjd");
         if (!(this.accountRepository.exists(registerationForm.getUsername())
                 || this.accountRepository.exists(registerationForm.getEmail()))) {
             try {
@@ -73,6 +79,8 @@ public class Authentication {
                 account.setPassword(this.passwordEncoder.encode(account.getPassword()));
                 account.setRoles(new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)));
                 this.accountService.create(account);
+                Profile profile = new Profile(account);
+                this.profileService.create(profile);
                 authenticationManager.authenticate(
                         new UsernamePasswordAuthenticationToken(account.getUsername(), registerationForm.getPassword()));
                 return new Token(jwtTokenProvider.createToken(account.getUsername(), account.getRoles()), new Long(604800000));
