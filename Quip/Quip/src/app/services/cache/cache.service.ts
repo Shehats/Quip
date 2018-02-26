@@ -11,15 +11,8 @@ export class CacheService {
     return Observable.fromPromise(_storage.setItem('token', token));
   }
 
-  public getAuthToken(): Observable<any> {
-    return (this.getToken()
-      .filter((x:Token) => x.expiry < Date.now()))
-    ? this.getToken()
-    : this.removeToken();
-  }
-
-  private getToken(): Observable<Token> {
-    return Observable.fromPromise(_storage.getItem('token'));
+  public getAuthToken(): Promise<any> {
+    return _storage.getItem('token');
   }
 
   public removeToken(): Observable<void> {

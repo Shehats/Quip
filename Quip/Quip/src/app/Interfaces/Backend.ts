@@ -1,9 +1,10 @@
 export class Backend {
   baseUrl: string = 'http://localhost:8990/';
-  signUp: String = this.baseUrl + '/signup';
-  signIn: String = this.baseUrl + '/signin';
-  account: String = this.baseUrl + '/account';
-  profile: String = this.baseUrl + '/profile';
-  post: String = this.baseUrl + '/post';
-  comment: String = this.baseUrl + '/comment';
+  signUp: string = this.baseUrl + 'signup';
+  signIn: string = this.baseUrl + 'signin';
+  exists: string = this.baseUrl + 'exists';
+  account: string = this.baseUrl + 'accounts';
+  profile: string = this.baseUrl + 'profile';
+  post: string = this.baseUrl + 'post';
+  comment: string = this.baseUrl + 'comment';
 }

@@ -22,7 +22,10 @@ export class ActionsService {
   }
 
   public save <T> (actionUrl: string, obj: T): Observable<T> {
-    return this.http.post<T>(actionUrl, JSON.stringify(obj));
+    console.log(actionUrl);
+    console.log(obj);
+    console.log(this.http);
+    return this.http.post<T>(actionUrl, obj);
   }
 
   public update <T> (actionUrl: string, obj: T) {
