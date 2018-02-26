@@ -53,7 +53,7 @@ public class ProfileServiceImpl implements ProfileService{
 		if(profile == null) {
 			throw new ProfileNotFoundException();
 		}
-		profile.setAccount(profile.getAccount());
+		// profile.setAccount(profile.getAccount());
 		profile.setFriends(profile.getFriends());
 		profile.setPosts(profile.getPosts());
 		profile.setRecomendedFriends(profile.getRecomendedFriends());

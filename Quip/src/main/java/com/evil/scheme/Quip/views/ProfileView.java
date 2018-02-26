@@ -19,6 +19,7 @@ public class ProfileView {
     @RequestMapping(value = "/{username}", method = RequestMethod.GET)
     public Profile getProfile(@PathVariable String username) {
         Account account = this.accountRepository.findByUsername(username);
+        System.out.println(account.getProfile());
         return account.getProfile();
     }
 

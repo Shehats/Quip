@@ -67,7 +67,6 @@ public class Authentication {
     @PostMapping("/signup")
     @ResponseBody
     public Token signUp(@RequestBody RegisterationForm registerationForm) throws AuthException{
-        System.out.println("sdkjdkfsddhfdjdhdvdjhjdhjd");
         if (!(this.accountRepository.exists(registerationForm.getUsername())
                 || this.accountRepository.exists(registerationForm.getEmail()))) {
             try {
@@ -78,9 +77,10 @@ public class Authentication {
                         registerationForm.getEmail());
                 account.setPassword(this.passwordEncoder.encode(account.getPassword()));
                 account.setRoles(new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)));
-                this.accountService.create(account);
-                Profile profile = new Profile(account);
+                Profile profile = new Profile();
                 this.profileService.create(profile);
+                account.setProfile(profile);
+                this.accountService.create(account);
                 authenticationManager.authenticate(
                         new UsernamePasswordAuthenticationToken(account.getUsername(), registerationForm.getPassword()));
                 return new Token(jwtTokenProvider.createToken(account.getUsername(), account.getRoles()), new Long(604800000));

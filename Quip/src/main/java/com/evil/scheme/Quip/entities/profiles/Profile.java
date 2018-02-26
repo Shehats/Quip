@@ -22,16 +22,11 @@ import java.util.stream.Stream;
 @Table
 public class Profile {
 	private Long profileId;
-	private Account account;
 	private List<Post> posts;
 	private List<Account> friends;
 	private List<Account> recomendedFriends;
 
 	public Profile() {
-	}
-
-	public Profile(Account account) {
-		this.account = account;
 	}
 
 	@Id
@@ -44,14 +39,6 @@ public class Profile {
 		this.profileId = profileId;
 	}
 	
-	@OneToOne(targetEntity = Account.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	public Account getAccount() {
-		return account;
-	}
-
-	public void setAccount(Account account) {
-		this.account = account;
-	}
 
 	@OneToMany(targetEntity = Post.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	public List<Post> getPosts() {

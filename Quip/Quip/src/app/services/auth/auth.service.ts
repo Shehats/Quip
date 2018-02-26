@@ -26,7 +26,11 @@ export class AuthService {
     .flatMap(_ => this.actions.fetch<Profile>(this.backend.profile+'/'+account.username));
   }
 
-  public logout() {
+  public logout(): void {
     this.cache.removeToken().subscribe(_ => this.router.navigate(['']))
+  }
+
+  public checkAccount(account: Account): Observable<any> {
+    return this.actions.save<any>(this.backend.exists, account);
   }
 }

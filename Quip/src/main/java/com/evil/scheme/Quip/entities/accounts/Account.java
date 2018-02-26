@@ -105,7 +105,7 @@ public class Account {
         this.roles = roles;
     }
 
-    @OneToOne(cascade = CascadeType.ALL ,mappedBy = "account")
+    @OneToOne(targetEntity = Profile.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     public Profile getProfile() {
         return profile;
     }
