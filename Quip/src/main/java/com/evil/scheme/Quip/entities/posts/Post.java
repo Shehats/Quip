@@ -21,6 +21,23 @@ public class Post{
     public Post() {
     }
 
+    public Post(String title, String description, String mediaUrl, byte[] picture, Integer likes, Integer dislikes, List<Comment> comments) {
+        this.title = title;
+        this.description = description;
+        this.mediaUrl = mediaUrl;
+        this.picture = picture;
+        this.likes = likes;
+        this.dislikes = dislikes;
+        this.comments = comments;
+    }
+
+    public Post(String title, String description, String mediaUrl, byte[] picture) {
+        this.title = title;
+        this.description = description;
+        this.mediaUrl = mediaUrl;
+        this.picture = picture;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getId() {

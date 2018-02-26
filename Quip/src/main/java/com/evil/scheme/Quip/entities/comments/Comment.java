@@ -16,7 +16,11 @@ public class Comment {
 	public Comment() {
 	}
 
-	@Id
+    public Comment(String description) {
+        this.description = description;
+    }
+
+    @Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	public Long getId() {
 		return id;
