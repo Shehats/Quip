@@ -2,6 +2,7 @@ package com.evil.scheme.Quip.authentication;
 
 import com.evil.scheme.Quip.entities.accounts.Account;
 import com.evil.scheme.Quip.entities.accounts.Role;
+import com.evil.scheme.Quip.entities.profiles.Profile;
 import com.evil.scheme.Quip.exceptions.AuthException;
 import com.evil.scheme.Quip.forms.LoginForm;
 import com.evil.scheme.Quip.forms.RegisterationForm;
@@ -9,6 +10,7 @@ import com.evil.scheme.Quip.forms.Token;
 import com.evil.scheme.Quip.repositories.AccountRepository;
 import com.evil.scheme.Quip.security.JwtTokenProvider;
 import com.evil.scheme.Quip.services.AccountServiceImpl;
+import com.evil.scheme.Quip.services.ProfileServiceImpl;
 import org.codehaus.jackson.annotate.JsonValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -31,6 +33,9 @@ public class Authentication {
     private AccountServiceImpl accountService;
 
     @Resource
+    private ProfileServiceImpl profileService;
+
+    @Resource
     private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
@@ -50,20 +55,20 @@ public class Authentication {
             if (this.passwordEncoder.matches(loginForm.getPassword(), account.getPassword())) {
                 try {
                     authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginForm.getUsername(),loginForm.getPassword()));
-                    return new Token(jwtTokenProvider.createToken(account.getUsername(), account.getRoles()));
+                    return new Token(jwtTokenProvider.createToken(account.getUsername(), account.getRoles()), new Long(604800000));
                 } catch (AuthenticationException e) {
                     throw new AuthException("Invalid Credentials", HttpStatus.UNPROCESSABLE_ENTITY);
                 }
             }
         }
-        throw new AuthException("Invalid Credentials", HttpStatus.UNPROCESSABLE_ENTITY);
+        throw new AuthException("User not found", HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     @PostMapping("/signup")
     @ResponseBody
     public Token signUp(@RequestBody RegisterationForm registerationForm) throws AuthException{
-        if (this.accountRepository.exists(registerationForm.getUsername())
-                || this.accountRepository.exists(registerationForm.getEmail())) {
+        if (!(this.accountRepository.exists(registerationForm.getUsername())
+                || this.accountRepository.exists(registerationForm.getEmail()))) {
             try {
                 Account account = new Account(registerationForm.getUsername(),
                         registerationForm.getPassword(),
@@ -72,10 +77,13 @@ public class Authentication {
                         registerationForm.getEmail());
                 account.setPassword(this.passwordEncoder.encode(account.getPassword()));
                 account.setRoles(new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)));
+                Profile profile = new Profile();
+                this.profileService.create(profile);
+                account.setProfile(profile);
                 this.accountService.create(account);
                 authenticationManager.authenticate(
                         new UsernamePasswordAuthenticationToken(account.getUsername(), registerationForm.getPassword()));
-                return new Token(jwtTokenProvider.createToken(account.getUsername(), account.getRoles()));
+                return new Token(jwtTokenProvider.createToken(account.getUsername(), account.getRoles()), new Long(604800000));
             } catch (AuthenticationException e) {
                 throw new AuthException("Invalid Credentials", HttpStatus.UNPROCESSABLE_ENTITY);
             }

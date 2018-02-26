@@ -1,31 +1,20 @@
 package com.evil.scheme.Quip.entities.comments;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 import com.evil.scheme.Quip.entities.posts.Post;
 
 @Entity
+@Table(name = "comment")
 public class Comment {
 	
 	private Long id;
-	private Post parentId;
+	private Post post;
 	private String description;
 	private Integer likes;
 	private Integer dislikes;
-//	id: number;
-//	parentId: number;
-//	description: string;
-//	likes: number;
-//	dislikes: number;
+
 	public Comment() {
-		
 	}
 	
 	public Comment(Long id) {
@@ -33,23 +22,23 @@ public class Comment {
 		this.id = id;
 	}
 
-	public Comment(Long id, Post parentId) {
+	public Comment(Long id, Post post) {
 		super();
 		this.id = id;
-		this.parentId = parentId;
+		this.post = post;
 	}
 
-	public Comment(Long id, Post parentId, String description) {
+	public Comment(Long id, Post post, String description) {
 		super();
 		this.id = id;
-		this.parentId = parentId;
+		this.post = post;
 		this.description = description;
 	}
 
 	public Comment(Long id, Post parentId, String description, Integer likes) {
 		super();
 		this.id = id;
-		this.parentId = parentId;
+		this.post = parentId;
 		this.description = description;
 		this.likes = likes;
 	}
@@ -57,7 +46,7 @@ public class Comment {
 	public Comment(Long id, Post parentId, String description, Integer likes, Integer dislikes) {
 		super();
 		this.id = id;
-		this.parentId = parentId;
+		this.post = parentId;
 		this.description = description;
 		this.likes = likes;
 		this.dislikes = dislikes;
@@ -67,43 +56,39 @@ public class Comment {
 	public Long getId() {
 		return id;
 	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	@ManyToOne(targetEntity = Post.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	public Post getParentId() {
-		return parentId;
+	public Post getPost() {
+		return post;
+	}
+	public void setPost(Post post) {
+		this.post = post;
 	}
 
-	public void setParentId(Post parentId) {
-		this.parentId = parentId;
-	}
 	@Column(name = "description")
 	public String getDescription() {
 		return description;
 	}
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
 	@Column(name = "likes")
 	public Integer getLikes() {
 		return likes;
 	}
-
 	public void setLikes(Integer likes) {
 		this.likes = likes;
 	}
+
 	@Column(name = "dislikes")
 	public Integer getDislikes() {
 		return dislikes;
 	}
-
 	public void setDislikes(Integer dislikes) {
 		this.dislikes = dislikes;
 	}
-	
-	
-	
 }

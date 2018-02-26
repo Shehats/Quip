@@ -3,24 +3,40 @@ import {
   HttpInterceptor,
   HttpRequest,
   HttpHandler,
-  HttpEvent
+  HttpEvent,
+  HttpResponse,
+  HttpErrorResponse
 } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
+import { CacheService } from '../cache/cache.service';
+import { Token } from '../../Interfaces/Token';
 
 @Injectable()
 export class ReqInterceptorService implements HttpInterceptor{
-  constructor() { }
+  constructor(private cache: CacheService) { }
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
     ): Observable<HttpEvent<any>> {
-    if (!req.headers.has('Content-Type'))
-      req = req.clone({headers: 
-        req.headers.set('Content-Type', 'application/json')
-      });
-    return next.handle(req.clone({headers: 
-      req.headers.set('Accept', 'application/json')}));
+    return Observable.fromPromise(this.cache.getAuthToken())
+    .map((x: Token) => {
+      req = req.clone({ headers: req.headers.set('Authorization', 'Bearer ' + x.token)})
+      return req;
+    }).flatMap((x: HttpRequest<any>) => {
+      return next.handle(x.clone({headers: 
+        req.headers.set('Accept', 'application/json')}))
+      .do((res: HttpResponse<any>) => {
+        if (res.body) {
+          if (res.body['token']) {
+            let token = new Token(res.body['token'], res.body['expiry']);
+            this.cache.setToken(token);
+          }
+        }
+      },
+      (_: HttpErrorResponse) => {
+        this.cache.removeToken();
+        });
+    })
   }
-
 }

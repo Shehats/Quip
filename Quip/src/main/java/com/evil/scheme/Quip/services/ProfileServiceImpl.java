@@ -2,9 +2,8 @@ package com.evil.scheme.Quip.services;
 
 import java.util.List;
 import java.util.stream.Stream;
-
 import javax.annotation.Resource;
-
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.evil.scheme.Quip.control.ProfileService;
@@ -12,6 +11,7 @@ import com.evil.scheme.Quip.entities.profiles.Profile;
 import com.evil.scheme.Quip.exceptions.ProfileNotFoundException;
 import com.evil.scheme.Quip.repositories.ProfileRepository;
 
+@Service
 public class ProfileServiceImpl implements ProfileService{
 
 	@Resource
@@ -53,7 +53,7 @@ public class ProfileServiceImpl implements ProfileService{
 		if(profile == null) {
 			throw new ProfileNotFoundException();
 		}
-		profile.setAccount(profile.getAccount());
+		// profile.setAccount(profile.getAccount());
 		profile.setFriends(profile.getFriends());
 		profile.setPosts(profile.getPosts());
 		profile.setRecomendedFriends(profile.getRecomendedFriends());

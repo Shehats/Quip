@@ -5,13 +5,14 @@ import java.util.stream.Stream;
 
 import javax.annotation.Resource;
 
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.evil.scheme.Quip.control.CommentService;
 import com.evil.scheme.Quip.entities.comments.Comment;
 import com.evil.scheme.Quip.exceptions.CommentNotFoundException;
 import com.evil.scheme.Quip.repositories.CommentRepository;
 
+@Service
 public class CommentServiceImpl implements CommentService{
 
 	@Resource
@@ -50,7 +51,7 @@ public class CommentServiceImpl implements CommentService{
 		if(comment == null) {
 			throw new CommentNotFoundException();
 		}
-		comment.setParentId(comment.getParentId());
+		comment.setPost(comment.getPost());
 		comment.setDescription(comment.getDescription());
 		comment.setLikes(comment.getLikes());
 		comment.setDislikes(comment.getDislikes());

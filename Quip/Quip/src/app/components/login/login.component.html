@@ -1,4 +1,4 @@
-<section>
+<section class="flex-center">
     <div class="animated fadeIn card" style="width: 28rem;" id="login-form">
         <div class="card-body">
             <!-- <form [formGroup]="loginForm"> -->
@@ -12,7 +12,7 @@
                 <!--Body-->
                 <div class="md-form">
                     <i class="fa fa-envelope prefix grey-text"></i>
-                    <input type="text" id="loginForm-email" class="form-control" mdbActive formControlName="email">
+                    <input type="email" id="loginForm-email" class="form-control" mdbActive formControlName="email">
                     <label for="loginForm-email">Your email</label>
                 </div>
 
@@ -23,7 +23,7 @@
                 </div>
 
                 <div class="text-center">
-                    <button class="btn btn-default waves-effect waves-light" mdbRippleRadius>Login</button>
+                    <button class="btn btn-default waves-effect waves-light" [disabled]="!loginForm.valid" mdbRippleRadius>Login</button>
                 </div>
 
             </form>
