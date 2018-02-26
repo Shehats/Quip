@@ -21,12 +21,10 @@ public class ProfileView {
 
     @Autowired
     JwtTokenProvider tokenProvider;
-//    @RequestMapping(value = "/{username}", method = RequestMethod.GET)
-//    public Profile getProfile(@PathVariable String username) {
-//        Account account = this.accountRepository.findByUsername(username);
-//        System.out.println(account.getProfile());
-//        return account.getProfile();
-//    }
+    @RequestMapping(value = "/{username}", method = RequestMethod.GET)
+    public Profile getProfileByUsername(@PathVariable String username) {
+        return this.profileRepository.findByUser(username);
+    }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public Profile getProfile(@RequestHeader("Authorization") String token) {
