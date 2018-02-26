@@ -1,5 +1,6 @@
 package com.evil.scheme.Quip.entities.accounts;
 
+import com.evil.scheme.Quip.entities.profiles.Profile;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ public class Account {
     private String lname;
     private String email;
     private byte[] profilePic;
+    private Profile profile;
     List<Role> roles;
 
     public Account() {
@@ -99,8 +101,15 @@ public class Account {
     public List<Role> getRoles() {
         return roles;
     }
-
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    @OneToOne(cascade = CascadeType.ALL ,mappedBy = "account")
+    public Profile getProfile() {
+        return profile;
+    }
+    public void setProfile(Profile profile) {
+        this.profile = profile;
     }
 }

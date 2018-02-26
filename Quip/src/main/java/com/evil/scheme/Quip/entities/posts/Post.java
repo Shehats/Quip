@@ -1,14 +1,21 @@
 package com.evil.scheme.Quip.entities.posts;
 
+import com.evil.scheme.Quip.entities.comments.Comment;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
+@Table(name = "post")
 public class Post{
     private Long id;
     private String title;
     private String description;
     private String mediaUrl;
     private byte[] picture;
+    private Integer likes;
+    private Integer dislikes;
+    private List<Comment> comments;
 
     public Post() {
     }
@@ -69,5 +76,29 @@ public class Post{
     }
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Column(name = "likes")
+    public Integer getLikes() {
+        return likes;
+    }
+    public void setLikes(Integer likes) {
+        this.likes = likes;
+    }
+
+    @Column(name = "dislikes")
+    public Integer getDislikes() {
+        return dislikes;
+    }
+    public void setDislikes(Integer dislikes) {
+        this.dislikes = dislikes;
+    }
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
+    public List<Comment> getComments() {
+        return comments;
+    }
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }

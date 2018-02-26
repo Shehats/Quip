@@ -30,7 +30,11 @@ public class Profile {
 	public Profile() {
 	}
 
-    @Id
+	public Profile(Account account) {
+		this.account = account;
+	}
+
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 	public Long getProfileId() {
 		return profileId;
