@@ -1,8 +1,12 @@
 package com.evil.scheme.Quip.views;
 
 import com.evil.scheme.Quip.entities.posts.Post;
+import com.evil.scheme.Quip.entities.profiles.Profile;
 import com.evil.scheme.Quip.exceptions.PostNotFoundException;
+import com.evil.scheme.Quip.exceptions.ProfileNotFoundException;
+import com.evil.scheme.Quip.forms.PostForm;
 import com.evil.scheme.Quip.services.PostServiceImpl;
+import com.evil.scheme.Quip.services.ProfileServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -12,10 +16,17 @@ import javax.annotation.Resource;
 public class PostView {
     @Resource
     PostServiceImpl postService;
+    @Resource
+    ProfileServiceImpl profileService;
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public Post add(@ModelAttribute Post post) {
-        return this.postService.create(post);
+    public Post add(@ModelAttribute PostForm post) throws ProfileNotFoundException {
+        Profile profile = this.profileService.findById(post.getProfileId());
+        Post retVal = this.postService.create(new Post(post.getTitle(), post.getDescription(), post.getMediaUrl(),
+                                         post.getPicture()));
+        profile.getPosts().add(retVal);
+        this.profileService.update(profile);
+        return retVal;
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.PUT)

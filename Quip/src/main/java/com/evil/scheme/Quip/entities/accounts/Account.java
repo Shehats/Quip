@@ -16,8 +16,7 @@ public class Account {
     private String lname;
     private String email;
     private byte[] profilePic;
-    private Profile profile;
-    List<Role> roles;
+    private List<Role> roles;
 
     public Account() {
     }
@@ -97,19 +96,12 @@ public class Account {
         this.profilePic = profilePic;
     }
 
+    @JsonIgnore
     @ElementCollection(fetch = FetchType.EAGER)
     public List<Role> getRoles() {
         return roles;
     }
     public void setRoles(List<Role> roles) {
         this.roles = roles;
-    }
-
-    @OneToOne(targetEntity = Profile.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    public Profile getProfile() {
-        return profile;
-    }
-    public void setProfile(Profile profile) {
-        this.profile = profile;
     }
 }

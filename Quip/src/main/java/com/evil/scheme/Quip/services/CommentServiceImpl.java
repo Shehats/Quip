@@ -51,7 +51,6 @@ public class CommentServiceImpl implements CommentService{
 		if(comment == null) {
 			throw new CommentNotFoundException();
 		}
-		comment.setPost(comment.getPost());
 		comment.setDescription(comment.getDescription());
 		comment.setLikes(comment.getLikes());
 		comment.setDislikes(comment.getDislikes());
