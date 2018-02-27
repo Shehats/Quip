@@ -40,6 +40,7 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
+    this.auth.register({
     if (this.registerForm.valid) {
       this.auth.register({
       username: this.registerForm.controls['username'].value,

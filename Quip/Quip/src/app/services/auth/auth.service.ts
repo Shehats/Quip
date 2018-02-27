@@ -14,6 +14,7 @@ export class AuthService {
               private cache: CacheService,
               private router: Router
               ) { }
+
   // Takes an account of any form username and password are a must.
   public register(account: any): Observable<any> {
     return this.actions.save<any>(this.backend.signUp,account);
