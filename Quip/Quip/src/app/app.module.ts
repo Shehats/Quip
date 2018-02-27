@@ -13,7 +13,6 @@ import { CacheService } from './services/cache/cache.service';
 import { MDBBootstrapModule } from './typescripts/free';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { SplashComponent } from './components/splash/splash.component';
 // Local modules
 import { ProfileModule } from './modules/profile/profile.module';
 import { AuthModule } from './modules/auth/auth.module';
@@ -21,8 +20,7 @@ import { AuthModule } from './modules/auth/auth.module';
 @NgModule({
   declarations: [
     AppComponent,
-    SplashComponent,
-    SearchPipe
+    SearchPipe,
   ],
   imports: [
     BrowserModule,

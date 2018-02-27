@@ -1,4 +1,4 @@
-<section class="flex-center">
+<section class="flex-center animate-bg">
   <div class="animated fadeIn card" style="width: 28rem;" id="register-form">
     <div class="card-body">
 
@@ -14,6 +14,7 @@
         <div class="md-form">
           <i class="fa fa-user prefix grey-text"></i>
           <input type="text" id="registerForm-firstname" class="form-control" mdbActive formControlName="fname">
+          <label for="registerForm-firstname">Firstname</label>
         </div>
 
         <div class="md-form">
@@ -34,14 +35,15 @@
         <div class="md-form">
           <i class="fa fa-lock prefix grey-text"></i>
           <input type="password" id="registerForm-pass" class="form-control" mdbActive formControlName="password">
+          <label for="registerForm-pass">Password</label>
         </div>
 
         <div class="text-center">
-          <button class="btn btn-default waves-effect waves-light" type="submit">Register</button>
-          <button class="btn btn-default waves-effect waves-light" routerLink="/login">Login</button>
+          <button class="btn btn-default waves-effect waves-light" type="submit" [disabled]="!registerForm.valid" mdbRippleRadius>Register</button>
+          <button class="btn btn-default waves-effect waves-light" routerLink="/login" mdbRippleRadius>Login</button>
         </div>
       </form>
-      
+
     </div>
   </div>
 </section>
