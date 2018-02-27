@@ -2,7 +2,7 @@
   <div class="animated fadeIn card" style="width: 28rem;" id="register-form">
     <div class="card-body">
 
-      <form [formGroup]="registerForm" (ngSubmit)="onRegister(registerForm.value)">
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
         <!--Header-->
         <div class="form-header">
           <h3 class="text-center">
@@ -14,35 +14,30 @@
         <div class="md-form">
           <i class="fa fa-user prefix grey-text"></i>
           <input type="text" id="registerForm-firstname" class="form-control" mdbActive formControlName="fname">
-          <label for="registerForm-firstname">Firstname</label>
         </div>
 
         <div class="md-form">
           <i class="fa fa-user prefix grey-text"></i>
           <input type="text" id="registerForm-lastname" class="form-control" mdbActive formControlName="lname">
-          <label for="registerForm-lastname">Lastname</label>
         </div>
 
         <div class="md-form">
           <i class="fa fa-user prefix grey-text"></i>
           <input type="text" id="registerForm-username" class="form-control" mdbActive formControlName="username">
-          <label for="registerForm-username">Username</label>
         </div>
 
         <div class="md-form">
           <i class="fa fa-envelope prefix grey-text"></i>
           <input type="text" id="registerForm-email" class="form-control" mdbActive formControlName="email">
-          <label for="registerForm-email">Email</label>
         </div>
 
         <div class="md-form">
           <i class="fa fa-lock prefix grey-text"></i>
-          <input type="password" id="registerForm-pass" class="form-control" mdbActive formControlName="pass">
-          <label for="registerForm-pass">Password</label>
+          <input type="password" id="registerForm-pass" class="form-control" mdbActive formControlName="password">
         </div>
 
         <div class="text-center">
-          <button class="btn btn-default waves-effect waves-light">Register</button>
+          <button class="btn btn-default waves-effect waves-light" type="submit">Register</button>
           <button class="btn btn-default waves-effect waves-light" routerLink="/login">Login</button>
         </div>
       </form>
