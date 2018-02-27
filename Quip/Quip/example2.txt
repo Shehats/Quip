@@ -1,0 +1,26 @@
+import { Component, OnInit } from '@angular/core';
+import { ActionsService } from '../../services/http/actions.service';
+import { Router } from '@angular/router';
+import { Profile } from '../../models/Profile';
+import { Backend } from '../../Interfaces/Backend';
+
+
+@Component({
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.scss']
+})
+export class ProfileComponent implements OnInit {
+  profile: Profile;
+  backend: Backend = new Backend();
+  constructor(private actions: ActionsService,
+					    private router: Router) { }
+
+  ngOnInit() {
+    this.actions.fetch<Profile>(this.backend.profile)
+            .subscribe(
+              val => console.log(val),
+              _ => this.router.navigate(['login']));
+  }
+
+}
