@@ -3,10 +3,10 @@ import { Routes, RouterModule } from '@angular/router';
 
 
 // Local Components
-import { ProfileComponent } from '../../components/profile/profile.component';
+// import { ProfileComponent } from '../../components/profile/profile.component';
 
 const routes: Routes = [
-  { path: 'profile', component: ProfileComponent }
+  // { path: 'profile', component: ProfileComponent }
 ];
 
 @NgModule({
