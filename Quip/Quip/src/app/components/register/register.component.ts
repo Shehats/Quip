@@ -40,7 +40,8 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
-    this.auth.register({
+    if (this.registerForm.valid) {
+      this.auth.register({
       username: this.registerForm.controls['username'].value,
       fname: this.registerForm.controls['fname'].value,
       lname: this.registerForm.controls['lname'].value,
@@ -48,5 +49,6 @@ export class RegisterComponent implements OnInit {
       password: this.registerForm.controls['password'].value
     }).subscribe(_ => this.router.navigate(['profile']),
                  _ => this.registerForm.reset());
+    }
   }
 }
