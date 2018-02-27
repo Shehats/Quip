@@ -1,4 +1,4 @@
-<section class="flex-center">
+<section class="flex-center animate-bg">
   <div class="animated fadeIn card" style="width: 28rem;" id="register-form">
     <div class="card-body">
 
@@ -42,8 +42,8 @@
         </div>
 
         <div class="text-center">
-          <button class="btn btn-default waves-effect waves-light">Register</button>
-          <button class="btn btn-default waves-effect waves-light" routerLink="/login">Login</button>
+          <button class="btn btn-default waves-effect waves-light" [disabled]="!registerForm.valid" mdbRippleRadius >Register</button>
+          <button class="btn btn-default waves-effect waves-light" routerLink="/login" mdbRippleRadius >Login</button>
         </div>
       </form>
       

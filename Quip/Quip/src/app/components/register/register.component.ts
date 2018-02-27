@@ -13,6 +13,7 @@ export class RegisterComponent implements OnInit {
 
   onRegister = function (user) {
     console.log(user);
+    this.registerForm.reset();
   }
 
   ngOnInit() {

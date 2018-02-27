@@ -36,6 +36,7 @@
     "gulp-run": "1.7.x",
     "hammerjs": "^2.0.8",
     "localforage": "^1.5.7",
+    "ng-sticky": "^0.1.5",
     "ng2-avatar": "^2.2.1",
     "ngm-cli": "0.5.x",
     "rxjs": "^5.5.2",

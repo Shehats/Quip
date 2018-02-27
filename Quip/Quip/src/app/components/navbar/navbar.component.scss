@@ -1,0 +1,31 @@
+/* Your custom styles */
+
+.my-blue {
+    background-color: #2d565c;
+}
+
+.avatar {
+    height: 32px;
+}
+
+#profile-pic {
+    width: 128px;
+}
+
+.navbar-dark .navbar-brand {
+    color: white;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+    :hover {
+        color: white;
+        text-decoration: none;
+    }
+}
+
+.sidebar-link {
+    background-color: #ddd;
+    padding: 3px 25%;
+}
