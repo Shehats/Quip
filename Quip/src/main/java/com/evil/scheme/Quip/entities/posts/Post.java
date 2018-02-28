@@ -9,6 +9,7 @@ import java.util.List;
 @Entity
 public class Post{
     private Long id;
+    private Long parentId;
     private String title;
     private String description;
     private String mediaUrl;
@@ -45,6 +46,14 @@ public class Post{
     public void setId(Long id) {
         this.id = id;
     }
+    @ManyToOne(cascade = CascadeType.ALL,targetEntity = Profile.class)
+	public Long getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(Long parentId) {
+		this.parentId = parentId;
+	}
 
     @Column(name = "media")
     public String getMediaUrl() {
