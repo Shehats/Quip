@@ -54,7 +54,7 @@ public class Authentication {
         if (account != null) {
             if (this.passwordEncoder.matches(loginForm.getPassword(), account.getPassword())) {
                 try {
-                    authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginForm.getUsername(),loginForm.getPassword()));
+                    authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(account.getUsername(),loginForm.getPassword()));
                     return new Token(jwtTokenProvider.createToken(account.getUsername(), account.getRoles()), new Long(604800000));
                 } catch (AuthenticationException e) {
                     throw new AuthException("Invalid Credentials", HttpStatus.UNPROCESSABLE_ENTITY);
@@ -77,13 +77,13 @@ public class Authentication {
                         registerationForm.getEmail());
                 account.setPassword(this.passwordEncoder.encode(account.getPassword()));
                 account.setRoles(new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)));
+                Account account1 = this.accountService.create(account);
                 Profile profile = new Profile();
+                profile.setAccount(account);
                 this.profileService.create(profile);
-                account.setProfile(profile);
-                this.accountService.create(account);
                 authenticationManager.authenticate(
-                        new UsernamePasswordAuthenticationToken(account.getUsername(), registerationForm.getPassword()));
-                return new Token(jwtTokenProvider.createToken(account.getUsername(), account.getRoles()), new Long(604800000));
+                        new UsernamePasswordAuthenticationToken(account1.getUsername(), registerationForm.getPassword()));
+                return new Token(jwtTokenProvider.createToken(account.getUsername(), account1.getRoles()), new Long(604800000));
             } catch (AuthenticationException e) {
                 throw new AuthException("Invalid Credentials", HttpStatus.UNPROCESSABLE_ENTITY);
             }

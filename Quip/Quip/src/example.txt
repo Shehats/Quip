@@ -1,0 +1,19 @@
+// Authentication
+// Can be more that just that but username and password are must.
+
+backend: Backend = new Backend();
+
+this.auth.register({
+      username: 'Tanner',
+      password: 'password'
+    }).subscribe(_ => this.router.navigate(['profile']));
+
+// this will give u the profile data.
+this.actions.fetch<Profile>(this.backend.profile)
+
+// this will save a post to the database same with comments and the others
+this.actions.save<Post>(this.backend.post)
+
+All you need to do is make services for comments, posts like auth and that'd be good
+
+All the routes are in Backend.ts in interfaces folder.

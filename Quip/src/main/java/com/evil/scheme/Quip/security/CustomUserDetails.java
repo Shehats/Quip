@@ -20,10 +20,6 @@ public class CustomUserDetails implements UserDetailsService {
         if (account == null)
             throw new UsernameNotFoundException("User not found");
 
-        System.out.println(account.getUsername());
-        System.out.println("dfhjbhbghbhbjbjbjbnbnbnbn");
-        System.out.println(account.getPassword());
-
         return User.withUsername(username)
                     .password(account.getPassword())
                     .authorities(account.getRoles())

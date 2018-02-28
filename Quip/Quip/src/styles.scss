@@ -24,11 +24,16 @@ body {
     h8 {
         color: $light-grey;
     }
+}
+
+.animate-bg {
     width: 100wh;
     color: #fff;
     background: linear-gradient(-45deg,
     $lime-green,
-    $dark-blue
+    $dark-blue,
+    $red,
+    $lime-green
     );
     background-size: 400% 400%;
     -webkit-animation: Gradient 15s ease infinite;

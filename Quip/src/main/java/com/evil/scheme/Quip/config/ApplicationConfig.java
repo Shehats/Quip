@@ -19,7 +19,8 @@ import java.util.regex.Pattern;
 @ComponentScan("com.evil.scheme.Quip")
 @PropertySource(value = {"classpath:application.properties",
                          "classpath:persistence.properties",
-                         "classpath:security.properties"})
+                         "classpath:security.properties",
+                         "classpath:email.properties"})
 //@PropertySource("classpath:persistence.properties")
 //@PropertySource("classpath:security.properties")
 @EnableJpaRepositories("com.evil.scheme.Quip.repositories")
@@ -28,6 +29,12 @@ class ApplicationConfig {
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
         return new PropertySourcesPlaceholderConfigurer();
     }
+
+//    @Bean
+//    public JavaMailSender getJavaMailSender () {
+//        return null;
+//    }
+
 
     @Bean
     public static ConversionService conversionService () {

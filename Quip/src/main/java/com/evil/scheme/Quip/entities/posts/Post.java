@@ -7,7 +7,6 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "post")
 public class Post{
     private Long id;
     private Long parentId;
@@ -22,20 +21,20 @@ public class Post{
     public Post() {
     }
 
-    public Post(String title, String description) {
-        this.title = title;
-        this.description = description;
-    }
-
-    public Post(String title, String description, String mediaUrl) {
+    public Post(String title, String description, String mediaUrl, byte[] picture, Integer likes, Integer dislikes, List<Comment> comments) {
         this.title = title;
         this.description = description;
         this.mediaUrl = mediaUrl;
+        this.picture = picture;
+        this.likes = likes;
+        this.dislikes = dislikes;
+        this.comments = comments;
     }
 
-    public Post(String title, String description, byte[] picture) {
+    public Post(String title, String description, String mediaUrl, byte[] picture) {
         this.title = title;
         this.description = description;
+        this.mediaUrl = mediaUrl;
         this.picture = picture;
     }
 
@@ -104,13 +103,12 @@ public class Post{
         this.dislikes = dislikes;
     }
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
+    @OneToMany(targetEntity = Comment.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public List<Comment> getComments() {
         return comments;
     }
     public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
-
 
 }

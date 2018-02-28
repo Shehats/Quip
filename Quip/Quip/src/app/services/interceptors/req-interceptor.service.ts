@@ -21,7 +21,8 @@ export class ReqInterceptorService implements HttpInterceptor{
     ): Observable<HttpEvent<any>> {
     return Observable.fromPromise(this.cache.getAuthToken())
     .map((x: Token) => {
-      req = req.clone({ headers: req.headers.set('Authorization', 'Bearer ' + x.token)})
+      if (x)
+        req = req.clone({ headers: req.headers.set('Authorization', 'Bearer ' + x.token)})
       return req;
     }).flatMap((x: HttpRequest<any>) => {
       return next.handle(x.clone({headers: 

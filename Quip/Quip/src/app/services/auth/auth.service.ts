@@ -3,7 +3,6 @@ import { CacheService } from '../cache/cache.service';
 import { ActionsService } from '../http/actions.service';
 import { Observable } from 'rxjs/Observable';
 import { Backend } from '../../Interfaces/Backend';
-import { Account } from '../../models/Account';
 import { Profile } from '../../models/Profile';
 import { Router } from '@angular/router';
 
@@ -16,17 +15,18 @@ export class AuthService {
               private router: Router
               ) { }
 
-  public register(account: Account): Observable<Profile> {
-    return this.actions.save<Account>(this.backend.signUp,account)
-    .flatMap(_ => this.actions.fetch<Profile>(this.backend.profile+'/'+account.username));
+  // Takes an account of any form username and password are a must.
+  public register(account: any): Observable<any> {
+    return this.actions.save<any>(this.backend.signUp,account);
   }
 
-  public login(account: Account): Observable<Profile> {
-    return this.actions.save<Account>(this.backend.signIn,account)
-    .flatMap(_ => this.actions.fetch<Profile>(this.backend.profile+'/'+account.username));
+  // Takes an account of any form username or email and password are a must.
+  public login(account: any): Observable<Profile> {
+    return this.actions.save<any>(this.backend.signIn,account);
   }
 
   public logout(): void {
+    console.log('erhjerejh')
     this.cache.removeToken().subscribe(_ => this.router.navigate(['']))
   }
 
