@@ -8,9 +8,9 @@ export class Account implements Instance {
     profilePic: any;
     email: string;
 
-    constructor(identifier: number, message: string, first: string, last: string, profile: any, mail: string) {
+    constructor(identifier: number, username: string, first: string, last: string, profile: any, mail: string) {
         this.id = identifier;
-        this.username = message;
+        this.username = username;
         this.fname = first;
         this.lname = last;
         this.profilePic = profile;

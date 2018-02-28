@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MDBBootstrapModule } from '../../typescripts/free';
 import { ProfileRoutingModule } from './profile-routing.module';
+import { PostComponent } from 'app/components/post/post.component';
 
 // Local declarations
 import { ProfileComponent } from '../../components/profile/profile.component';
@@ -19,9 +20,9 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
     MDBBootstrapModule.forRoot()
   ],
   declarations: [
+    PostComponent,
     ProfileComponent,
-    NavbarComponent,
-
+    NavbarComponent
   ]
 })
 export class ProfileModule { }

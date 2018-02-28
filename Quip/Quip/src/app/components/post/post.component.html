@@ -1,0 +1,54 @@
+<div class="animated fadeIn card" style="width: 28rem;" id="login-form">
+    <div class="card-body">
+        <div class="news">
+
+            <!--Label-->
+            <div class="label">
+                <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-1-mini.jpg" class="rounded-circle z-depth-1-half">
+                <a class="name">{{acc.username}}</a>
+            </div>
+
+            <!--Excert-->
+            <div class="excerpt">
+
+                <!--Brief-->
+                <div class="brief">
+                    <br> {{post.description}}
+                </div>
+
+                <!--Feed footer-->
+                <div class="feed-footer">
+                    <a class="thumbs" data-toggle="tooltip" data-placement="top" title="I like it">
+                        <i class="fa fa-thumbs-up mx-2"> {{post.likes}} </i> 
+                        <span>     </span>
+                    </a>
+                    <a class="thumbs" data-toggle="tooltip" data-placement="top" title="I don't like it">
+                        <i class="fa fa-thumbs-down"></i> {{post.dislikes}}
+                    </a>
+                    <br>
+                    <a class="comment" data-toggle="collapse" href="#collapseExample-1" aria-expanded="false" aria-controls="collapseExample-1">Comment</a> &middot;
+                    <span>
+                        <a>{{post.comments.length}}</a>
+                    </span>
+                    <div class="collapse" id="collapseExample-1">
+                        <div class="card card-body mt-1">
+                            <!--Add comment-->
+                            <div class="md-form mt-1 mb-1">
+                                <textarea type="text" id="form7" class="md-textarea"></textarea>
+                                <label for="form7">Add comment</label>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <button type="button" class="btn-flat waves-effect" data-toggle="collapse" data-target="#collapseExample-1" aria-expanded="false"
+                                    aria-controls="collapseExample-1">Cancel</button>
+                                <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#collapseExample-1" aria-expanded="false"
+                                    aria-controls="collapseExample-1">Reply</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

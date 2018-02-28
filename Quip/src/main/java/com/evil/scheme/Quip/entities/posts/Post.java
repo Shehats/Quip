@@ -46,6 +46,7 @@ public class Post{
     public void setId(Long id) {
         this.id = id;
     }
+    
     @ManyToOne(cascade = CascadeType.ALL,targetEntity = Profile.class)
 	public Long getParentId() {
 		return parentId;
