@@ -6,7 +6,6 @@ import com.evil.scheme.Quip.entities.posts.Post;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "comment")
 public class Comment {
 	private Long id;
 	private String description;

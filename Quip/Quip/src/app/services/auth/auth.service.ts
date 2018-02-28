@@ -26,6 +26,7 @@ export class AuthService {
   }
 
   public logout(): void {
+    console.log('erhjerejh')
     this.cache.removeToken().subscribe(_ => this.router.navigate(['']))
   }
 

@@ -54,7 +54,7 @@ public class Authentication {
         if (account != null) {
             if (this.passwordEncoder.matches(loginForm.getPassword(), account.getPassword())) {
                 try {
-                    authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginForm.getUsername(),loginForm.getPassword()));
+                    authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(account.getUsername(),loginForm.getPassword()));
                     return new Token(jwtTokenProvider.createToken(account.getUsername(), account.getRoles()), new Long(604800000));
                 } catch (AuthenticationException e) {
                     throw new AuthException("Invalid Credentials", HttpStatus.UNPROCESSABLE_ENTITY);

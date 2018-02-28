@@ -17,7 +17,6 @@ public class QuipApplication {
         return new BCryptPasswordEncoder();
     }
 
-
     public static void main(String[] args) {
         SpringApplication.run(QuipApplication.class, args);
     }
