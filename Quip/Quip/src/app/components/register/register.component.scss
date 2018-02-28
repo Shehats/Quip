@@ -1,0 +1,22 @@
+$dark-blue: #2d5c56;
+$light-blue: #b8c6c9;
+$lime-green: #73cf45;
+
+
+
+#register-form {
+    button {
+        background-color: $dark-blue;
+    }
+    margin-top: auto;
+    margin-bottom: auto;
+    // background: linear-gradient(45deg, $lime-green, $dark-blue);
+    padding: 16px;
+    border-radius: 10px;
+    align-content: center;
+
+    label, i, h3, p{
+        color: $dark-blue;
+    }
+  
+}
