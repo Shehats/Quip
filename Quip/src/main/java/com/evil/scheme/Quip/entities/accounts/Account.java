@@ -7,7 +7,6 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table
 public class Account {
     private Long id;
     private String username;

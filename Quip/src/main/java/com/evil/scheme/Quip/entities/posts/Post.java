@@ -7,7 +7,6 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "post")
 public class Post{
     private Long id;
     private String title;

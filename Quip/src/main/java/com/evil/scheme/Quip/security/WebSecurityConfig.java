@@ -25,6 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .antMatchers(HttpMethod.POST, "/signin").permitAll()
                 .antMatchers(HttpMethod.POST, "/signup").permitAll()
                 .antMatchers(HttpMethod.POST, "/exists").permitAll()
+                .antMatchers(HttpMethod.GET, "/profile/{username}").permitAll()
                 .anyRequest().authenticated().and().apply(new JwtTokenFilterConfigurer(jwtTokenProvider))
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.httpBasic();
