@@ -1,0 +1,22 @@
+$navbar-height: app-navbar;
+#sidebar {
+    background: #ddd;
+    padding-top: 16px;
+}
+
+#feed {
+    // background: blue;
+    height: auto;
+    padding-top: 16px;
+   
+}
+
+.pres-scrollable {
+    max-height: 25vh;
+}
+
+#profile{
+    margin: auto;
+    padding: auto;
+    height: 100%;
+}
