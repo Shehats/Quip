@@ -12,6 +12,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.Arrays;
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -25,6 +27,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .antMatchers(HttpMethod.POST, "/signin").permitAll()
                 .antMatchers(HttpMethod.POST, "/signup").permitAll()
                 .antMatchers(HttpMethod.POST, "/exists").permitAll()
+                .antMatchers(HttpMethod.POST, "/uploadProfile").permitAll()
+                .antMatchers(HttpMethod.POST, "/uploadMedia").permitAll()
+                .antMatchers(HttpMethod.PUT, "/uploadMedia/{id}").permitAll()
+                .antMatchers(HttpMethod.GET, "/forget-password/{email}").permitAll()
+                .antMatchers(HttpMethod.POST, "/accounts/forget-password").permitAll()
                 .antMatchers(HttpMethod.GET, "/profile/{username}").permitAll()
                 .anyRequest().authenticated().and().apply(new JwtTokenFilterConfigurer(jwtTokenProvider))
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -33,8 +40,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Bean
     UrlBasedCorsConfigurationSource corsConfigurationSource () {
+         CorsConfiguration configuration = new CorsConfiguration();
+         configuration.setAllowedOrigins(Arrays.asList("*"));
+         configuration.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE"));
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+        source.registerCorsConfiguration("/**", configuration);
         return source;
     }
 }

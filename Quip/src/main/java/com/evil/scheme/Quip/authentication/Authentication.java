@@ -10,6 +10,7 @@ import com.evil.scheme.Quip.forms.Token;
 import com.evil.scheme.Quip.repositories.AccountRepository;
 import com.evil.scheme.Quip.security.JwtTokenProvider;
 import com.evil.scheme.Quip.services.AccountServiceImpl;
+import com.evil.scheme.Quip.services.EmailService;
 import com.evil.scheme.Quip.services.ProfileServiceImpl;
 import org.codehaus.jackson.annotate.JsonValue;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,9 @@ public class Authentication {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private EmailService emailService;
+
     @PostMapping("/signin")
     @ResponseBody
     public Token signin(@RequestBody LoginForm loginForm) throws AuthException{
@@ -80,6 +84,7 @@ public class Authentication {
                 Account account1 = this.accountService.create(account);
                 Profile profile = new Profile();
                 profile.setAccount(account);
+                this.emailService.sendMail(registerationForm.getEmail(), "Welcome to Quip", "Thank you for signing up");
                 this.profileService.create(profile);
                 authenticationManager.authenticate(
                         new UsernamePasswordAuthenticationToken(account1.getUsername(), registerationForm.getPassword()));
@@ -88,7 +93,7 @@ public class Authentication {
                 throw new AuthException("Invalid Credentials", HttpStatus.UNPROCESSABLE_ENTITY);
             }
         }else
-            throw new AuthException("Account already exists.", HttpStatus.UNAUTHORIZED);
+           throw new AuthException("Account already exists.", HttpStatus.UNAUTHORIZED);
     }
 
     @PostMapping("/exists")
@@ -96,5 +101,17 @@ public class Authentication {
     HttpStatus exists(@RequestBody RegisterationForm registerationForm) {
         return (!(this.accountRepository.exists(registerationForm.getUsername())
                 || this.accountRepository.exists(registerationForm.getEmail()))) ? HttpStatus.OK : HttpStatus.NOT_ACCEPTABLE;
+    }
+
+    @GetMapping("/forget-password/{email}")
+    public void forgetPassword(@PathVariable String email) throws AuthException{
+        Account account = this.accountRepository.findByEmailOrUsername(email);
+        if (account != null) {
+            String token = jwtTokenProvider.createToken(account.getUsername(), account.getRoles());
+            this.emailService.sendMail(email, "Reset password", "Click on the link http://localhost:4200/forgot-password-confirmation/" 
+                                                                + token + "to reset password");
+        } else {
+            throw new AuthException("Account doesn't exist.", HttpStatus.UNAUTHORIZED);
+        }
     }
 }

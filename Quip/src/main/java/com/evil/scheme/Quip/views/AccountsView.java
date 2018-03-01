@@ -4,17 +4,29 @@ import com.evil.scheme.Quip.control.AccountService;
 
 import com.evil.scheme.Quip.entities.accounts.Account;
 import com.evil.scheme.Quip.exceptions.AccountNotFoundException;
+import com.evil.scheme.Quip.forms.PasswordForm;
+import com.evil.scheme.Quip.repositories.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
+
+import static com.evil.scheme.Quip.views.ProfileView.refactorToken;
 
 @RestController
 @RequestMapping(value = "accounts")
 public class AccountsView {
     @Autowired
     private AccountService accountService;
+
+    @Resource
+    private AccountRepository accountRepository;
+
+    @Resource
+    private BCryptPasswordEncoder passwordEncoder;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public List<Account> getAll() {
@@ -24,6 +36,18 @@ public class AccountsView {
     @RequestMapping(value = "", method = RequestMethod.POST)
     public Account add(@ModelAttribute Account account) {
         return this.accountService.create(account);
+    }
+
+    @RequestMapping(value = "/forget-password", method = RequestMethod.POST)
+    public Account updatePassword(@ModelAttribute PasswordForm passwordForm) throws AccountNotFoundException{
+        Account account = this.accountRepository.findByUsername(refactorToken(passwordForm.getToken()));
+        if (account != null) {
+            account.setPassword(this.passwordEncoder.encode(passwordForm.getPassword()));
+            return this.accountService.update(account);
+        }
+        else {
+            throw new AccountNotFoundException("Account not found");
+        }
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)

@@ -14,7 +14,7 @@ public class Account {
     private String fname;
     private String lname;
     private String email;
-    private byte[] profilePic;
+    private String profilePic;
     private List<Role> roles;
 
     public Account() {
@@ -28,7 +28,7 @@ public class Account {
         this.email = email;
     }
 
-    public Account(String username, String password, String fname, String lname, String email, byte[] profilePic) {
+    public Account(String username, String password, String fname, String lname, String email, String profilePic) {
         this.username = username;
         this.password = password;
         this.fname = fname;
@@ -88,10 +88,10 @@ public class Account {
     }
 
     @Column(name = "profilePic")
-    public byte[] getProfilePic() {
+    public String getProfilePic() {
         return profilePic;
     }
-    public void setProfilePic(byte[] profilePic) {
+    public void setProfilePic(String profilePic) {
         this.profilePic = profilePic;
     }
 

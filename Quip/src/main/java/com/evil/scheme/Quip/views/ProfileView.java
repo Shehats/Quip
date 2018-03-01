@@ -7,6 +7,8 @@ import com.evil.scheme.Quip.repositories.ProfileRepository;
 import com.evil.scheme.Quip.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import com.evil.scheme.Quip.services.ProfileServiceImpl;
+import com.evil.scheme.Quip.exceptions.ProfileNotFoundException;
 
 import javax.annotation.Resource;
 
@@ -14,13 +16,17 @@ import javax.annotation.Resource;
 @RequestMapping(value = "profile")
 public class ProfileView {
     @Resource
-    AccountRepository accountRepository;
+    private AccountRepository accountRepository;
 
     @Resource
-    ProfileRepository profileRepository;
+    private ProfileRepository profileRepository;
+
+    @Resource
+    private ProfileServiceImpl profileService;
 
     @Autowired
-    JwtTokenProvider tokenProvider;
+    private JwtTokenProvider tokenProvider;
+
     @RequestMapping(value = "/{username}", method = RequestMethod.GET)
     public Profile getProfileByUsername(@PathVariable String username) {
         return this.profileRepository.findByUser(username);
@@ -28,21 +34,27 @@ public class ProfileView {
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public Profile getProfile(@RequestHeader("Authorization") String token) {
-        System.out.println(token);
         Account account = this.accountRepository
-                .findByUsername(this.tokenProvider.getUsername(this.refactorToken(token)));
-//        System.out.println(account.getUsername());
-//        System.out.println(account.getAccountProfile().getAccount().getUsername());
-        System.out.println("dfkdfdfkjhfdjfhdjfdhfjdhfdjhfdjdf");
-        Profile profile = this.profileRepository.findByUser(this.tokenProvider.getUsername(this.refactorToken(token)));
-        System.out.println((profile == null)?true:false);
+                .findByUsername(this.tokenProvider.getUsername(refactorToken(token)));
+        Profile profile = this.profileRepository.findByUser(this.tokenProvider.getUsername(refactorToken(token)));
         return profile;
     }
 
-    private String refactorToken (String bearerToken) {
+    @RequestMapping(value = "/addFriend/{username}", method = RequestMethod.PUT)
+    public Profile addFriend(@RequestHeader("Authorization") String token, @PathVariable String username) throws ProfileNotFoundException{
+        Account account = this.accountRepository
+                .findByUsername(this.tokenProvider.getUsername(refactorToken(token)));
+        Profile profile = this.profileRepository.findByUser(this.tokenProvider.getUsername(refactorToken(token)));
+        Account friend = this.accountRepository.findByUsername(username);
+        profile.getFriends().add(friend);
+        return profileService.update(profile);
+    }
+
+    public static String refactorToken (String bearerToken) {
         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7, bearerToken.length());
         }
         return null;
     }
 }
+

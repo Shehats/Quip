@@ -22,8 +22,7 @@ public class PostView {
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public Post add(@ModelAttribute PostForm post) throws ProfileNotFoundException {
         Profile profile = this.profileService.findById(post.getProfileId());
-        Post retVal = this.postService.create(new Post(post.getTitle(), post.getDescription(), post.getMediaUrl(),
-                                         post.getPicture()));
+        Post retVal = this.postService.create(new Post(post.getTitle(), post.getDescription(), post.getMediaUrl()));
         profile.getPosts().add(retVal);
         this.profileService.update(profile);
         return retVal;
