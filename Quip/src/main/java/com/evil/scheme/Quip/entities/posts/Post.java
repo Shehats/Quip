@@ -13,29 +13,30 @@ public class Post{
     private String title;
     private String description;
     private String mediaUrl;
-    private byte[] picture;
     private Integer likes;
     private Integer dislikes;
     private List<Comment> comments;
 
-    public Post() {
+    public Post () {
     }
 
-    public Post(String title, String description, String mediaUrl, byte[] picture, Integer likes, Integer dislikes, List<Comment> comments) {
+    public Post (String mediaUrl) {
+        this.mediaUrl = mediaUrl;
+    }
+
+    public Post (String title, String description, String mediaUrl, Integer likes, Integer dislikes, List<Comment> comments) {
         this.title = title;
         this.description = description;
         this.mediaUrl = mediaUrl;
-        this.picture = picture;
         this.likes = likes;
         this.dislikes = dislikes;
         this.comments = comments;
     }
 
-    public Post(String title, String description, String mediaUrl, byte[] picture) {
+    public Post (String title, String description, String mediaUrl) {
         this.title = title;
         this.description = description;
         this.mediaUrl = mediaUrl;
-        this.picture = picture;
     }
 
     @Id
@@ -61,14 +62,6 @@ public class Post{
     }
     public void setMediaUrl(String mediaUrl) {
         this.mediaUrl = mediaUrl;
-    }
-
-    @Column(name = "picture")
-    public byte[] getPicture() {
-        return picture;
-    }
-    public void setPicture(byte[] picture) {
-        this.picture = picture;
     }
 
     @Column(name = "title")
