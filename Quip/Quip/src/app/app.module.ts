@@ -16,11 +16,13 @@ import { AppRoutingModule } from './app-routing.module';
 // Local modules
 import { ProfileModule } from './modules/profile/profile.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { ForgotPasswordConfirmationComponent } from './forgot-password-confirmation/forgot-password-confirmation.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchPipe,
+    ForgotPasswordConfirmationComponent
   ],
   imports: [
     BrowserModule,
@@ -34,9 +36,9 @@ import { AuthModule } from './modules/auth/auth.module';
     MDBBootstrapModule.forRoot()
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, 
-      useClass: ReqInterceptorService, 
-      multi: true 
+    { provide: HTTP_INTERCEPTORS,
+      useClass: ReqInterceptorService,
+      multi: true
     },
     CacheService,
     ActionsService,
