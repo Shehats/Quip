@@ -108,7 +108,8 @@ public class Authentication {
         Account account = this.accountRepository.findByEmailOrUsername(email);
         if (account != null) {
             String token = jwtTokenProvider.createToken(account.getUsername(), account.getRoles());
-            this.emailService.sendMail(email, "Reset password", "Click on the link update/" + token);
+            this.emailService.sendMail(email, "Reset password", "Click on the link http://localhost:4200/forgot-password-confirmation/" 
+                                                                + token + "to reset password");
         } else {
             throw new AuthException("Account doesn't exist.", HttpStatus.UNAUTHORIZED);
         }

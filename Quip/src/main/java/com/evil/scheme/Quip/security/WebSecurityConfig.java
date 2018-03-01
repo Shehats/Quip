@@ -30,6 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .antMatchers(HttpMethod.POST, "/uploadProfile").permitAll()
                 .antMatchers(HttpMethod.POST, "/uploadMedia").permitAll()
                 .antMatchers(HttpMethod.PUT, "/uploadMedia/{id}").permitAll()
+                .antMatchers(HttpMethod.GET, "/forget-password/{email}").permitAll()
                 .antMatchers(HttpMethod.POST, "/accounts/forget-password").permitAll()
                 .antMatchers(HttpMethod.GET, "/profile/{username}").permitAll()
                 .anyRequest().authenticated().and().apply(new JwtTokenFilterConfigurer(jwtTokenProvider))
