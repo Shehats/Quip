@@ -44,8 +44,11 @@
 
                             <!--First news-->
                             <div class="news">
-
-                                <app-post></app-post>
+                                <ul>
+                                    <li *ngFor="let post of fake.posts">
+                                        <app-post [post]="post"  [acc]="acc"></app-post>
+                                    </li>
+                                </ul>
 
                                 <!--Label-->
                                 <div class="label">
