@@ -15,13 +15,13 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 // Local modules
 import { ProfileModule } from './modules/profile/profile.module';
-<<<<<<< HEAD
+
 import { AuthModule } from './modules/auth/auth.module';
 import { ForgotPasswordConfirmationComponent } from './forgot-password-confirmation/forgot-password-confirmation.component';
-=======
+
 import { AuthModule } from './modules/auth/auth.module';
 import { FileUploadService } from './services/file-upload/file-upload.service';
->>>>>>> 8676cd039de78eb5969a853e7db46bed9ae9f73e
+
 
 @NgModule({
   declarations: [
