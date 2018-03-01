@@ -7,7 +7,7 @@ export class Post implements Instance{
     likes: number;
     dislikes: number;
 
-    constructor(ident: number, desc: string, like: number, disl: number, medi?: string) {
+    constructor(desc: string, like: number, disl: number, medi?: string, ident?: number) {
         this.id = ident;
         this.media = (medi) ? medi: '';
         this.description = desc;
