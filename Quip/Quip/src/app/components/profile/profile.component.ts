@@ -43,11 +43,11 @@ export class ProfileComponent implements OnInit {
       postText: new FormControl("", Validators.required)
     })
 
-  //   this.action.fetch(this.backend.profile) // Fetching Username
-  //   .subscribe(
-  //     () => console.log(this.actRoute), // this.username = this.actRoute
-  //     () => this.router.navigate(['login'])
-  //   )
+    this.action.fetch(this.backend.profile) // Fetching Username
+    .subscribe(
+      () => console.log(this.actRoute), // this.username = this.actRoute
+      () => this.router.navigate(['login'])
+    )
   }
 
 }
