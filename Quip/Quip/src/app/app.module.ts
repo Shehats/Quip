@@ -4,7 +4,7 @@ import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-// import { HttpModule } from '@angular/http';
+import { HttpModule } from '@angular/http';
 import { SearchPipe } from './pipes/search.pipe';
 import { ReqInterceptorService } from './services/interceptors/req-interceptor.service';
 import { ActionsService } from './services/http/actions.service';
@@ -16,6 +16,7 @@ import { AppRoutingModule } from './app-routing.module';
 // Local modules
 import { ProfileModule } from './modules/profile/profile.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { FileUploadService } from './services/file-upload/file-upload.service';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { AuthModule } from './modules/auth/auth.module';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    HttpModule,
     AppRoutingModule,
     ProfileModule,
     AuthModule,
@@ -40,7 +42,8 @@ import { AuthModule } from './modules/auth/auth.module';
     },
     CacheService,
     ActionsService,
-    AuthService
+    AuthService,
+    FileUploadService
   ],
   bootstrap: [AppComponent],
   schemas: [ NO_ERRORS_SCHEMA ]
