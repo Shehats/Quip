@@ -39,7 +39,7 @@ public class Profile {
 		this.account = account;
 	}
 
-	@OneToMany(targetEntity = Post.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(targetEntity = Post.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "parentId")
 	public List<Post> getPosts() {
 		return posts;
 	}
