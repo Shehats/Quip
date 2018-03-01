@@ -16,7 +16,6 @@ import { AppRoutingModule } from './app-routing.module';
 // Local modules
 import { ProfileModule } from './modules/profile/profile.module';
 
-import { AuthModule } from './modules/auth/auth.module';
 import { ForgotPasswordConfirmationComponent } from './forgot-password-confirmation/forgot-password-confirmation.component';
 
 import { AuthModule } from './modules/auth/auth.module';

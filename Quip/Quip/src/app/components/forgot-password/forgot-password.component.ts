@@ -18,7 +18,7 @@ export class ForgotPasswordComponent implements OnInit {
   onSendRequest = function (user) {
     console.log(user["email"]);
     this.email = user["email"];
-    this.actions.save<any>(this.backend.account + `/forget-password/${this.email}`)
+    this.actions.fetch<any>(this.backend.account + `/forget-password/${this.email}`)
     .subscribe(
       _=>console.log("Yay"),
       _=>console.log("Aww")
