@@ -13,6 +13,7 @@ import java.io.*;
 public class Comment implements Serializable{
 	private Long id;
 	private String description;
+	private Post parentPost;
 	private List<Account> likes;
 	private List<Account> dislikes;
 
@@ -54,5 +55,13 @@ public class Comment implements Serializable{
 	}
 	public void setDislikes(List<Account> dislikes) {
 		this.dislikes = dislikes;
+	}
+
+	@ManyToOne(targetEntity = Post.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	public Post getParentPost() {
+		return parentPost;
+	}
+	public void setParentPost(Post parentPost) {
+		this.parentPost = parentPost;
 	}
 }

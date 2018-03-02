@@ -98,7 +98,7 @@ public class Post implements Serializable{
         this.dislikes = dislikes;
     }
 
-    @OneToMany(targetEntity = Comment.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "parentPost")
     public List<Comment> getComments() {
         return comments;
     }
