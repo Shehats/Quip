@@ -105,11 +105,11 @@ public class Authentication {
 
     @GetMapping("/forget-password/{email}")
     public void forgetPassword(@PathVariable String email) throws AuthException{
-        Account account = this.accountRepository.findByEmailOrUsername(email);
+        Account account = this.accountRepository.findWithPartOfEmail(email);
         if (account != null) {
             String token = jwtTokenProvider.createToken(account.getUsername(), account.getRoles());
-            this.emailService.sendMail(email, "Reset password", "Click on the link http://localhost:4200/forgot-password-confirmation/" 
-                                                                + token + "to reset password");
+            this.emailService.sendMail(account.getEmail(), "Reset password", "Click on the link http://localhost:4200/forgot-password-confirmation/" 
+                                                                + token + " to reset your password\nThank you\nQuip Team.");
         } else {
             throw new AuthException("Account doesn't exist.", HttpStatus.UNAUTHORIZED);
         }

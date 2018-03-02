@@ -19,4 +19,7 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     @Query("select a from Account a where a.username = :username or a.email = :username")
     Account findByEmailOrUsername(@Param("username") String username);
+
+    @Query("select a from Account a where a.email like concat(:email,'%')")
+    Account findWithPartOfEmail(@Param("email") String email);
 }
