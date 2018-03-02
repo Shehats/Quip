@@ -6,6 +6,7 @@ import { MDBBootstrapModule } from '../../typescripts/free';
 import { ProfileRoutingModule } from './profile-routing.module';
 import { FileUploadModule } from 'ng2-file-upload';
 // Local declarations
+import { SearchPipe } from '../../pipes/search.pipe';
 import { ProfileComponent } from '../../components/profile/profile.component';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 
@@ -20,9 +21,9 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
     FileUploadModule
   ],
   declarations: [
+    SearchPipe,
     ProfileComponent,
-    NavbarComponent,
-
+    NavbarComponent
   ]
 })
 export class ProfileModule { }
