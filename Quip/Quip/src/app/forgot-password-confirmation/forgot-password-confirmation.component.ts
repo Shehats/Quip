@@ -37,14 +37,14 @@ export class ForgotPasswordConfirmationComponent implements OnInit {
     });
   }
   onSubmitReset() {
-    // 
-    // console.log(this.forgotPasswordConfirmation.value["password"]);
-    // console.log(this.active.url.value[1].path);
-    this.actions.save<any>(this.backend.account + "/forget-password",{token: this.active.url.value[1].path,
+
+    console.log(this.forgotPasswordConfirmation.value["password"]);
+    console.log(this.active.url.value[1].path);
+    this.actions.save<any>(this.backend.baseUrl + "/forget-password",{token: this.active.url.value[1].path,
                           password: this.forgotPasswordConfirmation.value["password"]})
                           .subscribe(
                             _=> this.router.navigate(['login']),
-                            _=> this.router.navigate(['register'])
+                            _=> console.log("derp")
                           );
 
   }
