@@ -11,19 +11,19 @@
 
                 <!--Body-->
                 <div class="md-form">
-                    <i class="fa fa-envelope prefix grey-text"></i>
+                    <i class="fa fa-envelope prefix "></i>
                     <input type="email" id="loginForm-email" class="form-control" mdbActive formControlName="email">
                     <label for="loginForm-email">Email</label>
                 </div>
                 <div class="md-form">
-                    <i class="fa fa-lock prefix grey-text"></i>
+                    <i class="fa fa-lock prefix "></i>
                     <input type="password" id="loginForm-pass" class="form-control" mdbActive formControlName="password">
                     <label for="loginForm-pass">Password</label>
                 </div>
 
                 <div class="text-center">
                     <button class="btn btn-default waves-effect waves-light" 
-                    type="submit" [disabled]="!loginForm.valid" mdbRippleRadius>Login</button>
+                    type="submit" ng-disabled="!loginForm.valid" mdbRippleRadius>Login</button>
                 </div>
 
             </form>

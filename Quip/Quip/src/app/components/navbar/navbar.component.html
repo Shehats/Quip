@@ -4,6 +4,7 @@
     aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
+
   <div class="collapse navbar-collapse" id="navbarSupportedContent-5">
 
     <ul class="navbar-nav mr-auto ">
@@ -11,6 +12,17 @@
 
       </li>
     </ul>
+
+    <!-- Search form -->
+    <input [(ngModel)]="searchArg" class="form-control" type="text" placeholder="Search" id="searchBar">
+    <!-- <ul class="list-group list-group-flush no-gutter" *ngIf="accounts$">
+      <li class="list-group-item" *ngFor="let account of accounts$ | search: searchArg :account| async">
+<p>{{account.username}}</p>
+        <p>{{account.fname}}</p>
+        <p>{{account.email}}</p>
+      </li>
+    </ul> -->
+
 
     <ul class="navbar-nav ml-auto nav-flex-icons">
       <a href="#" class="d-flex justify-content-between ">

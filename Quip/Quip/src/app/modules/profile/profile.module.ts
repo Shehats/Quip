@@ -8,6 +8,8 @@ import { FileUploadModule } from 'ng2-file-upload';
 // Local declarations
 import { ProfileComponent } from '../../components/profile/profile.component';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
+import { SearchPipe } from 'app/pipes/search.pipe';
+
 
 
 @NgModule({
@@ -22,6 +24,7 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
   declarations: [
     ProfileComponent,
     NavbarComponent,
+    SearchPipe
 
   ]
 })
