@@ -18,12 +18,11 @@ export class ForgotPasswordComponent implements OnInit {
               private router: Router){}
 
   onSendRequest = function (user) {
-    console.log(user["email"]);
     this.email = user["email"];
     this.actions.fetch<any>(this.backend.baseUrl + `/forget-password/${this.email}`)
     .subscribe(
       _=>this.sent=true,
-      _=>console.log("Aww")
+      _=>console.log("Error")
     );
   }
   toLogin(){
