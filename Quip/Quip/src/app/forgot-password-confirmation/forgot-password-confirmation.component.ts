@@ -3,6 +3,7 @@ import {FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router'
 import { Backend } from '../Interfaces/Backend'
 import { ActionsService } from '../services/http/actions.service';
+import { Account } from '../models/Account';
 
 @Component({
   selector: 'app-forgot-password-confirmation',
@@ -12,18 +13,13 @@ import { ActionsService } from '../services/http/actions.service';
 export class ForgotPasswordConfirmationComponent implements OnInit {
   forgotPasswordConfirmation;
   backend:Backend = new Backend();
+  account:Account;
   constructor(private active: ActivatedRoute,
               private actions: ActionsService,
               private router: Router) { }
 
   ngOnInit() {
-    // this.forgotPasswordConfirmation = this.formBuilder.group({
-    //      passwords: this.formBuilder.group({
-    //          password: ['', [Validators.required]],
-    //          passwordconf: ['', [Validators.required]],
-    //      }, {validator: this.passwordConfirming}),
-    //
-    //  });
+
     this.forgotPasswordConfirmation = new FormGroup({
       password: new FormControl("", Validators.compose([
         Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"),
@@ -40,11 +36,12 @@ export class ForgotPasswordConfirmationComponent implements OnInit {
 
     console.log(this.forgotPasswordConfirmation.value["password"]);
     console.log(this.active.url.value[1].path);
-    this.actions.save<any>(this.backend.baseUrl + "/forget-password",{token: this.active.url.value[1].path,
+    this.actions.save<any>(this.backend.account + "/forget-password",{token: this.active.url.value[1].path,
                           password: this.forgotPasswordConfirmation.value["password"]})
                           .subscribe(
-                            _=> this.router.navigate(['login']),
-                            _=> console.log("derp")
+                            account=> this.account = <Account>account ,
+                            _=> console.log("derp"),
+                            ()=>console.log(this.account)
                           );
 
   }
