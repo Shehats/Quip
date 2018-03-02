@@ -54,7 +54,7 @@ public class AccountServiceImpl implements AccountService{
         account.setPassword(obj.getPassword());
         account.setLname(obj.getLname());
         account.setProfilePic(obj.getProfilePic());
-        return account;
+        return this.create(obj);
     }
 
     @Override

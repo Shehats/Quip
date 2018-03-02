@@ -7,11 +7,6 @@ public class PasswordForm {
     public PasswordForm() {
     }
 
-    public PasswordForm(String token, String password) {
-        this.token = token;
-        this.password = password;
-    }
-
     public String getToken() {
         return token;
     }

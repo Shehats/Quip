@@ -29,21 +29,13 @@ public class PostView {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
-    public Post update(@ModelAttribute Post post) {
-        try {
-            return this.postService.update(post);
-        } catch (PostNotFoundException e) {
-            return null;
-        }
+    public Post update(@ModelAttribute Post post) throws PostNotFoundException {
+        return this.postService.update(post);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public boolean delete(@PathVariable Long id) {
-        try {
-            return this.postService.delete(id);
-        } catch (PostNotFoundException e) {
-            return false;
-        }
+    public boolean delete(@PathVariable Long id) throws PostNotFoundException {
+        return this.postService.delete(id);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)

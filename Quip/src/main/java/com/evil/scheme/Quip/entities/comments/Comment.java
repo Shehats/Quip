@@ -2,15 +2,18 @@ package com.evil.scheme.Quip.entities.comments;
 
 import javax.persistence.*;
 
+import com.evil.scheme.Quip.entities.accounts.Account;
 import com.evil.scheme.Quip.entities.posts.Post;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.List;
 
 @Entity
 public class Comment {
 	private Long id;
 	private String description;
-	private Integer likes;
-	private Integer dislikes;
+	private List<Account> likes;
+	private List<Account> dislikes;
 
 	public Comment() {
 	}
@@ -36,19 +39,19 @@ public class Comment {
 		this.description = description;
 	}
 
-	@Column(name = "likes")
-	public Integer getLikes() {
+	@ManyToOne(targetEntity = Account.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	public List<Account> getLikes() {
 		return likes;
 	}
-	public void setLikes(Integer likes) {
+	public void setLikes(List<Account> likes) {
 		this.likes = likes;
 	}
 
-	@Column(name = "dislikes")
-	public Integer getDislikes() {
+	@ManyToOne(targetEntity = Account.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	public List<Account> getDislikes() {
 		return dislikes;
 	}
-	public void setDislikes(Integer dislikes) {
+	public void setDislikes(List<Account> dislikes) {
 		this.dislikes = dislikes;
 	}
 }
