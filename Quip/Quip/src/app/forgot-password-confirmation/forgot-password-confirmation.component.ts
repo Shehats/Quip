@@ -18,8 +18,7 @@ export class ForgotPasswordConfirmationComponent implements OnInit {
               private actions: ActionsService,
               private router: Router) { }
 
-  ngOnInit() {
-
+  ngOnInit () {
     this.forgotPasswordConfirmation = new FormGroup({
       password: new FormControl("", Validators.compose([
         Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"),
@@ -32,16 +31,16 @@ export class ForgotPasswordConfirmationComponent implements OnInit {
 
     });
   }
+
   onSubmitReset() {
     //
     // console.log(this.forgotPasswordConfirmation.value["password"]);
-    // console.log(this.active.url.value[1].path);
-    this.actions.save<any>(this.backend.account + "/forget-password",{token: this.active.url.value[1].path,
+    // console.log(this.active.snapshot.params.token);
+    this.actions.save<any>(this.backend.account + "/forget-password",{token: this.active.snapshot.params.token,
                           password: this.forgotPasswordConfirmation.value["password"]})
                           .subscribe(
                             ()=> this.router.navigate(['login']),
-                            _=> console.log("Error"),
-                            ()=>console.log(this.account)
+                            _=> console.log("Error")
                           );
 
   }

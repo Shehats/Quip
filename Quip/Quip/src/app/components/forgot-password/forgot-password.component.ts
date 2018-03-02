@@ -17,7 +17,7 @@ export class ForgotPasswordComponent implements OnInit {
   constructor(private actions: ActionsService,
               private router: Router){}
 
-  onSendRequest = function (user) {
+  onSendRequest(user) {
     this.email = user["email"];
     this.actions.fetch<any>(this.backend.baseUrl + `/forget-password/${this.email}`)
     .subscribe(
