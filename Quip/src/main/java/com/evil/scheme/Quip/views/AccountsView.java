@@ -40,10 +40,12 @@ public class AccountsView {
 
     @RequestMapping(value = "/forget-password", method = RequestMethod.POST)
     public Account updatePassword(@ModelAttribute PasswordForm passwordForm) throws AccountNotFoundException{
+        System.out.println(refactorToken(passwordForm.getToken()));
+        System.out.println("sddssddd");
         Account account = this.accountRepository.findByUsername(refactorToken(passwordForm.getToken()));
         if (account != null) {
-            account.setPassword(this.passwordEncoder.encode(passwordForm.getPassword()));
-            return this.accountService.update(account);
+            this.accountRepository.updatePassword(account.getId(),this.passwordEncoder.encode(passwordForm.getPassword()));
+            return account;
         }
         else {
             throw new AccountNotFoundException("Account not found");

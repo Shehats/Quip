@@ -51,10 +51,10 @@ public class CommentServiceImpl implements CommentService{
 		if(comment == null) {
 			throw new CommentNotFoundException();
 		}
-		comment.setDescription(comment.getDescription());
-		comment.setLikes(comment.getLikes());
-		comment.setDislikes(comment.getDislikes());
-		return comment;
+		comment.setDescription(obj.getDescription());
+		comment.setLikes(obj.getLikes());
+		comment.setDislikes(obj.getDislikes());
+		return this.create(obj);
 	}
 
 	@Override

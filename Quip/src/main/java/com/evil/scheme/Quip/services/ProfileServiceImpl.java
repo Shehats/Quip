@@ -57,7 +57,7 @@ public class ProfileServiceImpl implements ProfileService{
 		profile.setFriends(profile.getFriends());
 		profile.setPosts(profile.getPosts());
 		profile.setRecomendedFriends(profile.getRecomendedFriends());
-		return profile;
+		return this.create(obj);
 	}
 
 	@Override
