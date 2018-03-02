@@ -5,6 +5,8 @@ export class Backend {
   exists: string = this.baseUrl + 'exists';
   account: string = this.baseUrl + 'accounts';
   profile: string = this.baseUrl + 'profile';
+  uploadProfilePic: string = this.baseUrl + 'uploadProfile';
+  uploadPostPic: string = this.baseUrl + 'uploadMedia';
   post: string = this.baseUrl + 'posts';
   comment: string = this.baseUrl + 'comments';
   accountUpdate: string = this.account + '/update';
