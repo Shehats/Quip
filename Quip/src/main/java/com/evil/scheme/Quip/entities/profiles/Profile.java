@@ -14,6 +14,7 @@ import java.util.stream.Stream;
 public class Profile {
 	private Long profileId;
 	private Account account;
+	private String description;
 	private List<Post> posts;
 	private List<Account> friends;
 	private List<Account> recomendedFriends;
@@ -61,5 +62,13 @@ public class Profile {
 	}
 	public void setRecomendedFriends(List<Account> recomendedFriends) {
 		this.recomendedFriends = recomendedFriends;
+	}
+
+	@Column
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }
