@@ -4,26 +4,29 @@ import { Backend } from 'app/Interfaces/Backend';
 import { ActionsService } from '../../services/http/actions.service';
 import { Post } from '../../models/Post';
 import { Profile } from '../../models/Profile';
-// import { Router, ActivatedRoute } from '@angular/router';
+import { FileUploadService } from '../../services/file-upload/file-upload.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
-// , private router: Router, private actRoute: ActivatedRoute
+
 export class ProfileComponent implements OnInit {
-  constructor(private action: ActionsService) { }
-  postForm: FormGroup;
-  descForm: FormGroup;
+  constructor(private action: ActionsService, private uploadFile: FileUploadService, private router: Router, private actRoute: ActivatedRoute) { }
+  postForm: FormGroup; // Post Form values
+  descForm: FormGroup; // Description data
 
-  fileToUpload: any[];
-  localUrl;
+  fileToUpload: FileList; // actual file to upload
+  localUrl; // To display the image preview
+
   username: string;
-  backend: Backend = new Backend();
+  backend: Backend = new Backend(); // access to backend data.
 
-  profile: Profile;
+  profile: Profile; // Profile data.
   descText: string = "This is a test";
+  friends$: Profile[];
 
   submitPost() {
     if (this.postForm.valid) {
@@ -32,22 +35,29 @@ export class ProfileComponent implements OnInit {
         .subscribe(
           _ => this.postForm.reset()
         );
+      this.uploadFile.uploadPostPicture(this.fileToUpload[0])
+      .subscribe(
+        _ => console.log("Success!")
+      );
     }
   }
 
   submitDesc() {
     if (this.descForm.valid) {
-      // this.action.update<Profile>(this.backend.baseUrl, )
+      this.action.update<Profile>(this.backend.profile, this.profile);
     }
   }
 
   handleFileInput(event: any) {
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
+      this.fileToUpload = event.target.files;
       reader.onload = (event: any) => {
         this.localUrl = event.target.result;
       }
       reader.readAsDataURL(event.target.files[0]);
+      console.log(event.target.files);
+      console.log(this.fileToUpload);
     }
   }
 
@@ -57,7 +67,10 @@ export class ProfileComponent implements OnInit {
   }
 
   updateDesc(data) {
-    console.log(data);
+    if (data){
+      this.profile.description = data;
+        console.log(data);
+    }
   }
 
   handleProfileInfo(data) {
@@ -78,11 +91,11 @@ export class ProfileComponent implements OnInit {
         profile => { this.profile = profile }
       )
 
-    // this.action.fetch(this.backend.profile) // Fetching Username
-    //   .subscribe(
-    //     () => console.log(this.actRoute), // this.username = this.actRoute
-    //     () => this.router.navigate(['login'])
-    //   )
+    this.action.fetch(this.backend.profile) // Fetching Username
+      .subscribe(
+        () => console.log(this.actRoute), // this.username = this.actRoute
+        () => this.router.navigate(['login'])
+      )
   }
 
 }

@@ -1,6 +1,6 @@
 <app-navbar>
 </app-navbar>
-<section class="contianer row" id="profile">
+<section class="contianer row animated fadeIn" id="profile">
     <div class="container col-2" id="sidebar">
         <div class="card card-personal" card="card">
 
@@ -21,7 +21,7 @@
                 <p ng-disabled="true" (blur)="updateDesc()" class="card-text" *ngIf="descText">{{descText}}</p>
                 <button class="btn btn-sm mx-auto" data-toggle="modal" data-target="#basicExample" (click)="profileInfoModal.show()" mdbRippleRadius>Edit Description</button>
                 <hr>
-                <div class="card-meta">
+                <div class="card-meta" (click)="displayFriends.show()">
                     <a class="btn btn-sm ">
                         <i class="fa fa-users"></i>
                     </a>
@@ -49,19 +49,27 @@
                 <input type="text" id="postForm" class="form-control" mdbActive formControlName="postText">
                 <label for="postForm">What are you doing today? 😁</label>
             </div>
-
-            <div class="form-group">
-                <label class="fa fa-photo" aria-hidden="true" id="fileInput">
-                    <input type="file" id="file" (change)="handleFileInput($event)">
-                </label>
-                <img [src]="localUrl" *ngIf="localUrl" style="width:64px">
-            </div>
-
-            <div class="text-right">
-                <small class="align-bottom">Char: 250</small>
-                <button class="btn btn-default waves-effect waves-light" type="submit" [disabled]="!postForm.valid" mdbRippleRadius>Post</button>
+            <div class="row">
+                <div class="col">
+                    <div>
+                        <label class="fa fa-photo" aria-hidden="true" id="fileInput">
+                            <input type="file" id="file" (change)="handleFileInput($event)">
+                        </label>
+                        <img [src]="localUrl" *ngIf="localUrl" style="width:64px">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="text-right">
+                        <small class="align-bottom">Char: 250</small>
+                        <button class="btn btn-default waves-effect waves-light" type="submit" [disabled]="!postForm.valid" mdbRippleRadius>Post</button>
+                    </div>
+                </div>
             </div>
         </form>
+
+
+
+
         <div class="pre-scrollable mx-auto" id="postFeed">
             <div class="card">
                 <!--Card image-->
@@ -145,7 +153,7 @@
     </div>
 </div>
 
-<!-- Edit information  -->
+<!-- Edit information Modal -->
 <div mdbModal #profileInfoModal="mdb-modal" class="modal fade" id="basicExample" tabindex="-1" role="dialog" aria-labelledby="profileInfoModal"
     aria-hidden="true">
     <div class="modal-dialog modal-sm" role="document">
@@ -157,12 +165,41 @@
                 </button>
             </div>
             <div class="modal-body">
-                <input type="text" placeholder="New Description" class="form-control" [(ngModel)]="descText">
+                <input type="text" placeholder="New Description" class="form-control" (value)="descText" [value]="profile.description">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-sm waves-light" data-dismiss="modal" (click)="profileInfoModal.hide()" mdbRippleRadius>Close</button>
-                <button type="button" class="btn btn-sm waves-light" mdbRippleRadius>Submit</button>
+                <button type="button" class="btn btn-sm waves-light" mdbRippleRadius (click)="submitDesc()">Submit</button>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- Friends Display Modal -->
+<div mdbModal #displayFriends="mdb-modal" class="modal fade" id="basicExample" tabindex="-1" role="dialog" aria-labelledby="displayFriends"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title w-100" id="displayFriends">Friends of <!-- {{user.fname}} {{user.lname}} --></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="displayFriends.hide()">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="container mx-3" *ngFor="let friend of friends$">
+                    <span *ngIf="friends$">
+                        
+                    </span>
+                </div>
+
+
+            </div>
+            <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-sm waves-light" data-dismiss="modal" (click)="displayFriends.hide()" mdbRippleRadius>Close</button>
+                <button type="button" class="btn btn-sm waves-light" mdbRippleRadius>Submit</button>
+            </div> -->
         </div>
     </div>
 </div>
