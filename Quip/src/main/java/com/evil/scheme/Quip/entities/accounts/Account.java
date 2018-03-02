@@ -5,9 +5,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.List;
+import java.io.*;
 
 @Entity
-public class Account {
+public class Account implements Serializable{
     private Long id;
     private String username;
     private String password;

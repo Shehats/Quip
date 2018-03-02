@@ -8,10 +8,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.List;
 import java.util.stream.Stream;
+import java.io.*;
 
 @Entity
 @Table
-public class Profile {
+public class Profile implements Serializable{
 	private Long profileId;
 	private Account account;
 	private String description;

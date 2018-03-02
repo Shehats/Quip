@@ -7,9 +7,10 @@ import com.evil.scheme.Quip.entities.posts.Post;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.List;
+import java.io.*;
 
 @Entity
-public class Comment {
+public class Comment implements Serializable{
 	private Long id;
 	private String description;
 	private List<Account> likes;

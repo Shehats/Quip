@@ -6,9 +6,10 @@ import com.evil.scheme.Quip.entities.profiles.Profile;
 
 import javax.persistence.*;
 import java.util.List;
+import java.io.*;
 
 @Entity
-public class Post{
+public class Post implements Serializable{
     private Long id;
     private Long parentId;
     private String title;
