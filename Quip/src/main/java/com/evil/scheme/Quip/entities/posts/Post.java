@@ -1,5 +1,6 @@
 package com.evil.scheme.Quip.entities.posts;
 
+import com.evil.scheme.Quip.entities.accounts.Account;
 import com.evil.scheme.Quip.entities.comments.Comment;
 import com.evil.scheme.Quip.entities.profiles.Profile;
 
@@ -13,8 +14,8 @@ public class Post{
     private String title;
     private String description;
     private String mediaUrl;
-    private Integer likes;
-    private Integer dislikes;
+    private List<Account> likes;
+    private List<Account> dislikes;
     private List<Comment> comments;
 
     public Post () {
@@ -24,7 +25,7 @@ public class Post{
         this.mediaUrl = mediaUrl;
     }
 
-    public Post (String title, String description, String mediaUrl, Integer likes, Integer dislikes, List<Comment> comments) {
+    public Post (String title, String description, String mediaUrl, List<Account> likes, List<Account> dislikes, List<Comment> comments) {
         this.title = title;
         this.description = description;
         this.mediaUrl = mediaUrl;
@@ -80,19 +81,19 @@ public class Post{
         this.description = description;
     }
 
-    @Column(name = "likes")
-    public Integer getLikes() {
+    @ManyToOne(targetEntity = Account.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    public List<Account> getLikes() {
         return likes;
     }
-    public void setLikes(Integer likes) {
+    public void setLikes(List<Account> likes) {
         this.likes = likes;
     }
 
-    @Column(name = "dislikes")
-    public Integer getDislikes() {
+    @ManyToOne(targetEntity = Account.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    public List<Account> getDislikes() {
         return dislikes;
     }
-    public void setDislikes(Integer dislikes) {
+    public void setDislikes(List<Account> dislikes) {
         this.dislikes = dislikes;
     }
 

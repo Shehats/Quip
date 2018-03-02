@@ -53,6 +53,8 @@ public class ProfileView {
     public static String refactorToken (String bearerToken) {
         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7, bearerToken.length());
+        } else if (bearerToken != null) {
+            return bearerToken;
         }
         return null;
     }
