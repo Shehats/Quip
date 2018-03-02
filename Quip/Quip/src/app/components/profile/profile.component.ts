@@ -23,7 +23,7 @@ export class ProfileComponent implements OnInit {
   backend: Backend = new Backend();
 
   profile: Profile;
-  isDescEditable: boolean = false;
+  descText: string = "This is a test";
 
   submitPost() {
     if (this.postForm.valid) {

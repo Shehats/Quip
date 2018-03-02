@@ -22,6 +22,7 @@ import { SearchPipe } from 'app/pipes/search.pipe';
     FileUploadModule
   ],
   declarations: [
+    SearchPipe,
     ProfileComponent,
     NavbarComponent,
     SearchPipe

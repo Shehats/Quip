@@ -35,10 +35,11 @@ a {
 #searchBar {
     padding: none;
     margin: auto;
-    max-width: 25%;
+    
+    max-width: 100%;
     height: auto;
     color: white;
-    ::placeholder{
+    input::placeholder{
         color: white;
     }
 }
