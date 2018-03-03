@@ -19,13 +19,11 @@ export class ProfileComponent implements OnInit {
 
   postForm: FormGroup; // Post Form values
   descForm: FormGroup; // Description data
-
   fileToUpload: File; // actual file to upload
+  profileUpload: File; // profile picture to upload
   localUrl; // To display the image preview
-
   username: string;
   backend: Backend = new Backend(); // access to backend data.
-
   profile: Profile; // Profile data.
   state: boolean; // sets the state of either being a profile or a dashboard
 
@@ -35,17 +33,20 @@ export class ProfileComponent implements OnInit {
   submitPost() {
     if (this.postForm.valid) {
       if (this.uploadFile) {
+        console.log('skkdfkjkgkjg');
+        console.log(this.postForm.controls['postText'].value);
         this.uploadFile.uploadPostPicture(this.fileToUpload)
         .subscribe(
           x => {
-            this.action.save<Post>(this.backend.post + '/', new Post(x['comments'], x['description'], x['dislikes'],
-                                                            x['id'], x['likes'], x['mediaUrl'], this.postForm.controls['postText'].value))
+            this.action.save<Post>(this.backend.post + '/image', new Post(x['comments'], this.postForm.controls['postText'].value, x['dislikes'],
+                                                            x['id'], x['likes'], x['mediaUrl'], x['title']))
                                                             .subscribe(x => console.log(x));
           },
           err => console.log(err)
         );
       } else {
-        this.action.save<Post>(this.backend.post, new Post(null, null, null, null, null, null, this.postForm.controls['postText'].value))
+        console.log('here');
+        this.action.save<Post>(this.backend.post, new Post(null, this.postForm.controls['postText'].value, null, null, null, null, null))
           .subscribe(
             _ => this.postForm.reset()
           );
@@ -66,13 +67,23 @@ export class ProfileComponent implements OnInit {
       reader.onload = (event: any) => {
         this.localUrl = event.target.result;
       }
-  
     }
   }
 
 
-  handleProfilePicInput(files: FileList) {
-    console.log(files);
+  handleProfilePicInput(event: any) {
+    if (event.target.files && event.target.files[0]) {
+      this.profileUpload = event.target.files.item(0);
+    }
+  }
+
+  uploadProfilePic() {
+    if (this.profileUpload) {
+      this.uploadFile.uploadProfilePicture(this.profileUpload)
+      .subscribe(x => {
+        this.action.save<any>(this.backend.account+'/updatePicture', x)
+      })
+    }
   }
 
   updateDesc(data) {

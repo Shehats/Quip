@@ -51,6 +51,12 @@ public class PostServiceImpl implements PostService {
         post.setTitle(obj.getTitle());
         post.setDescription(obj.getDescription());
         post.setMediaUrl(obj.getMediaUrl());
+        post.setDislikes(obj.getDislikes());
+        post.setLikes(obj.getLikes());
+        post.setComments(obj.getComments());
+        post.getComments().forEach(x -> {
+            System.out.println(x.getDescription());
+        });
         return post;
     }
 
