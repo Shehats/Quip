@@ -1,6 +1,9 @@
 package com.evil.scheme.Quip.views;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import com.evil.scheme.Quip.entities.accounts.Account;
 import com.evil.scheme.Quip.entities.posts.Post;
 import com.evil.scheme.Quip.entities.profiles.Profile;
 import com.evil.scheme.Quip.exceptions.PostNotFoundException;
@@ -37,9 +40,11 @@ public class PostView {
 
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public Profile add(@RequestHeader("Authorization") String token, @ModelAttribute PostForm post) throws ProfileNotFoundException {
+    public Profile add(@RequestHeader("Authorization") String token, @RequestBody PostForm post) throws ProfileNotFoundException {
         Profile profile = this.profileRepository.findByUser(this.tokenProvider.getUsername(refactorToken(token)));
-        Post retVal = this.postService.create(new Post(post.getTitle(), post.getDescription(), post.getMedia()));
+        Post post1 = new Post(post.getTitle(), post.getDescription(), post.getMedia());
+        Post retVal = this.postService.create(post1);
+//        retVal.setParentId(profile);
         profile.getPosts().add(retVal);
         return this.profileService.update(profile);
     }
@@ -49,8 +54,38 @@ public class PostView {
         return this.postService.findAll();
     }
 
+    @RequestMapping(value = "/like/{id}", method = RequestMethod.PUT)
+    public Post like (@RequestHeader("Authorization") String token, @PathVariable Long id) throws PostNotFoundException {
+        Account account = this.accountRepository.findByUsername(this.tokenProvider.getUsername(refactorToken(token)));
+        Post post = this.postService.findById(id);
+        int canlike = post.getLikes().stream().filter(x -> (x.getId() == account.getId())).toArray().length;
+        int disliked = post.getDislikes().stream().filter(x -> (x.getId() == account.getId())).toArray().length;
+        if (canlike > 0)
+            post.getLikes().remove(account);
+        else
+            post.getLikes().add(account);
+        if (disliked > 0)
+            post.getDislikes().remove(account);
+        return this.postService.update(post);
+    }
+
+    @RequestMapping(value = "/dislike/{id}", method = RequestMethod.PUT)
+    public Post dislike (@RequestHeader("Authorization") String token, @PathVariable Long id) throws PostNotFoundException {
+        Account account = this.accountRepository.findByUsername(this.tokenProvider.getUsername(refactorToken(token)));
+        Post post = this.postService.findById(id);
+        int canlike = post.getLikes().stream().filter(x -> (x.getId() == account.getId())).toArray().length;
+        int disliked = post.getDislikes().stream().filter(x -> (x.getId() == account.getId())).toArray().length;
+        if (disliked > 0)
+            post.getDislikes().remove(account);
+        else
+            post.getDislikes().add(account);
+        if (canlike > 0)
+            post.getLikes().remove(account);
+        return this.postService.update(post);
+    }
+
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
-    public Post update(@ModelAttribute Post post) throws PostNotFoundException {
+    public Post update(@RequestBody Post post) throws PostNotFoundException {
         return this.postService.update(post);
     }
 
