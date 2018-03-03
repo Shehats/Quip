@@ -71,14 +71,14 @@ public class Authentication {
     @PostMapping("/signup")
     @ResponseBody
     public Token signUp(@RequestBody RegisterationForm registerationForm) throws AuthException{
-        if (!(this.accountRepository.exists(registerationForm.getUsername().toLowerCase())
-                || this.accountRepository.exists(registerationForm.getEmail().toLowerCase()))) {
+        if (!(this.accountRepository.exists(registerationForm.getUsername())
+                || this.accountRepository.exists(registerationForm.getEmail()))) {
             try {
-                Account account = new Account(registerationForm.getUsername(),
+                Account account = new Account(registerationForm.getUsername().toLowerCase(),
                         registerationForm.getPassword(),
                         registerationForm.getFname(),
                         registerationForm.getLname(),
-                        registerationForm.getEmail());
+                        registerationForm.getEmail().toLowerCase());
                 account.setPassword(this.passwordEncoder.encode(account.getPassword()));
                 account.setRoles(new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)));
                 Account account1 = this.accountService.create(account);
@@ -99,8 +99,8 @@ public class Authentication {
     @PostMapping("/exists")
     public @ResponseStatus
     HttpStatus exists(@RequestBody RegisterationForm registerationForm) {
-        return (!(this.accountRepository.exists(registerationForm.getUsername().toLowerCase())
-                || this.accountRepository.exists(registerationForm.getEmail().toLowerCase()))) ? HttpStatus.OK : HttpStatus.NOT_ACCEPTABLE;
+        return (!(this.accountRepository.exists(registerationForm.getUsername())
+                || this.accountRepository.exists(registerationForm.getEmail()))) ? HttpStatus.OK : HttpStatus.NOT_ACCEPTABLE;
     }
 
     @GetMapping("/forget-password/{email}")
