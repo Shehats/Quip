@@ -18,7 +18,7 @@ export class ProfileComponent implements OnInit {
   postForm: FormGroup; // Post Form values
   descForm: FormGroup; // Description data
 
-  fileToUpload: FileList; // actual file to upload
+  fileToUpload: File; // actual file to upload
   localUrl; // To display the image preview
 
   username: string;
@@ -29,15 +29,17 @@ export class ProfileComponent implements OnInit {
   friends$: Profile[];
 
   submitPost() {
+    console.log('sddkdfkffkjk');
     if (this.postForm.valid) {
       let postText = new Post(this.postForm.controls['postText'].value, 0, 0);
       this.action.save<Post>(this.backend.post, postText)
         .subscribe(
           _ => this.postForm.reset()
         );
-      this.uploadFile.uploadPostPicture(this.fileToUpload[0])
+      this.uploadFile.uploadPostPicture(this.fileToUpload)
       .subscribe(
-        _ => console.log("Success!")
+        x => console.log(x),
+        err => console.log(err)
       );
     }
   }
@@ -51,13 +53,11 @@ export class ProfileComponent implements OnInit {
   handleFileInput(event: any) {
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
-      this.fileToUpload = event.target.files;
+      this.fileToUpload = event.target.files.item(0);
       reader.onload = (event: any) => {
         this.localUrl = event.target.result;
       }
-      reader.readAsDataURL(event.target.files[0]);
-      console.log(event.target.files);
-      console.log(this.fileToUpload);
+  
     }
   }
 
