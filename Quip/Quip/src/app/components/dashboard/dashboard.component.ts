@@ -28,11 +28,11 @@ export class DashboardComponent implements OnInit {
 
   descText: string = "This is a test";
   friends$: Profile[];
+  posts$: Post[];
 
   submitPost() {
-    console.log('sddkdfkffkjk');
     if (this.postForm.valid) {
-      let postText = new Post(this.postForm.controls['postText'].value, null, null);
+      let postText = new Post(null, this.postForm.controls['postText'].value, null);
       console.log(postText);
       this.action.save<Post>(this.backend.post, postText)
         .subscribe(
@@ -45,6 +45,7 @@ export class DashboardComponent implements OnInit {
         err => console.log(err)
       );
     }
+    this.buildFeed();
   }
 
   submitDesc() {
@@ -80,6 +81,25 @@ export class DashboardComponent implements OnInit {
     console.log(data);
   }
 
+  like(id) {
+    this.action.fetch<Post>(this.backend.post + "/like/" +id)
+    .subscribe(
+      ()=>console.log("Liked")
+    );
+  }
+
+  dislike(id){
+    this.action.fetch<Post>(this.backend.post + "/dislike/" + id)
+    .subscribe(
+      ()=>console.log("Disliked")
+    );
+  }
+  buildFeed (){
+    this.action.fetch<Post[]>(this.backend.post)
+              .subscribe(
+                post => { this.posts$ = post }
+              );
+  }
   ngOnInit() {
     this.postForm = new FormGroup({
       postText: new FormControl("", Validators.required)
@@ -93,7 +113,7 @@ export class DashboardComponent implements OnInit {
       .subscribe(
         profile => { this.profile = profile; console.log(profile); }
       )
-
+      this.buildFeed();
     // this.action.fetch(this.backend.profile) // Fetching Username
     //   .subscribe(
     //     () => console.log(this.actRoute), // this.username = this.actRoute
