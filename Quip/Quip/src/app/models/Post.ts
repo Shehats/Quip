@@ -12,7 +12,7 @@ export class Post implements Instance{
     mediaUrl: string;
     title: string;
 
-    constructor(comments?: Comment[], description?: string, dislikes?: Account[], 
+    constructor(comments?: Comment[], description?: string, dislikes?: Account[],
                 id?: number, likes?: Account[], mediaUrl?: string, title?: string) {
 
         this.comments = comments;
@@ -21,7 +21,7 @@ export class Post implements Instance{
         this.id = id;
         this.likes =  likes;
         this.mediaUrl = mediaUrl;
-        this,title = title;
+        this.title = title;
     }
 
     getFilter(): string{
