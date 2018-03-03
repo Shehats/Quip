@@ -62,7 +62,7 @@ public class PostView {
         return this.postService.findAll();
     }
 
-    @RequestMapping(value = "/like/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/like/{id}", method = RequestMethod.GET)
     public Post like (@RequestHeader("Authorization") String token, @PathVariable Long id) throws PostNotFoundException {
         Account account = this.accountRepository.findByUsername(this.tokenProvider.getUsername(refactorToken(token)));
         Post post = this.postService.findById(id);
@@ -77,7 +77,7 @@ public class PostView {
         return this.postService.update(post);
     }
 
-    @RequestMapping(value = "/dislike/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/dislike/{id}", method = RequestMethod.GET)
     public Post dislike (@RequestHeader("Authorization") String token, @PathVariable Long id) throws PostNotFoundException {
         Account account = this.accountRepository.findByUsername(this.tokenProvider.getUsername(refactorToken(token)));
         Post post = this.postService.findById(id);
