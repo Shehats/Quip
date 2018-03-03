@@ -19,6 +19,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { FileUploadService } from './services/file-upload/file-upload.service';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,9 +39,9 @@ import { NotfoundComponent } from './components/notfound/notfound.component';
     MDBBootstrapModule.forRoot()
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, 
-      useClass: ReqInterceptorService, 
-      multi: true 
+    { provide: HTTP_INTERCEPTORS,
+      useClass: ReqInterceptorService,
+      multi: true
     },
     CacheService,
     ActionsService,

@@ -5,16 +5,13 @@ import { ActionsService } from '../../services/http/actions.service';
 import { Post } from '../../models/Post';
 import { Profile } from '../../models/Profile';
 import { FileUploadService } from '../../services/file-upload/file-upload.service';
-// import { Router, ActivatedRoute } from '@angular/router';
-// import { NavbarComponent } from 'app/components/navbar/navbar.component'
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.scss']
 })
-
-export class ProfileComponent implements OnInit {
+export class DashboardComponent implements OnInit {
   constructor(private action: ActionsService, private uploadFile: FileUploadService/*, private router: Router, private actRoute: ActivatedRoute*/) { }
 
   postForm: FormGroup; // Post Form values
@@ -81,11 +78,6 @@ export class ProfileComponent implements OnInit {
 
   handleProfileInfo(data) {
     console.log(data);
-  }
-
-  handleEvent(stateMode: any) {
-    this.state = stateMode;
-    console.log(this.state);
   }
 
   ngOnInit() {
