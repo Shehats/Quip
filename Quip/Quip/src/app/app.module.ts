@@ -17,10 +17,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { ProfileModule } from './modules/profile/profile.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { FileUploadService } from './services/file-upload/file-upload.service';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    DashboardComponent,
     // SearchPipe,
   ],
   imports: [
@@ -36,9 +38,9 @@ import { FileUploadService } from './services/file-upload/file-upload.service';
     MDBBootstrapModule.forRoot()
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, 
-      useClass: ReqInterceptorService, 
-      multi: true 
+    { provide: HTTP_INTERCEPTORS,
+      useClass: ReqInterceptorService,
+      multi: true
     },
     CacheService,
     ActionsService,
