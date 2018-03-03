@@ -5,25 +5,24 @@ import { ActionsService } from '../../services/http/actions.service';
 import { Post } from '../../models/Post';
 import { Profile } from '../../models/Profile';
 import { FileUploadService } from '../../services/file-upload/file-upload.service';
-// import { Router, ActivatedRoute } from '@angular/router';
-// import { NavbarComponent } from 'app/components/navbar/navbar.component'
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.scss']
 })
-
-export class ProfileComponent implements OnInit {
+export class DashboardComponent implements OnInit {
   constructor(private action: ActionsService, private uploadFile: FileUploadService/*, private router: Router, private actRoute: ActivatedRoute*/) { }
 
   postForm: FormGroup; // Post Form values
   descForm: FormGroup; // Description data
+
   fileToUpload: File; // actual file to upload
-  profileUpload: File; // profile picture to upload
   localUrl; // To display the image preview
+
   username: string;
   backend: Backend = new Backend(); // access to backend data.
+
   profile: Profile; // Profile data.
   state: boolean; // sets the state of either being a profile or a dashboard
 
@@ -31,26 +30,20 @@ export class ProfileComponent implements OnInit {
   friends$: Profile[];
 
   submitPost() {
+    console.log('sddkdfkffkjk');
     if (this.postForm.valid) {
-      if (this.uploadFile) {
-        console.log('skkdfkjkgkjg');
-        console.log(this.postForm.controls['postText'].value);
-        this.uploadFile.uploadPostPicture(this.fileToUpload)
+      let postText = new Post(this.postForm.controls['postText'].value, null, null);
+      console.log(postText);
+      this.action.save<Post>(this.backend.post, postText)
         .subscribe(
-          x => {
-            this.action.save<Post>(this.backend.post + '/image', new Post(x['comments'], this.postForm.controls['postText'].value, x['dislikes'],
-                                                            x['id'], x['likes'], x['mediaUrl'], x['title']))
-                                                            .subscribe(x => console.log(x));
-          },
-          err => console.log(err)
+          _ => this.postForm.reset(),
+          _ => console.log(this.profile.posts)
         );
-      } else {
-        console.log('here');
-        this.action.save<Post>(this.backend.post, new Post(null, this.postForm.controls['postText'].value, null, null, null, null, null))
-          .subscribe(
-            _ => this.postForm.reset()
-          );
-      }
+      this.uploadFile.uploadPostPicture(this.fileToUpload)
+      .subscribe(
+        x => console.log(x),
+        err => console.log(err)
+      );
     }
   }
 
@@ -67,23 +60,13 @@ export class ProfileComponent implements OnInit {
       reader.onload = (event: any) => {
         this.localUrl = event.target.result;
       }
+  
     }
   }
 
 
-  handleProfilePicInput(event: any) {
-    if (event.target.files && event.target.files[0]) {
-      this.profileUpload = event.target.files.item(0);
-    }
-  }
-
-  uploadProfilePic() {
-    if (this.profileUpload) {
-      this.uploadFile.uploadProfilePicture(this.profileUpload)
-      .subscribe(x => {
-        this.action.save<any>(this.backend.account+'/updatePicture', x)
-      })
-    }
+  handleProfilePicInput(files: FileList) {
+    console.log(files);
   }
 
   updateDesc(data) {
@@ -95,11 +78,6 @@ export class ProfileComponent implements OnInit {
 
   handleProfileInfo(data) {
     console.log(data);
-  }
-
-  handleEvent(stateMode: any) {
-    this.state = stateMode;
-    console.log(this.state);
   }
 
   ngOnInit() {
