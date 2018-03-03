@@ -1,4 +1,4 @@
-<app-navbar>
+<app-navbar (childData)="handleEvent($event)">
 </app-navbar>
 <section class="contianer row animated fadeIn" id="profile">
     <div class="container col-2" id="sidebar">
@@ -164,7 +164,7 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" *ngIf="profile">
                 <input type="text" placeholder="New Description" class="form-control" (value)="descText" [value]="profile.description">
             </div>
             <div class="modal-footer">
