@@ -54,7 +54,7 @@ public class AccountsView {
         }
     }
 
-    @RequestMapping(value = "/updatePicture", method = RequestMethod.POST)
+    @RequestMapping(value = "/updatePicture", method = RequestMethod.PUT)
     public Account updatePicture(@RequestHeader("Authorization") String token, @RequestBody PictureForm pictureForm) throws AccountNotFoundException {
         Account account = this.accountRepository
                 .findByUsername(this.tokenProvider.getUsername(refactorToken(token)));
