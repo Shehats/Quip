@@ -47,7 +47,7 @@ export class ProfileComponent implements OnInit {
         );
       } else {
         console.log('here');
-        this.action.save<Post>(this.backend.post, new Post(null, null, null, null, null, null, this.postForm.controls['postText'].value))
+        this.action.save<Post>(this.backend.post, new Post(null, this.postForm.controls['postText'].value, null, null, null, null, null))
           .subscribe(
             _ => this.postForm.reset()
           );
