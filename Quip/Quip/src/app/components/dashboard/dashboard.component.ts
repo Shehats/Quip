@@ -60,7 +60,7 @@ export class DashboardComponent implements OnInit {
       reader.onload = (event: any) => {
         this.localUrl = event.target.result;
       }
-  
+
     }
   }
 
