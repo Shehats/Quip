@@ -32,7 +32,7 @@ export class DashboardComponent implements OnInit {
   submitPost() {
     console.log('sddkdfkffkjk');
     if (this.postForm.valid) {
-      let postText = new Post(this.postForm.controls['postText'].value, 0, 0);
+      let postText = new Post(this.postForm.controls['postText'].value, null, null);
       console.log(postText);
       this.action.save<Post>(this.backend.post, postText)
         .subscribe(

@@ -33,20 +33,23 @@ export class ProfileComponent implements OnInit {
   friends$: Profile[];
 
   submitPost() {
-    console.log('sddkdfkffkjk');
     if (this.postForm.valid) {
-      let postText = new Post(this.postForm.controls['postText'].value, 0, 0);
-      console.log(postText);
-      this.action.save<Post>(this.backend.post, postText)
+      if (this.uploadFile) {
+        this.uploadFile.uploadPostPicture(this.fileToUpload)
         .subscribe(
-          _ => this.postForm.reset(),
-          _ => console.log(this.profile.posts)
+          x => {
+            this.action.save<Post>(this.backend.post + '/', new Post(x['comments'], x['description'], x['dislikes'],
+                                                            x['id'], x['likes'], x['mediaUrl'], this.postForm.controls['postText'].value))
+                                                            .subscribe(x => console.log(x));
+          },
+          err => console.log(err)
         );
-      this.uploadFile.uploadPostPicture(this.fileToUpload)
-      .subscribe(
-        x => console.log(x),
-        err => console.log(err)
-      );
+      } else {
+        this.action.save<Post>(this.backend.post, new Post(null, null, null, null, null, null, this.postForm.controls['postText'].value))
+          .subscribe(
+            _ => this.postForm.reset()
+          );
+      }
     }
   }
 
