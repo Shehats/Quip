@@ -54,7 +54,7 @@ public class Authentication {
     @PostMapping("/signin")
     @ResponseBody
     public Token signin(@RequestBody LoginForm loginForm) throws AuthException{
-        Account account = this.accountRepository.findByEmailOrUsername(loginForm.getUsername());
+        Account account = this.accountRepository.findByEmailOrUsername(loginForm.getUsername().toLowerCase());
         if (account != null) {
             if (this.passwordEncoder.matches(loginForm.getPassword(), account.getPassword())) {
                 try {
@@ -74,11 +74,11 @@ public class Authentication {
         if (!(this.accountRepository.exists(registerationForm.getUsername())
                 || this.accountRepository.exists(registerationForm.getEmail()))) {
             try {
-                Account account = new Account(registerationForm.getUsername(),
+                Account account = new Account(registerationForm.getUsername().toLowerCase(),
                         registerationForm.getPassword(),
                         registerationForm.getFname(),
                         registerationForm.getLname(),
-                        registerationForm.getEmail());
+                        registerationForm.getEmail().toLowerCase());
                 account.setPassword(this.passwordEncoder.encode(account.getPassword()));
                 account.setRoles(new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)));
                 Account account1 = this.accountService.create(account);
@@ -105,7 +105,7 @@ public class Authentication {
 
     @GetMapping("/forget-password/{email}")
     public void forgetPassword(@PathVariable String email) throws AuthException{
-        Account account = this.accountRepository.findWithPartOfEmail(email);
+        Account account = this.accountRepository.findWithPartOfEmail(email.toLowerCase());
         if (account != null) {
             String token = jwtTokenProvider.createToken(account.getUsername(), account.getRoles());
             this.emailService.sendMail(account.getEmail(), "Reset password", "Click on the link http://localhost:4200/forgot-password-confirmation/" 
