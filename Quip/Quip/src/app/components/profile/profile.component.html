@@ -1,4 +1,4 @@
-<app-navbar (childData)="handleEvent($event)">
+<app-navbar>
 </app-navbar>
 <section class="contianer row animated fadeIn" id="profile">
     <div class="container col-2" id="sidebar">
@@ -6,7 +6,7 @@
 
             <!--Card image-->
             <input type="image" data-toggle="modal" data-target="#basicExample" (click)="profilePictureModal.show()" mdbRippleRadius
-                class="img-fluid" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(29).jpg" alt="Card image cap">
+                class="img-fluid" src="https://s3.us-east-2.amazonaws.com/quip-test-bucket/profile_placeholder.png" alt="Card image cap">
             <!--Card image-->
 
             <!--Card content-->
@@ -72,54 +72,27 @@
 
         <div class="pre-scrollable mx-auto" id="postFeed">
             <div class="card">
-                <!--Card image-->
-                <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/43.jpg" alt="Card image cap">
                 <!--Card content-->
                 <div class="card-body">
-                    <!--Title-->
-                    <h4 class="card-title">Card title</h4>
-                    <!--Text-->
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Button</a>
+                    <div class="row">
+                        <div class="label col-1 mr-2">
+                            <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-1-mini.jpg" class="rounded-circle d-flex align-self-start mr-3">
+                        </div>
+                        <div class="col">
+                            <!--Title-->
+                            <h4 class="card-title">Card title</h4>
+                            <!--Text-->
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        </div>
+                    </div>
+                    <!--Card image-->
+                    <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/43.jpg" alt="Card image cap">
+                    <div class="btn-group mx-auto mt-2">
+                        <button class="btn-sm">like</button>
+                        <button class="btn-sm">dislike</button>
+                    </div>
                 </div>
             </div>
-            <div class="card">
-                <!--Card image-->
-                <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/43.jpg" alt="Card image cap">
-                <!--Card content-->
-                <div class="card-body">
-                    <!--Title-->
-                    <h4 class="card-title">Card title</h4>
-                    <!--Text-->
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Button</a>
-                </div>
-            </div>
-            <div class="card">
-                <!--Card image-->
-                <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/43.jpg" alt="Card image cap">
-                <!--Card content-->
-                <div class="card-body">
-                    <!--Title-->
-                    <h4 class="card-title">Card title</h4>
-                    <!--Text-->
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Button</a>
-                </div>
-            </div>
-            <div class="card">
-                <!--Card image-->
-                <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/43.jpg" alt="Card image cap">
-                <!--Card content-->
-                <div class="card-body">
-                    <!--Title-->
-                    <h4 class="card-title">Card title</h4>
-                    <!--Text-->
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Button</a>
-                </div>
-            </div>
-
         </div>
     </div>
     <div class="container col-4">
@@ -181,7 +154,9 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title w-100" id="displayFriends">Friends of <!-- {{user.fname}} {{user.lname}} --></h4>
+                <h4 class="modal-title w-100" id="displayFriends">Friends of
+                    <!-- {{user.fname}} {{user.lname}} -->
+                </h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="displayFriends.hide()">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -190,7 +165,7 @@
 
                 <div class="container mx-3" *ngFor="let friend of friends$">
                     <span *ngIf="friends$">
-                        
+
                     </span>
                 </div>
 
