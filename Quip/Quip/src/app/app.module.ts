@@ -15,7 +15,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 // Local modules
 import { ProfileModule } from './modules/profile/profile.module';
-// import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ForgotPasswordConfirmationComponent } from './forgot-password-confirmation/forgot-password-confirmation.component';
 import { AuthModule } from './modules/auth/auth.module';
 import { FileUploadService } from './services/file-upload/file-upload.service';
@@ -26,7 +26,7 @@ import { CommentComponent } from './components/comment/comment.component';
 @NgModule({
   declarations: [
     AppComponent,
-    // ForgotPasswordComponent,
+    ForgotPasswordComponent,
     ForgotPasswordConfirmationComponent,
     NotfoundComponent,
     CommentComponent,
