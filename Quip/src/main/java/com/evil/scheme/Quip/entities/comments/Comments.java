@@ -7,18 +7,21 @@ import com.evil.scheme.Quip.entities.posts.Post;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.List;
+import java.io.*;
 
 @Entity
-public class Comment {
+public class Comments implements Serializable{
 	private Long id;
+	private Account owner;
 	private String description;
+	private Post parentPost;
 	private List<Account> likes;
 	private List<Account> dislikes;
 
-	public Comment() {
+	public Comments() {
 	}
 
-    public Comment(String description) {
+    public Comments(String description) {
         this.description = description;
     }
 
@@ -39,6 +42,14 @@ public class Comment {
 		this.description = description;
 	}
 
+	@OneToOne(targetEntity = Account.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	public Account getOwner() {
+		return owner;
+	}
+	public void setOwner(Account owner) {
+		this.owner = owner;
+	}
+
 	@ManyToOne(targetEntity = Account.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	public List<Account> getLikes() {
 		return likes;
@@ -53,5 +64,13 @@ public class Comment {
 	}
 	public void setDislikes(List<Account> dislikes) {
 		this.dislikes = dislikes;
+	}
+
+	@ManyToOne(targetEntity = Post.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	public Post getParentPost() {
+		return parentPost;
+	}
+	public void setParentPost(Post parentPost) {
+		this.parentPost = parentPost;
 	}
 }
