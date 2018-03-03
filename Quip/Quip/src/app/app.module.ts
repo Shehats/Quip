@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
-import { SearchPipe } from './pipes/search.pipe';
+// import { SearchPipe } from './pipes/search.pipe';
 import { ReqInterceptorService } from './services/interceptors/req-interceptor.service';
 import { ActionsService } from './services/http/actions.service';
 import { AuthService } from './services/auth/auth.service';
@@ -25,8 +25,12 @@ import { FileUploadService } from './services/file-upload/file-upload.service';
 @NgModule({
   declarations: [
     AppComponent,
+<<<<<<< HEAD
     SearchPipe,
     ForgotPasswordConfirmationComponent
+=======
+    // SearchPipe,
+>>>>>>> 7ab43ae3348fa26e6bfd76253bfd8f56426c2d1a
   ],
   imports: [
     BrowserModule,
