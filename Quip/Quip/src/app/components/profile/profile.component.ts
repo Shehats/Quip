@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 //import { Backend } from 'app/Interfaces/Backend';
-import { ActionsService } from '../../services/http/actions.service';
+import {ActionsService} from '../../services/http/actions.service';
+import { PostService } from '../../services/post/post.service';
 import { Post } from '../../models/Post';
 import { Profile } from '../../models/Profile';
 import { FileUploadService } from '../../services/file-upload/file-upload.service';
@@ -17,7 +18,7 @@ import { Account } from 'app/models/Account';
 })
 
 export class ProfileComponent implements OnInit {
-  constructor(private action: ActionsService, private uploadFile: FileUploadService/*, private router: Router*/, private actRoute: ActivatedRoute) { }
+  constructor(private postService: PostService, private uploadFile: FileUploadService, private action: ActionsService/*, private router: Router, private actRoute: ActivatedRoute*/) { }
 
   postForm: FormGroup; // Post Form values
   descForm: FormGroup; // Description data
@@ -25,8 +26,7 @@ export class ProfileComponent implements OnInit {
   profileUpload: File; // profile picture to upload
   localUrl; // To display the image preview
   username: string;
-  //backend: Backend = new Backend(); // access to backend data.
-  pro: Profile; // Profile data.
+  profile: Profile; // Profile data.
   state: boolean; // sets the state of either being a profile or a dashboard
   acc: Account;
   posts: Post[];
@@ -39,18 +39,17 @@ export class ProfileComponent implements OnInit {
       if (this.uploadFile) {
         console.log('skkdfkjkgkjg');
         console.log(this.postForm.controls['postText'].value);
-        this.uploadFile.uploadPostPicture(this.fileToUpload)
+        this.postService.uploadPostPicture(this.fileToUpload)
         .subscribe(
           x => {
-            this.action.save<Post>(post + '/image', new Post(x['comments'], this.postForm.controls['postText'].value, x['dislikes'],
+            this.postService.savePost<Post>(new Post(x['comments'], this.postForm.controls['postText'].value, x['dislikes'],
                                                             x['id'], x['likes'], x['mediaUrl'], x['title']))
                                                             .subscribe(x => console.log(x));
           },
           err => console.log(err)
         );
       } else {
-        console.log('here');
-        this.action.save<Post>(post, new Post(null, this.postForm.controls['postText'].value, null, null, null, null, null))
+        this.postService.savePost<Post>(new Post(null, this.postForm.controls['postText'].value, null, null, null, null, null))
           .subscribe(
             _ => this.postForm.reset()
           );
