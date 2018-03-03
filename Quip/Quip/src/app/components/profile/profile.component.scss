@@ -4,11 +4,13 @@ $light-blue: #b8c6c9;
 $light-grey: #cccccc;
 $lime-green: #73cf45;
 $turquoise-blue: #005555;
+
 .pre-scrollable {
     max-height: 100%;
     max-width: 100%;
-    img {
-        max-width: 500px;
+    background: #ddd;;
+    .card {
+        margin: 16px 0px;
     }
 }
 
@@ -24,7 +26,7 @@ $turquoise-blue: #005555;
 #profile {
     margin: auto;
     padding-top: 64px;
-    height: 100%;
+    height: auto;
     background: #ddd;
     #sidebar {
         padding-top: 16px;
@@ -53,10 +55,11 @@ $turquoise-blue: #005555;
         {
         margin-bottom: 0px;
     }
-    .btn {
+    .btn, .btn-sm {
         background-color: $dark-blue;
         padding: 8px;
         margin-bottom: 0px;
+        color: white;
     }
     #photoSelect {
         i {
@@ -68,22 +71,24 @@ $turquoise-blue: #005555;
     }
     padding: 16px;
 }
+
 input[type="file"] {
     display: none;
- }
+}
 
- #fileInput {
-     background: $dark-blue;
-     color: white;
-     width: 32px;
-     height: 32px;
+#fileInput {
+    background: $dark-blue;
+    color: white;
+    width: 32px;
+    height: 32px;
     padding: 8px;
     border-radius: .3rem;
     cursor: pointer;
-    input:hover + label{
+    input:hover+label {
         background: $light-blue;
     }
-    }
+}
+
 .btn-sm {
     background: #2d5c56;
     border-radius: .3rem;

@@ -14,6 +14,8 @@
 
 .navbar-dark .navbar-brand {
     color: white;
+    padding-right: 16px;
+
 }
 
 a {
@@ -28,4 +30,16 @@ a {
 .sidebar-link {
     background-color: #ddd;
     padding: 3px 25%;
+}
+
+#searchBar {
+    padding: none;
+    margin: auto;
+    
+    max-width: 100%;
+    height: auto;
+    color: white;
+    input::placeholder{
+        color: white;
+    }
 }
