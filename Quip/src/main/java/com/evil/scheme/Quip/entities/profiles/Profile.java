@@ -8,10 +8,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.List;
 import java.util.stream.Stream;
+import java.io.*;
 
 @Entity
 @Table
-public class Profile {
+public class Profile implements Serializable{
 	private Long profileId;
 	private Account account;
 	private String description;
@@ -40,7 +41,7 @@ public class Profile {
 		this.account = account;
 	}
 
-	@OneToMany(targetEntity = Post.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "parentId")
+	@OneToMany(targetEntity = Post.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	public List<Post> getPosts() {
 		return posts;
 	}

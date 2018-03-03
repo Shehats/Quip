@@ -20,7 +20,7 @@ export class ProfileComponent implements OnInit {
   postForm: FormGroup; // Post Form values
   descForm: FormGroup; // Description data
 
-  fileToUpload: FileList; // actual file to upload
+  fileToUpload: File; // actual file to upload
   localUrl; // To display the image preview
 
   username: string;
@@ -34,18 +34,20 @@ export class ProfileComponent implements OnInit {
 
   submitPost() {
     if (this.postForm.valid) {
-      let postText = new Post(this.postForm.controls['postText'].value, 0, 0);
-      console.log(postText);
-      this.action.save<Post>(this.backend.post, postText)
+      if (this.uploadFile) {
+        this.uploadFile.uploadPostPicture(this.fileToUpload)
         .subscribe(
-          _ => this.postForm.reset(),
-          _ => console.log(this.profile.posts)
+          x => {
+            this.action.save<Post>(this.backend.post + '/', new Post(x['comments'], x['description'], x['dislikes'],
+                                                            x['id'], x['likes'], x['mediaUrl'], this.postForm.controls['postText'].value))
+                                                            .subscribe(x => console.log(x));
+          },
+          err => console.log(err)
         );
-      if (this.fileToUpload) {
-        this.uploadFile.uploadPostPicture(this.fileToUpload[0])
+      } else {
+        this.action.save<Post>(this.backend.post, new Post(null, null, null, null, null, null, this.postForm.controls['postText'].value))
           .subscribe(
-            _ => console.log("Success!")
-
+            _ => this.postForm.reset()
           );
       }
     }
@@ -60,13 +62,11 @@ export class ProfileComponent implements OnInit {
   handleFileInput(event: any) {
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
-      this.fileToUpload = event.target.files;
+      this.fileToUpload = event.target.files.item(0);
       reader.onload = (event: any) => {
         this.localUrl = event.target.result;
       }
-      reader.readAsDataURL(event.target.files[0]);
-      console.log(event.target.files);
-      console.log(this.fileToUpload);
+  
     }
   }
 

@@ -56,7 +56,7 @@ public class ProfileView {
         Account account = this.accountRepository
                 .findByUsername(this.tokenProvider.getUsername(refactorToken(token)));
         Profile profile = this.profileRepository.findByUser(this.tokenProvider.getUsername(refactorToken(token)));
-        List<Post> posts = new ArrayList<>();
+        List<Post> posts = profile.getPosts();
         profile.getFriends().forEach(x -> {
             this.profileRepository.findByUser(x.getUsername()).getPosts()
                     .forEach(y -> {
@@ -73,6 +73,16 @@ public class ProfileView {
         Profile profile = this.profileRepository.findByUser(this.tokenProvider.getUsername(refactorToken(token)));
         Account friend = this.accountRepository.findByUsername(username);
         profile.getFriends().add(friend);
+        return profileService.update(profile);
+    }
+
+    @RequestMapping(value = "/unFriend/{username}", method = RequestMethod.PUT)
+    public Profile unFriend(@RequestHeader("Authorization") String token, @PathVariable String username) throws ProfileNotFoundException{
+        Account account = this.accountRepository
+                .findByUsername(this.tokenProvider.getUsername(refactorToken(token)));
+        Profile profile = this.profileRepository.findByUser(this.tokenProvider.getUsername(refactorToken(token)));
+        Account friend = this.accountRepository.findByUsername(username);
+        profile.getFriends().remove(friend);
         return profileService.update(profile);
     }
 

@@ -28,4 +28,5 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     @Modifying(clearAutomatically = true)
     @Query("update Account a SET a.password = :password where a.id = :id")
     int updatePassword(@Param("id") Long id, @Param("password") String password);
+    
 }
