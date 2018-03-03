@@ -54,7 +54,7 @@ public class Authentication {
     @PostMapping("/signin")
     @ResponseBody
     public Token signin(@RequestBody LoginForm loginForm) throws AuthException{
-        Account account = this.accountRepository.findByEmailOrUsername(loginForm.getUsername());
+        Account account = this.accountRepository.findByEmailOrUsername(loginForm.getUsername().toLowerCase());
         if (account != null) {
             if (this.passwordEncoder.matches(loginForm.getPassword(), account.getPassword())) {
                 try {
@@ -71,8 +71,8 @@ public class Authentication {
     @PostMapping("/signup")
     @ResponseBody
     public Token signUp(@RequestBody RegisterationForm registerationForm) throws AuthException{
-        if (!(this.accountRepository.exists(registerationForm.getUsername())
-                || this.accountRepository.exists(registerationForm.getEmail()))) {
+        if (!(this.accountRepository.exists(registerationForm.getUsername().toLowerCase())
+                || this.accountRepository.exists(registerationForm.getEmail().toLowerCase()))) {
             try {
                 Account account = new Account(registerationForm.getUsername(),
                         registerationForm.getPassword(),
@@ -99,13 +99,13 @@ public class Authentication {
     @PostMapping("/exists")
     public @ResponseStatus
     HttpStatus exists(@RequestBody RegisterationForm registerationForm) {
-        return (!(this.accountRepository.exists(registerationForm.getUsername())
-                || this.accountRepository.exists(registerationForm.getEmail()))) ? HttpStatus.OK : HttpStatus.NOT_ACCEPTABLE;
+        return (!(this.accountRepository.exists(registerationForm.getUsername().toLowerCase())
+                || this.accountRepository.exists(registerationForm.getEmail().toLowerCase()))) ? HttpStatus.OK : HttpStatus.NOT_ACCEPTABLE;
     }
 
     @GetMapping("/forget-password/{email}")
     public void forgetPassword(@PathVariable String email) throws AuthException{
-        Account account = this.accountRepository.findWithPartOfEmail(email);
+        Account account = this.accountRepository.findWithPartOfEmail(email.toLowerCase());
         if (account != null) {
             String token = jwtTokenProvider.createToken(account.getUsername(), account.getRoles());
             this.emailService.sendMail(account.getEmail(), "Reset password", "Click on the link http://localhost:4200/forgot-password-confirmation/" 
