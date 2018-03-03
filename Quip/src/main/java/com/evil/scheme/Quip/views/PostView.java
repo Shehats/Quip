@@ -50,7 +50,7 @@ public class PostView {
     }
 
     @RequestMapping(value = "/image", method = RequestMethod.POST)
-    public Profile addImage(@RequestHeader("Authorization") String token, @RequestBody Post post) {
+    public Profile addImage(@RequestHeader("Authorization") String token, @RequestBody Post post) throws ProfileNotFoundException {
         Profile profile = this.profileRepository.findByUser(this.tokenProvider.getUsername(refactorToken(token)));
         profile.getPosts().add(post);
         return this.profileService.update(profile);
