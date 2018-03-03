@@ -5,7 +5,8 @@ import { ActionsService } from '../../services/http/actions.service';
 import { Post } from '../../models/Post';
 import { Profile } from '../../models/Profile';
 import { FileUploadService } from '../../services/file-upload/file-upload.service';
-import { Router, ActivatedRoute } from '@angular/router';
+// import { Router, ActivatedRoute } from '@angular/router';
+// import { NavbarComponent } from 'app/components/navbar/navbar.component'
 
 @Component({
   selector: 'app-profile',
@@ -14,7 +15,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 
 export class ProfileComponent implements OnInit {
-  constructor(private action: ActionsService, private uploadFile: FileUploadService, private router: Router, private actRoute: ActivatedRoute) { }
+  constructor(private action: ActionsService, private uploadFile: FileUploadService/*, private router: Router, private actRoute: ActivatedRoute*/) { }
+
   postForm: FormGroup; // Post Form values
   descForm: FormGroup; // Description data
 
@@ -25,6 +27,8 @@ export class ProfileComponent implements OnInit {
   backend: Backend = new Backend(); // access to backend data.
 
   profile: Profile; // Profile data.
+  state: boolean; // sets the state of either being a profile or a dashboard
+
   descText: string = "This is a test";
   friends$: Profile[];
 
@@ -72,14 +76,19 @@ export class ProfileComponent implements OnInit {
   }
 
   updateDesc(data) {
-    if (data){
+    if (data) {
       this.profile.description = data;
-        console.log(data);
+      console.log(data);
     }
   }
 
   handleProfileInfo(data) {
     console.log(data);
+  }
+
+  handleEvent(stateMode: any) {
+    this.state = stateMode;
+    console.log(this.state);
   }
 
   ngOnInit() {
@@ -93,14 +102,14 @@ export class ProfileComponent implements OnInit {
 
     this.action.fetch<Profile>(this.backend.profile)
       .subscribe(
-        profile => { this.profile = profile }
+        profile => { this.profile = profile; console.log(profile); }
       )
 
-    this.action.fetch(this.backend.profile) // Fetching Username
-      .subscribe(
-        () => console.log(this.actRoute), // this.username = this.actRoute
-        () => this.router.navigate(['login'])
-      )
+    // this.action.fetch(this.backend.profile) // Fetching Username
+    //   .subscribe(
+    //     () => console.log(this.actRoute), // this.username = this.actRoute
+    //     () => this.router.navigate(['login'])
+    //   )
   }
 
 }
