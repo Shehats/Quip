@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Backend } from 'app/Interfaces/Backend';
+import { PostService } from '../../services/post/post.service';
 import { ActionsService } from '../../services/http/actions.service';
 import { Post } from '../../models/Post';
 import { Profile } from '../../models/Profile';
@@ -12,7 +12,7 @@ import { FileUploadService } from '../../services/file-upload/file-upload.servic
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  constructor(private action: ActionsService, private uploadFile: FileUploadService/*, private router: Router, private actRoute: ActivatedRoute*/) { }
+  constructor(private postService: PostService, private uploadFile: FileUploadService, private action: ActionsService/*, private router: Router, private actRoute: ActivatedRoute*/) { }
 
   postForm: FormGroup; // Post Form values
   descForm: FormGroup; // Description data
@@ -21,20 +21,19 @@ export class DashboardComponent implements OnInit {
   localUrl; // To display the image preview
 
   username: string;
-  backend: Backend = new Backend(); // access to backend data.
 
   profile: Profile; // Profile data.
   state: boolean; // sets the state of either being a profile or a dashboard
 
   descText: string = "This is a test";
   friends$: Profile[];
+  posts$: Post[];
 
   submitPost() {
-    console.log('sddkdfkffkjk');
     if (this.postForm.valid) {
-      let postText = new Post(this.postForm.controls['postText'].value, null, null);
+      let postText = new Post(null, this.postForm.controls['postText'].value, null);
       console.log(postText);
-      this.action.save<Post>(this.backend.post, postText)
+      this.postService.savePost<Post>(postText)
         .subscribe(
           _ => this.postForm.reset(),
           _ => console.log(this.profile.posts)
@@ -45,6 +44,7 @@ export class DashboardComponent implements OnInit {
         err => console.log(err)
       );
     }
+    this.buildFeed();
   }
 
   submitDesc() {
@@ -60,7 +60,7 @@ export class DashboardComponent implements OnInit {
       reader.onload = (event: any) => {
         this.localUrl = event.target.result;
       }
-  
+
     }
   }
 
@@ -80,6 +80,25 @@ export class DashboardComponent implements OnInit {
     console.log(data);
   }
 
+  like(id) {
+    this.postService.getPostById<Post>(id)
+    .subscribe(
+      ()=>console.log("Liked")
+    );
+  }
+
+  dislike(id){
+    this.postService.getPostById(id)
+    .subscribe(
+      ()=>console.log("Disliked")
+    );
+  }
+  buildFeed (){
+    this.postService.getAllPosts()
+              .subscribe(
+                post => { this.posts$ = post }
+              );
+  }
   ngOnInit() {
     this.postForm = new FormGroup({
       postText: new FormControl("", Validators.required)
@@ -93,8 +112,8 @@ export class DashboardComponent implements OnInit {
       .subscribe(
         profile => { this.profile = profile; console.log(profile); }
       )
-
-    // this.action.fetch(this.backend.profile) // Fetching Username
+      this.buildFeed();
+    // this.postService.fetch(this.backend.profile) // Fetching Username
     //   .subscribe(
     //     () => console.log(this.actRoute), // this.username = this.actRoute
     //     () => this.router.navigate(['login'])

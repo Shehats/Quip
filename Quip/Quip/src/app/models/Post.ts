@@ -11,8 +11,17 @@ export class Post implements Instance{
     likes: Account[];
     mediaUrl: string;
     title: string;
+//Java pojo for reference.
+    // private Long id;
+    // private Account owner;
+    // private String title;
+    // private String description;
+    // private String mediaUrl;
+    // private List<Account> likes;
+    // private List<Account> dislikes;
+    // private List<Comments> comments;
 
-    constructor(comments?: Comment[], description?: string, dislikes?: Account[], 
+    constructor(comments?: Comment[], description?: string, dislikes?: Account[],
                 id?: number, likes?: Account[], mediaUrl?: string, title?: string) {
 
         this.comments = comments;
@@ -21,7 +30,7 @@ export class Post implements Instance{
         this.id = id;
         this.likes =  likes;
         this.mediaUrl = mediaUrl;
-        this,title = title;
+        this.title = title;
     }
 
     getFilter(): string{
