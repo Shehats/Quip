@@ -8,7 +8,7 @@ export class Account implements Instance {
     profilePic: string;
     email: string;
 
-    constructor(id: number, username: string, fname: string, lname: string, profilePic: string, email: string) {
+    constructor(id?: number, username?: string, fname?: string, lname?: string, profilePic?: string, email?: string) {
         this.id = id;
         this.username = username;
         this.fname = fname;
