@@ -20,11 +20,10 @@ export class ProfileComponent implements OnInit {
   postForm: FormGroup; // Post Form values
   descForm: FormGroup; // Description data
   fileToUpload: File; // actual file to upload
+  profileUpload: File; // profile picture to upload
   localUrl; // To display the image preview
-
   username: string;
   backend: Backend = new Backend(); // access to backend data.
-
   profile: Profile; // Profile data.
   state: boolean; // sets the state of either being a profile or a dashboard
 
@@ -68,13 +67,23 @@ export class ProfileComponent implements OnInit {
       reader.onload = (event: any) => {
         this.localUrl = event.target.result;
       }
-  
     }
   }
 
 
-  handleProfilePicInput(files: FileList) {
-    console.log(files);
+  handleProfilePicInput(event: any) {
+    if (event.target.files && event.target.files[0]) {
+      this.profileUpload = event.target.files.item(0);
+    }
+  }
+
+  uploadProfilePic() {
+    if (this.profileUpload) {
+      this.uploadFile.uploadProfilePicture(this.profileUpload)
+      .subscribe(x => {
+        this.action.save<any>(this.backend.account+'/updatePicture', x)
+      })
+    }
   }
 
   updateDesc(data) {

@@ -32,7 +32,7 @@ public class CommentView {
     @Resource
     PostServiceImpl postService;
 
-    @RequestMapping(value = "", method = RequestMethod.POST)
+    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
     public Post add(@RequestHeader("Authorization") String token,  @PathVariable Long id, @RequestBody CommentForm comment) throws PostNotFoundException {
         Account account = this.accountRepository.findByUsername(this.tokenProvider.getUsername(refactorToken(token)));
         Comments insVal = new Comments((comment.getDescription()));
@@ -43,7 +43,7 @@ public class CommentView {
         return this.postService.update(post);
     }
 
-    @RequestMapping(value = "/like/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/like/{id}", method = RequestMethod.GET)
     public Comments like (@RequestHeader("Authorization") String token, @PathVariable Long id) throws CommentNotFoundException {
         Account account = this.accountRepository.findByUsername(this.tokenProvider.getUsername(refactorToken(token)));
         Comments post = this.commentService.findById(id);
@@ -58,7 +58,7 @@ public class CommentView {
         return this.commentService.update(post);
     }
 
-    @RequestMapping(value = "/dislike/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/dislike/{id}", method = RequestMethod.GET)
     public Comments dislike (@RequestHeader("Authorization") String token, @PathVariable Long id) throws CommentNotFoundException {
         Account account = this.accountRepository.findByUsername(this.tokenProvider.getUsername(refactorToken(token)));
         Comments post = this.commentService.findById(id);
@@ -72,7 +72,7 @@ public class CommentView {
             post.getLikes().remove(account);
         return this.commentService.update(post);
     }
-    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     public Comments update(@ModelAttribute Comments comments) {
         try {
             return this.commentService.update(comments);

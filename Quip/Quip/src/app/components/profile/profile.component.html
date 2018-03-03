@@ -114,13 +114,13 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label class="fa fa-photo" aria-hidden="true" id="fileInput">
-                        <input type="file" id="file" (change)="handleProfilePicInput($event.target.files)">
+                        <input type="file" id="file" (change)="handleProfilePicInput($event)">
                     </label>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-sm waves-light" data-dismiss="modal" (click)="profilePictureModal.hide()" mdbRippleRadius>Close</button>
-                <button type="button" class="btn btn-sm waves-light" mdbRippleRadius>Submit</button>
+                <button type="button" class="btn btn-sm waves-light" (click)="uploadProfilePic()" mdbRippleRadius>Submit</button>
             </div>
         </div>
     </div>
