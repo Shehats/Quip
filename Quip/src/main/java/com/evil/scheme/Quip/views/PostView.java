@@ -49,6 +49,13 @@ public class PostView {
         return this.profileService.update(profile);
     }
 
+    @RequestMapping(value = "/image", method = RequestMethod.POST)
+    public Profile addImage(@RequestHeader("Authorization") String token, @RequestBody Post post) {
+        Profile profile = this.profileRepository.findByUser(this.tokenProvider.getUsername(refactorToken(token)));
+        profile.getPosts().add(post);
+        return this.profileService.update(profile);
+    }
+
     @RequestMapping(value = "", method = RequestMethod.GET)
     public List<Post> getAll() {
         return this.postService.findAll();
