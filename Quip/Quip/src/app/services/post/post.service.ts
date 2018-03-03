@@ -40,7 +40,7 @@ export class PostService {
                       .catch((e) => Observable.throw(e));
   }
 
-  public save <Post> (obj: Post): Observable<Post> {
+  public savePost <Post> (obj: Post): Observable<Post> {
     return this.action.save(post, obj)
                       .map(x => new Post(x['comments'], x['postText'],
                       x['dislikes'], x['id'], x['likes'],
@@ -48,7 +48,7 @@ export class PostService {
                       .catch((e) => Observable.throw(e));
   }
 
-  public update <Post> (obj: Post):Observable<Post> {
+  public updatePost <Post> (obj: Post):Observable<Post> {
     return this.action.update<Post>(post, obj)
                         .map(x => new Post(x['comments'], x['postText'],
                         x['dislikes'], x['id'], x['likes'],
@@ -56,14 +56,14 @@ export class PostService {
                         .catch((e) => Observable.throw(e));
   }
 
-  public updateById <Post> (id: number, obj: Post): Observable<Post> {
+  public updatePostById <Post> (id: number, obj: Post): Observable<Post> {
     return this.action.updateById(post, id, obj)
                       .map(x => new Post(x['comments'], x['postText'],
                       x['dislikes'], x['id'], x['likes'],
                       x['mediaUrl'], x['title']))
                       .catch((e) => Observable.throw(e));
   }
-  public deleteById <Post> (id: number): Observable<Post> {
+  public deletePostById <Post> (id: number): Observable<Post> {
     return this.action.deleteById(post, id)
                       .map(x => new Post(x['comments'], x['postText'],
                       x['dislikes'], x['id'], x['likes'],

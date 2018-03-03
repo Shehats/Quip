@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Backend } from 'app/Interfaces/Backend';
+import { PostService } from '../../services/post/post.service';
 import { ActionsService } from '../../services/http/actions.service';
 import { Post } from '../../models/Post';
 import { Profile } from '../../models/Profile';
@@ -12,7 +12,7 @@ import { FileUploadService } from '../../services/file-upload/file-upload.servic
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  constructor(private action: ActionsService, private uploadFile: FileUploadService/*, private router: Router, private actRoute: ActivatedRoute*/) { }
+  constructor(private postService: PostService, private uploadFile: FileUploadService, private action: ActionsService/*, private router: Router, private actRoute: ActivatedRoute*/) { }
 
   postForm: FormGroup; // Post Form values
   descForm: FormGroup; // Description data
@@ -21,7 +21,6 @@ export class DashboardComponent implements OnInit {
   localUrl; // To display the image preview
 
   username: string;
-  backend: Backend = new Backend(); // access to backend data.
 
   profile: Profile; // Profile data.
   state: boolean; // sets the state of either being a profile or a dashboard
@@ -34,7 +33,7 @@ export class DashboardComponent implements OnInit {
     if (this.postForm.valid) {
       let postText = new Post(null, this.postForm.controls['postText'].value, null);
       console.log(postText);
-      this.action.save<Post>(this.backend.post, postText)
+      this.postService.savePost<Post>(postText)
         .subscribe(
           _ => this.postForm.reset(),
           _ => console.log(this.profile.posts)
@@ -82,20 +81,20 @@ export class DashboardComponent implements OnInit {
   }
 
   like(id) {
-    this.action.fetch<Post>(this.backend.post + "/like/" +id)
+    this.postService.getPostById<Post>(id)
     .subscribe(
       ()=>console.log("Liked")
     );
   }
 
   dislike(id){
-    this.action.fetch<Post>(this.backend.post + "/dislike/" + id)
+    this.postService.getPostById(id)
     .subscribe(
       ()=>console.log("Disliked")
     );
   }
   buildFeed (){
-    this.action.fetch<Post[]>(this.backend.post)
+    this.postService.getAllPosts()
               .subscribe(
                 post => { this.posts$ = post }
               );
@@ -114,7 +113,7 @@ export class DashboardComponent implements OnInit {
         profile => { this.profile = profile; console.log(profile); }
       )
       this.buildFeed();
-    // this.action.fetch(this.backend.profile) // Fetching Username
+    // this.postService.fetch(this.backend.profile) // Fetching Username
     //   .subscribe(
     //     () => console.log(this.actRoute), // this.username = this.actRoute
     //     () => this.router.navigate(['login'])
