@@ -38,3 +38,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
         http.httpBasic();
     }
 }
+
