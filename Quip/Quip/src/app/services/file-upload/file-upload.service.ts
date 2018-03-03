@@ -14,6 +14,7 @@ export class FileUploadService {
     formData.append('file', fileToUpload);
     return this.http
       .post(this.backend.uploadProfilePic, formData)
+      .map(res => res.json())
       .catch((e) => Observable.throw(e));
   }
 
