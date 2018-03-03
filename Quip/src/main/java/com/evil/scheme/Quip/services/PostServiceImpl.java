@@ -51,7 +51,7 @@ public class PostServiceImpl implements PostService {
         post.setTitle(obj.getTitle());
         post.setDescription(obj.getDescription());
         post.setMediaUrl(obj.getMediaUrl());
-        return this.repository.save(obj);
+        return post;
     }
 
     @Override

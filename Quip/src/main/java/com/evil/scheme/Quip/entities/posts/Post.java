@@ -1,7 +1,7 @@
 package com.evil.scheme.Quip.entities.posts;
 
 import com.evil.scheme.Quip.entities.accounts.Account;
-import com.evil.scheme.Quip.entities.comments.Comment;
+import com.evil.scheme.Quip.entities.comments.Comments;
 import com.evil.scheme.Quip.entities.profiles.Profile;
 
 import javax.persistence.*;
@@ -11,13 +11,13 @@ import java.io.*;
 @Entity
 public class Post implements Serializable{
     private Long id;
-    private Long parentId;
+//    private Profile parentId;
     private String title;
     private String description;
     private String mediaUrl;
     private List<Account> likes;
     private List<Account> dislikes;
-    private List<Comment> comments;
+    private List<Comments> comments;
 
     public Post () {
     }
@@ -26,7 +26,7 @@ public class Post implements Serializable{
         this.mediaUrl = mediaUrl;
     }
 
-    public Post (String title, String description, String mediaUrl, List<Account> likes, List<Account> dislikes, List<Comment> comments) {
+    public Post (String title, String description, String mediaUrl, List<Account> likes, List<Account> dislikes, List<Comments> comments) {
         this.title = title;
         this.description = description;
         this.mediaUrl = mediaUrl;
@@ -49,14 +49,16 @@ public class Post implements Serializable{
     public void setId(Long id) {
         this.id = id;
     }
-    @ManyToOne(cascade = CascadeType.ALL,targetEntity = Profile.class)
-	public Long getParentId() {
-		return parentId;
-	}
 
-	public void setParentId(Long parentId) {
-		this.parentId = parentId;
-	}
+//    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL,targetEntity = Profile.class)
+////    @JoinColumn(name = "profileId")
+//	public Profile getParentId() {
+//		return parentId;
+//	}
+//
+//	public void setParentId(Profile parentId) {
+//		this.parentId = parentId;
+//	}
 
     @Column(name = "media")
     public String getMediaUrl() {
@@ -99,10 +101,10 @@ public class Post implements Serializable{
     }
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "parentPost")
-    public List<Comment> getComments() {
+    public List<Comments> getComments() {
         return comments;
     }
-    public void setComments(List<Comment> comments) {
+    public void setComments(List<Comments> comments) {
         this.comments = comments;
     }
 }
