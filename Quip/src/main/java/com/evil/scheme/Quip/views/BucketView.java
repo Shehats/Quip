@@ -52,8 +52,8 @@ public class BucketView {
 
 	@PostMapping("/uploadMedia")
 	public Post uploadMedia (@RequestPart (value = "file") MultipartFile file) {
-		Post post = new Post(this.amazonClient.uploadFile(file));
-		return this.postService.create(post);
+		// Post post = new Post(this.amazonClient.uploadFile(file));
+		return new Post(this.amazonClient.uploadFile(file));
 	}
 
 	@PutMapping("/uploadMedia/{id}")

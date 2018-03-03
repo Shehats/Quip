@@ -19,7 +19,6 @@ export class ProfileComponent implements OnInit {
 
   postForm: FormGroup; // Post Form values
   descForm: FormGroup; // Description data
-
   fileToUpload: File; // actual file to upload
   localUrl; // To display the image preview
 
@@ -35,16 +34,19 @@ export class ProfileComponent implements OnInit {
   submitPost() {
     if (this.postForm.valid) {
       if (this.uploadFile) {
+        console.log('skkdfkjkgkjg');
+        console.log(this.postForm.controls['postText'].value);
         this.uploadFile.uploadPostPicture(this.fileToUpload)
         .subscribe(
           x => {
-            this.action.save<Post>(this.backend.post + '/', new Post(x['comments'], x['description'], x['dislikes'],
-                                                            x['id'], x['likes'], x['mediaUrl'], this.postForm.controls['postText'].value))
+            this.action.save<Post>(this.backend.post + '/image', new Post(x['comments'], this.postForm.controls['postText'].value, x['dislikes'],
+                                                            x['id'], x['likes'], x['mediaUrl'], x['title']))
                                                             .subscribe(x => console.log(x));
           },
           err => console.log(err)
         );
       } else {
+        console.log('here');
         this.action.save<Post>(this.backend.post, new Post(null, null, null, null, null, null, this.postForm.controls['postText'].value))
           .subscribe(
             _ => this.postForm.reset()

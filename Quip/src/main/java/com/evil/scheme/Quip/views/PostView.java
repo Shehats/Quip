@@ -40,20 +40,21 @@ public class PostView {
 
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public Profile add(@RequestHeader("Authorization") String token, @RequestBody PostForm post) throws ProfileNotFoundException {
+    public List<Post> add(@RequestHeader("Authorization") String token, @RequestBody PostForm post) throws ProfileNotFoundException {
         Profile profile = this.profileRepository.findByUser(this.tokenProvider.getUsername(refactorToken(token)));
         Post post1 = new Post(post.getTitle(), post.getDescription(), post.getMedia());
         Post retVal = this.postService.create(post1);
 //        retVal.setParentId(profile);
         profile.getPosts().add(retVal);
-        return this.profileService.update(profile);
+        return this.profileService.update(profile).getPosts();
     }
 
     @RequestMapping(value = "/image", method = RequestMethod.POST)
-    public Profile addImage(@RequestHeader("Authorization") String token, @RequestBody Post post) throws ProfileNotFoundException {
+    public List<Post> addImage(@RequestHeader("Authorization") String token, @RequestBody Post post) throws ProfileNotFoundException, PostNotFoundException {
         Profile profile = this.profileRepository.findByUser(this.tokenProvider.getUsername(refactorToken(token)));
+        this.postService.create(post);
         profile.getPosts().add(post);
-        return this.profileService.update(profile);
+        return this.profileService.update(profile).getPosts();
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
