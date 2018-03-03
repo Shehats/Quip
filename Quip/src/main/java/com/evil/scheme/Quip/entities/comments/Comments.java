@@ -50,7 +50,7 @@ public class Comments implements Serializable{
 		this.owner = owner;
 	}
 
-	@ManyToOne(targetEntity = Account.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(targetEntity = Account.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	public List<Account> getLikes() {
 		return likes;
 	}
@@ -58,7 +58,7 @@ public class Comments implements Serializable{
 		this.likes = likes;
 	}
 
-	@ManyToOne(targetEntity = Account.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(targetEntity = Account.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	public List<Account> getDislikes() {
 		return dislikes;
 	}
