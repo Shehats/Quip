@@ -25,12 +25,8 @@ import { FileUploadService } from './services/file-upload/file-upload.service';
 @NgModule({
   declarations: [
     AppComponent,
-<<<<<<< HEAD
     SearchPipe,
     ForgotPasswordConfirmationComponent
-=======
-    // SearchPipe,
->>>>>>> 7ab43ae3348fa26e6bfd76253bfd8f56426c2d1a
   ],
   imports: [
     BrowserModule,
