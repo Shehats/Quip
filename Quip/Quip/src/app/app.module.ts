@@ -4,8 +4,8 @@ import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-// import { HttpModule } from '@angular/http';
-import { SearchPipe } from './pipes/search.pipe';
+import { HttpModule } from '@angular/http';
+// import { SearchPipe } from './pipes/search.pipe';
 import { ReqInterceptorService } from './services/interceptors/req-interceptor.service';
 import { ActionsService } from './services/http/actions.service';
 import { AuthService } from './services/auth/auth.service';
@@ -15,12 +15,20 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 // Local modules
 import { ProfileModule } from './modules/profile/profile.module';
+// import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { ForgotPasswordConfirmationComponent } from './forgot-password-confirmation/forgot-password-confirmation.component';
 import { AuthModule } from './modules/auth/auth.module';
+import { FileUploadService } from './services/file-upload/file-upload.service';
+import { NotfoundComponent } from './components/notfound/notfound.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    SearchPipe,
+    // ForgotPasswordComponent,
+    ForgotPasswordConfirmationComponent,
+    NotfoundComponent,
+    // SearchPipe,
   ],
   imports: [
     BrowserModule,
@@ -28,19 +36,21 @@ import { AuthModule } from './modules/auth/auth.module';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    HttpModule,
     AppRoutingModule,
     ProfileModule,
     AuthModule,
     MDBBootstrapModule.forRoot()
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, 
-      useClass: ReqInterceptorService, 
-      multi: true 
+    { provide: HTTP_INTERCEPTORS,
+      useClass: ReqInterceptorService,
+      multi: true
     },
     CacheService,
     ActionsService,
-    AuthService
+    AuthService,
+    FileUploadService
   ],
   bootstrap: [AppComponent],
   schemas: [ NO_ERRORS_SCHEMA ]

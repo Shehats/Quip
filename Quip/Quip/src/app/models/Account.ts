@@ -5,16 +5,16 @@ export class Account implements Instance {
     username: string;
     fname: string;
     lname: string;
-    profilePic: any;
+    profilePic: string;
     email: string;
 
-    constructor(identifier: number, message: string, first: string, last: string, profile: any, mail: string) {
-        this.id = identifier;
-        this.username = message;
-        this.fname = first;
-        this.lname = last;
-        this.profilePic = profile;
-        this.email = mail;
+    constructor(id: number, username: string, fname: string, lname: string, profilePic: string, email: string) {
+        this.id = id;
+        this.username = username;
+        this.fname = fname;
+        this.lname = lname;
+        this.profilePic = profilePic;
+        this.email = email;
     }
 
     getFilter(): string{

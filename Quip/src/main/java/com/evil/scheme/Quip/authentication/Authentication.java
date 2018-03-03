@@ -10,6 +10,7 @@ import com.evil.scheme.Quip.forms.Token;
 import com.evil.scheme.Quip.repositories.AccountRepository;
 import com.evil.scheme.Quip.security.JwtTokenProvider;
 import com.evil.scheme.Quip.services.AccountServiceImpl;
+import com.evil.scheme.Quip.services.EmailService;
 import com.evil.scheme.Quip.services.ProfileServiceImpl;
 import org.codehaus.jackson.annotate.JsonValue;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,10 +48,13 @@ public class Authentication {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private EmailService emailService;
+
     @PostMapping("/signin")
     @ResponseBody
     public Token signin(@RequestBody LoginForm loginForm) throws AuthException{
-        Account account = this.accountRepository.findByEmailOrUsername(loginForm.getUsername());
+        Account account = this.accountRepository.findByEmailOrUsername(loginForm.getUsername().toLowerCase());
         if (account != null) {
             if (this.passwordEncoder.matches(loginForm.getPassword(), account.getPassword())) {
                 try {
@@ -70,16 +74,17 @@ public class Authentication {
         if (!(this.accountRepository.exists(registerationForm.getUsername())
                 || this.accountRepository.exists(registerationForm.getEmail()))) {
             try {
-                Account account = new Account(registerationForm.getUsername(),
+                Account account = new Account(registerationForm.getUsername().toLowerCase(),
                         registerationForm.getPassword(),
                         registerationForm.getFname(),
                         registerationForm.getLname(),
-                        registerationForm.getEmail());
+                        registerationForm.getEmail().toLowerCase());
                 account.setPassword(this.passwordEncoder.encode(account.getPassword()));
                 account.setRoles(new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)));
                 Account account1 = this.accountService.create(account);
                 Profile profile = new Profile();
                 profile.setAccount(account);
+                this.emailService.sendMail(registerationForm.getEmail(), "Welcome to Quip", "Thank you for signing up");
                 this.profileService.create(profile);
                 authenticationManager.authenticate(
                         new UsernamePasswordAuthenticationToken(account1.getUsername(), registerationForm.getPassword()));
@@ -88,7 +93,7 @@ public class Authentication {
                 throw new AuthException("Invalid Credentials", HttpStatus.UNPROCESSABLE_ENTITY);
             }
         }else
-            throw new AuthException("Account already exists.", HttpStatus.UNAUTHORIZED);
+           throw new AuthException("Account already exists.", HttpStatus.UNAUTHORIZED);
     }
 
     @PostMapping("/exists")
@@ -96,5 +101,17 @@ public class Authentication {
     HttpStatus exists(@RequestBody RegisterationForm registerationForm) {
         return (!(this.accountRepository.exists(registerationForm.getUsername())
                 || this.accountRepository.exists(registerationForm.getEmail()))) ? HttpStatus.OK : HttpStatus.NOT_ACCEPTABLE;
+    }
+
+    @GetMapping("/forget-password/{email}")
+    public void forgetPassword(@PathVariable String email) throws AuthException{
+        Account account = this.accountRepository.findWithPartOfEmail(email.toLowerCase());
+        if (account != null) {
+            String token = jwtTokenProvider.createToken(account.getUsername(), account.getRoles());
+            this.emailService.sendMail(account.getEmail(), "Reset password", "Click on the link http://localhost:4200/forgot-password-confirmation/" 
+                                                                + token + " to reset your password\nThank you\nQuip Team.");
+        } else {
+            throw new AuthException("Account doesn't exist.", HttpStatus.UNAUTHORIZED);
+        }
     }
 }

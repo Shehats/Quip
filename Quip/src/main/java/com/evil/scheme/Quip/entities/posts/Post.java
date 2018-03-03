@@ -1,40 +1,44 @@
 package com.evil.scheme.Quip.entities.posts;
 
-import com.evil.scheme.Quip.entities.comments.Comment;
+import com.evil.scheme.Quip.entities.accounts.Account;
+import com.evil.scheme.Quip.entities.comments.Comments;
 import com.evil.scheme.Quip.entities.profiles.Profile;
 
 import javax.persistence.*;
 import java.util.List;
+import java.io.*;
 
 @Entity
-public class Post{
+public class Post implements Serializable{
     private Long id;
+//    private Profile parentId;
     private String title;
     private String description;
     private String mediaUrl;
-    private byte[] picture;
-    private Integer likes;
-    private Integer dislikes;
-    private List<Comment> comments;
+    private List<Account> likes;
+    private List<Account> dislikes;
+    private List<Comments> comments;
 
-    public Post() {
+    public Post () {
     }
 
-    public Post(String title, String description, String mediaUrl, byte[] picture, Integer likes, Integer dislikes, List<Comment> comments) {
+    public Post (String mediaUrl) {
+        this.mediaUrl = mediaUrl;
+    }
+
+    public Post (String title, String description, String mediaUrl, List<Account> likes, List<Account> dislikes, List<Comments> comments) {
         this.title = title;
         this.description = description;
         this.mediaUrl = mediaUrl;
-        this.picture = picture;
         this.likes = likes;
         this.dislikes = dislikes;
         this.comments = comments;
     }
 
-    public Post(String title, String description, String mediaUrl, byte[] picture) {
+    public Post (String title, String description, String mediaUrl) {
         this.title = title;
         this.description = description;
         this.mediaUrl = mediaUrl;
-        this.picture = picture;
     }
 
     @Id
@@ -46,20 +50,22 @@ public class Post{
         this.id = id;
     }
 
+//    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL,targetEntity = Profile.class)
+////    @JoinColumn(name = "profileId")
+//	public Profile getParentId() {
+//		return parentId;
+//	}
+//
+//	public void setParentId(Profile parentId) {
+//		this.parentId = parentId;
+//	}
+
     @Column(name = "media")
     public String getMediaUrl() {
         return mediaUrl;
     }
     public void setMediaUrl(String mediaUrl) {
         this.mediaUrl = mediaUrl;
-    }
-
-    @Column(name = "picture")
-    public byte[] getPicture() {
-        return picture;
-    }
-    public void setPicture(byte[] picture) {
-        this.picture = picture;
     }
 
     @Column(name = "title")
@@ -78,28 +84,27 @@ public class Post{
         this.description = description;
     }
 
-    @Column(name = "likes")
-    public Integer getLikes() {
+    @ManyToOne(targetEntity = Account.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    public List<Account> getLikes() {
         return likes;
     }
-    public void setLikes(Integer likes) {
+    public void setLikes(List<Account> likes) {
         this.likes = likes;
     }
 
-    @Column(name = "dislikes")
-    public Integer getDislikes() {
+    @ManyToOne(targetEntity = Account.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    public List<Account> getDislikes() {
         return dislikes;
     }
-    public void setDislikes(Integer dislikes) {
+    public void setDislikes(List<Account> dislikes) {
         this.dislikes = dislikes;
     }
 
-    @OneToMany(targetEntity = Comment.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    public List<Comment> getComments() {
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "parentPost")
+    public List<Comments> getComments() {
         return comments;
     }
-    public void setComments(List<Comment> comments) {
+    public void setComments(List<Comments> comments) {
         this.comments = comments;
     }
-
 }

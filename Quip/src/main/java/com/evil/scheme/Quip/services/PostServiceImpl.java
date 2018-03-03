@@ -48,10 +48,9 @@ public class PostServiceImpl implements PostService {
         Post post = this.repository.findOne(obj.getId());
         if (post == null)
             throw new PostNotFoundException("Post not found.");
-        post.setTitle(post.getTitle());
-        post.setDescription(post.getDescription());
-        post.setMediaUrl(post.getMediaUrl());
-        post.setPicture(post.getPicture());
+        post.setTitle(obj.getTitle());
+        post.setDescription(obj.getDescription());
+        post.setMediaUrl(obj.getMediaUrl());
         return post;
     }
 

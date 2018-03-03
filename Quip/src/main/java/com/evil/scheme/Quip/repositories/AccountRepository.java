@@ -1,8 +1,9 @@
 package com.evil.scheme.Quip.repositories;
-
+import org.springframework.transaction.annotation.Transactional;
 import com.evil.scheme.Quip.entities.accounts.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -19,4 +20,13 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     @Query("select a from Account a where a.username = :username or a.email = :username")
     Account findByEmailOrUsername(@Param("username") String username);
+
+    @Query("select a from Account a where a.email like concat(:email,'%')")
+    Account findWithPartOfEmail(@Param("email") String email);
+
+    @Transactional
+    @Modifying(clearAutomatically = true)
+    @Query("update Account a SET a.password = :password where a.id = :id")
+    int updatePassword(@Param("id") Long id, @Param("password") String password);
+    
 }

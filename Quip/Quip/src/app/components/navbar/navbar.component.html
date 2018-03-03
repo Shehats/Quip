@@ -1,9 +1,10 @@
-<nav class="mb-1 navbar navbar-expand-lg navbar-dark animate-bg lighten-1">
-  <a class="navbar-brand" href="#">Quip</a>
+<nav class="mb-1 navbar fixed-top navbar-expand-lg navbar-dark animate-bg scrolling-navbar lighten-1 animated fadeIn">
+  <a class="navbar-brand" (click)="sendState(false)">Quip</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-5" aria-controls="navbarSupportedContent-5"
     aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
+
   <div class="collapse navbar-collapse" id="navbarSupportedContent-5">
 
     <ul class="navbar-nav mr-auto ">
@@ -12,8 +13,22 @@
       </li>
     </ul>
 
+    <!-- Search form -->
+    <div class="sd-form">
+      <input [(ngModel)]="searchArg" class="form-control" type="text" placeholder="Search" aria-label="Search" id="searchBar">
+    </div>
+    <ul class="list-group list-group-flush" *ngIf="searchArg">
+      <li class="list-group-item" *ngFor="let user of accounts$ | search: searchArg :user| async">
+        <p>{{user.username}}</p>
+        <p>{{user.fname}}</p>
+        <p>{{user.lname}}</p>
+        <p>{{user.email}}</p>
+      </li>
+    </ul>
+
+
     <ul class="navbar-nav ml-auto nav-flex-icons">
-      <a href="#" class="d-flex justify-content-between ">
+      <a (click)="sendState(true)" class="d-flex justify-content-between ">
         <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-8" alt="avatar" class="avatar rounded-circle d-flex align-self-center mr-2 z-depth-1">
       </a>
       <li class="nav-item">

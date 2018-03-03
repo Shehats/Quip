@@ -1,0 +1,66 @@
+$dark-blue: #2d5c56;
+$red: #f84e4c;
+$light-blue: #b8c6c9;
+$light-grey: #cccccc;
+$lime-green: #73cf45;
+$turquoise-blue: #005555;
+
+h1 {
+    font-size: 96px;
+    color: white;
+}
+h4 {
+    font-size: 32px;
+    color: white;
+}
+
+.bg-animate {
+    width: 100wh;
+    color: #fff;
+    background: linear-gradient(-45deg, $lime-green, $dark-blue, $red, $lime-green);
+    background-size: 400% 400%;
+    -webkit-animation: Gradient 15s ease infinite;
+    -moz-animation: Gradient 15s ease infinite;
+    animation: Gradient 15s ease infinite;
+}
+
+@-webkit-keyframes Gradient {
+    0% {
+        background-position: 0% 50%
+    }
+    50% {
+        background-position: 100% 50%
+    }
+    100% {
+        background-position: 0% 50%
+    }
+}
+
+@-moz-keyframes Gradient {
+    0% {
+        background-position: 0% 50%
+    }
+    50% {
+        background-position: 100% 50%
+    }
+    100% {
+        background-position: 0% 50%
+    }
+}
+
+@keyframes Gradient {
+    0% {
+        background-position: 0% 50%
+    }
+    50% {
+        background-position: 100% 50%
+    }
+    100% {
+        background-position: 0% 50%
+    }
+}
+
+section {
+    height: 100%;
+    padding: 128px;
+}
