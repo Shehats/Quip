@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Backend } from 'app/Interfaces/Backend';
+//import { Backend } from 'app/Interfaces/Backend';
 import { ActionsService } from '../../services/http/actions.service';
 import { Post } from '../../models/Post';
 import { Profile } from '../../models/Profile';
 import { FileUploadService } from '../../services/file-upload/file-upload.service';
-// import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { post, profile, account } from 'app/Interfaces/Backend';
+import { Account } from 'app/models/Account';
 // import { NavbarComponent } from 'app/components/navbar/navbar.component'
 
 @Component({
@@ -15,7 +17,7 @@ import { FileUploadService } from '../../services/file-upload/file-upload.servic
 })
 
 export class ProfileComponent implements OnInit {
-  constructor(private action: ActionsService, private uploadFile: FileUploadService/*, private router: Router, private actRoute: ActivatedRoute*/) { }
+  constructor(private action: ActionsService, private uploadFile: FileUploadService/*, private router: Router*/, private actRoute: ActivatedRoute) { }
 
   postForm: FormGroup; // Post Form values
   descForm: FormGroup; // Description data
@@ -23,9 +25,11 @@ export class ProfileComponent implements OnInit {
   profileUpload: File; // profile picture to upload
   localUrl; // To display the image preview
   username: string;
-  backend: Backend = new Backend(); // access to backend data.
-  profile: Profile; // Profile data.
+  //backend: Backend = new Backend(); // access to backend data.
+  pro: Profile; // Profile data.
   state: boolean; // sets the state of either being a profile or a dashboard
+  acc: Account;
+  posts: Post[];
 
   descText: string = "This is a test";
   friends$: Profile[];
@@ -38,7 +42,7 @@ export class ProfileComponent implements OnInit {
         this.uploadFile.uploadPostPicture(this.fileToUpload)
         .subscribe(
           x => {
-            this.action.save<Post>(this.backend.post + '/image', new Post(x['comments'], this.postForm.controls['postText'].value, x['dislikes'],
+            this.action.save<Post>(post + '/image', new Post(x['comments'], this.postForm.controls['postText'].value, x['dislikes'],
                                                             x['id'], x['likes'], x['mediaUrl'], x['title']))
                                                             .subscribe(x => console.log(x));
           },
@@ -46,7 +50,7 @@ export class ProfileComponent implements OnInit {
         );
       } else {
         console.log('here');
-        this.action.save<Post>(this.backend.post, new Post(null, this.postForm.controls['postText'].value, null, null, null, null, null))
+        this.action.save<Post>(post, new Post(null, this.postForm.controls['postText'].value, null, null, null, null, null))
           .subscribe(
             _ => this.postForm.reset()
           );
@@ -56,7 +60,7 @@ export class ProfileComponent implements OnInit {
 
   submitDesc() {
     if (this.descForm.valid) {
-      this.action.update<Profile>(this.backend.profile, this.profile);
+      this.action.update<Profile>(profile, this.pro);
     }
   }
 
@@ -81,14 +85,14 @@ export class ProfileComponent implements OnInit {
     if (this.profileUpload) {
       this.uploadFile.uploadProfilePicture(this.profileUpload)
       .subscribe(x => {
-        this.action.save<any>(this.backend.account+'/updatePicture', x)
+        this.action.save<any>(account+'/updatePicture', x)
       })
     }
   }
 
   updateDesc(data) {
     if (data) {
-      this.profile.description = data;
+      this.pro.description = data;
       console.log(data);
     }
   }
@@ -111,16 +115,42 @@ export class ProfileComponent implements OnInit {
       desc: new FormControl()
     })
 
-    this.action.fetch<Profile>(this.backend.profile)
+    this.action.fetch<Profile>(profile)
       .subscribe(
-        profile => { this.profile = profile; console.log(profile); }
+        profile => { this.pro = profile; console.log(profile); }
       )
 
+    this.username = this.actRoute.snapshot.params.username;//Gets the username
+    if (this.username) {
+      this.action.fetch<Profile>(profile + '/' + this.username)
+      .subscribe(
+        (profile: Profile) => this.saveVariables(<Profile>profile),
+        _ => console.log('wake me up')
+        // this.username = this.actRoute
+        )
+    }
+    else {
+      this.action.fetch<Profile>(profile)
+        .subscribe(
+        (profile: Profile) => this.saveVariables(<Profile>profile),
+        _ => console.log('wake me up')
+        // this.username = this.actRoute
+        )
+    }
     // this.action.fetch(this.backend.profile) // Fetching Username
     //   .subscribe(
     //     () => console.log(this.actRoute), // this.username = this.actRoute
     //     () => this.router.navigate(['login'])
     //   )
   }
+
+  saveVariables(profiling: Profile) {
+    this.pro = profiling;
+    this.posts = profiling.posts;
+    this.acc = new Account(profiling.account.id, profiling
+      .account.username, profiling.account.fname, profiling.account.lname, profile, profiling.account.email);
+    console.log(profile);
+  }
+
 
 }

@@ -20,6 +20,7 @@ import { ForgotPasswordConfirmationComponent } from './forgot-password-confirmat
 import { AuthModule } from './modules/auth/auth.module';
 import { FileUploadService } from './services/file-upload/file-upload.service';
 import { NotfoundComponent } from './components/notfound/notfound.component';
+import { CommentComponent } from './components/comment/comment.component';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { NotfoundComponent } from './components/notfound/notfound.component';
     // ForgotPasswordComponent,
     ForgotPasswordConfirmationComponent,
     NotfoundComponent,
+    CommentComponent,
     // SearchPipe,
   ],
   imports: [
