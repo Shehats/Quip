@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import {FormGroup, FormControl, Validators } from '@angular/forms';
-import { ActionsService } from '../../services/http/actions.service';
-import { Backend } from '../../Interfaces/Backend';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router'
 
 @Component({
@@ -10,17 +9,15 @@ import { Router } from '@angular/router'
   styleUrls: ['./forgot-password.component.scss']
 })
 export class ForgotPasswordComponent implements OnInit {
-  backend:Backend = new Backend();
   forgotPassword;
   @Input() sent:boolean = false;
   email: string;
-  constructor(private actions: ActionsService,
+  constructor(private auth: AuthService,
               private router: Router){}
 
   onSendRequest(user) {
     this.email = user["email"];
-    this.actions.fetch<any>(this.backend.baseUrl + `/forget-password/${this.email}`)
-    .subscribe(
+    this.auth.forgetPassword(this.email).subscribe(
       _=>this.sent=true,
       _=>console.log("Error")
     );
