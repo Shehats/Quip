@@ -20,10 +20,10 @@ export const unFriend: string = profile + '/unFriend'; // PUT and append usernam
 // ..................................................
 // Post:
 /*GET ALL in the site, + post id gets post by id.
-  POST add a post, 
+  POST add a post,
   DELETE  + post id deletes a post,
 */
-export const post: string = baseUrl + 'posts'; 
+export const post: string = baseUrl + 'posts';
 export const postUpdate: string = post + '/update'; // PUT updates post
 export const addImage: string = post + '/image'; // POST add image to the post.
 export const likePost: string = post + '/like'; // GET add the id of the post to it.
@@ -32,6 +32,8 @@ export const disLikePost: string = post + '/dislike'; // GET add the id of the p
 // Comment
 export const comment: string = baseUrl + 'comments'; // POST + post id adds comment to it.
 export const commentUpdate: string = comment + '/update';
+export const likeComment: string = comment + '/like';
+export const disLikeComment: string = comment + '/dislike';
 // ...................................................
 // File uploads:
 export const uploadProfilePic: string = this.baseUrl + 'uploadProfile'; // POST
