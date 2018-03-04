@@ -46,16 +46,13 @@ export class ProfileService {
 
   public updateProfilePicture(fileToUpload: File): Observable<Account> {
     return this.files.uploadProfilePicture(fileToUpload)
-    .do(x => {
-            this.actions.update<Account>(updateProfilePic, x)
+    .flatMap(x => this.actions.save<Account>(updateProfilePic, x)
             .map(y => new Account(y['id'], y['username'], y['fname'], y['lname'], y['profilePic'],y['email']))
-          },
-          err => console.log(err)
         );
 
   }
   public updateProfile(profile: Profile): Observable<Profile> {
-    return this.actions.update(updateProfile, profile)
+    return this.actions.save(updateProfile, profile)
                 .map(x => new Profile(x['account'], x['posts'], x['friends'], 
                                   x['recomendedFriends'], x['description']));
   }

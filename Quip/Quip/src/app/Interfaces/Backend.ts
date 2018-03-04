@@ -36,5 +36,5 @@ export const likeComment: string = comment + '/like';
 export const disLikeComment: string = comment + '/dislike';
 // ...................................................
 // File uploads:
-export const uploadProfilePic: string = this.baseUrl + 'uploadProfile'; // POST
-export const uploadPostPic: string = this.baseUrl + 'uploadMedia'; // POST
+export const uploadProfilePic: string = baseUrl + 'uploadProfile'; // POST
+export const uploadPostPic: string = baseUrl + 'uploadMedia'; // POST
