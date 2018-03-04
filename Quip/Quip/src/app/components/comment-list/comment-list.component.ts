@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Comment } from '../../models/Comment';
 import { CommentService } from '../../services/comment/comment.service';
 @Component({
@@ -12,16 +12,16 @@ export class CommentListComponent implements OnInit {
 
   ngOnInit() {
   }
-  
+
     like(id) {
-      this.commentService.likePost(id)
+      this.commentService.likeComment(id)
       .subscribe(
         ()=>console.log("Liked")
       );
     }
 
     dislike(id){
-      this.commentService.dislikePost(id)
+      this.commentService.dislikeComment(id)
       .subscribe(
         ()=>console.log("Disliked")
       );
