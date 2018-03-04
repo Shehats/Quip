@@ -14,6 +14,7 @@ import { PostListComponent } from '../../components/post-list/post-list.componen
 import { ProfileService } from '../../services/profile/profile.service';
 import { PostService } from '../../services/post/post.service';
 import { DashboardComponent } from '../../components/dashboard/dashboard.component';
+import { AccountListComponent } from '../../components/account-list/account-list.component';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { DashboardComponent } from '../../components/dashboard/dashboard.compone
     SearchPipe,
     NavbarComponent,
     // DashboardComponent,
+    AccountListComponent,
     PostListComponent,
     DashboardComponent
   ],

@@ -20,15 +20,15 @@ export class PostListComponent implements OnInit {
                       x['mediaUrl'], x['title']));
   }
 
-  like(id) {
-    this.postService.likePost(id)
+  like(post: Post) {
+    this.postService.likePost(post.id)
     .subscribe(
       _ => location.reload()
     );
   }
 
-  dislike(id){
-    this.postService.dislikePost(id)
+  dislike(post: Post){
+    this.postService.dislikePost(post.id)
     .subscribe(
      _ => location.reload()
     );

@@ -1,6 +1,3 @@
-<div class="md-form">
-    <input class="form-control" type="text" placeholder="Search" aria-label="Search">
-</div>
 <div class="card" *ngFor="let post of posts" style="margin-bottom: 15px;">
     <!--Card content-->
     <div class="card-body">
@@ -20,8 +17,8 @@
         <hr>
         <div><p class="card-text">{{post['description']}}</p></div>
         <div class="btn-group mx-auto mt-2">
-            <button class="btn-sm" (click)="like(post.id)"><i class="fa fa-thumbs-o-up"></i><span *ngIf="post.likes">{{post.likes.length}}</span></button>
-            <button class="btn-sm" (click)="dislike(post.id)"><i class="fa fa-thumbs-o-down"></i><span *ngIf="post.dislikes">{{post.dislikes.length}}</span></button>
+            <button class="btn-sm" (click)="like(post)"><i class="fa fa-thumbs-o-up"></i><span *ngIf="post.likes">{{post.likes.length}}</span></button>
+            <button class="btn-sm" (click)="dislike(post)"><i class="fa fa-thumbs-o-down"></i><span *ngIf="post.dislikes">{{post.dislikes.length}}</span></button>
         </div>
     </div>
 </div>

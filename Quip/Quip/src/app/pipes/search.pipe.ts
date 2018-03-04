@@ -12,6 +12,9 @@ import * as _ from 'underscore';
 export class SearchPipe implements PipeTransform {
   transform <T extends Instance, F extends Filter> (value: Observable<T[]>, 
     args?: string, kwargs?: string | string [] | F | F []): Observable<T[]> {
+    console.log(args);
+    console.log('hererere');
+    console.log(value);
     return (args)? value.map(
     	x => x.filter(y => (y.getFilter().toLowerCase()
         .includes(args.toLowerCase()))).filter(g => this.refactor(g, kwargs))): value;

@@ -17,14 +17,7 @@
     <div class="sd-form">
       <input [(ngModel)]="searchArg" class="form-control" type="text" placeholder="Search" aria-label="Search" id="searchBar">
     </div>
-    <ul class="list-group list-group-flush" *ngIf="searchArg">
-      <li class="list-group-item" *ngFor="let user of accounts$ | search: searchArg :user| async">
-        <p>{{user.username}}</p>
-        <p>{{user.fname}}</p>
-        <p>{{user.lname}}</p>
-        <p>{{user.email}}</p>
-      </li>
-    </ul>
+      <app-account-list *ngIf="searchArg" [obsAccounts]="accounts$" [searchArg]="searchArg"></app-account-list>
 
     <ul class="navbar-nav ml-auto nav-flex-icons">
       <a (click)="sendState(true)" class="d-flex justify-content-between ">

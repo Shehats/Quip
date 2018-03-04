@@ -21,8 +21,6 @@ import { AuthModule } from './modules/auth/auth.module';
 import { FileUploadService } from './services/file-upload/file-upload.service';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import { CommentListComponent } from './components/comment-list/comment-list.component';
-import { AccountListComponent } from './components/account-list/account-list.component';
-
 
 @NgModule({
   declarations: [
@@ -30,9 +28,7 @@ import { AccountListComponent } from './components/account-list/account-list.com
     ForgotPasswordComponent,
     ForgotPasswordConfirmationComponent,
     NotfoundComponent,
-    CommentListComponent,
-    AccountListComponent
-    // SearchPipe,
+    CommentListComponent
   ],
   imports: [
     BrowserModule,
