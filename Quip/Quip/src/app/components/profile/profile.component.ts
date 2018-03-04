@@ -111,6 +111,10 @@ export class ProfileComponent implements OnInit {
       desc: new FormControl()
     })
 
+    this.action.save<Post>(this.backend.post, new Post(null,'sdffdkfdkfdjdk', null, null))
+    .subscribe(x => console.log(x),
+              _ => console.log('errr'))
+
     this.action.fetch<Profile>(this.backend.profile)
       .subscribe(
         profile => { this.profile = profile; console.log(profile); }
