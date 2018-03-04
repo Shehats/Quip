@@ -9,7 +9,9 @@ import { PostService } from '../../services/post/post.service';
 })
 export class PostListComponent implements OnInit {
   @Input('posts') posts: Post[];
+  @Input('picture') profilePicture: string;
   constructor(private postService: PostService) { }
+  
   ngOnInit() {
 
   }

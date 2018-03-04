@@ -6,7 +6,7 @@
 
             <!--Card image-->
             <input type="image" data-toggle="modal" data-target="#basicExample" (click)="profilePictureModal.show()" mdbRippleRadius
-            class="img-fluid" src="https://s3.us-east-2.amazonaws.com/quip-test-bucket/profile_placeholder.png" alt="Card image cap">
+            class="img-fluid" [src]="((profile$|async)?.account.profilePic)?(profile$|async)?.account.profilePic:'https://s3.us-east-2.amazonaws.com/quip-test-bucket/profile_placeholder.png'" alt="Card image cap">
             <!--Card image-->
 
             <!--Card content-->
@@ -67,7 +67,7 @@
             </div>
         </form>
         <div class="pre-scrollable mx-auto" id="postFeed" *ngIf="profile$">
-            <app-post-list  [posts]="(profile$|async)?.posts"></app-post-list>
+            <app-post-list  [posts]="(profile$|async)?.posts" [picture]="(profile$|async)?.account.profilePic"></app-post-list>
         </div>
     </div>
     <div class="container col-4">
@@ -94,8 +94,7 @@ aria-hidden="true">
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-sm waves-light" data-dismiss="modal" (click)="profilePictureModal.hide()" mdbRippleRadius>Close</button>
-            <button type="button" class="btn btn-sm waves-light" (click)="uploadProfilePic()" mdbRippleRadius>Submit</button>
+            <button type="button" class="btn btn-sm waves-light" (click)="uploadProfilePic(); profilePictureModal.hide()" mdbRippleRadius>Submit</button>
         </div>
     </div>
 </div>
@@ -116,8 +115,7 @@ aria-hidden="true">
             <input type="text" placeholder="New Description" class="form-control" (value)="descText" [value]="(profile$|async)?.description">
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-sm waves-light" data-dismiss="modal" (click)="profileInfoModal.hide()" mdbRippleRadius>Close</button>
-            <button type="button" class="btn btn-sm waves-light" mdbRippleRadius (click)="submitDesc()">Submit</button>
+            <button type="button" class="btn btn-sm waves-light" mdbRippleRadius (click)="submitDesc(); profileInfoModal.hide()">Submit</button>
         </div>
     </div>
 </div>

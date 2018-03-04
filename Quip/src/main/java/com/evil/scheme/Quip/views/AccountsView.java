@@ -67,7 +67,7 @@ public class AccountsView {
         return this.accountService.findById(id);
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     public Account update(@RequestBody Account account) {
         try {
             return this.accountService.update(account);
