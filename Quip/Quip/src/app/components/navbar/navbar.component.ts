@@ -3,7 +3,7 @@ import { AuthService } from 'app/services/auth/auth.service';
 import { ActionsService } from '../../services/http/actions.service';
 import { Observable } from 'rxjs/Observable';
 import { Account } from 'app/models/Account';
-import { Backend } from '../../Interfaces/Backend';
+import { baseUrl } from '../../Interfaces/Backend';
 
 @Component({
   selector: 'app-navbar',
@@ -11,7 +11,6 @@ import { Backend } from '../../Interfaces/Backend';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  private backend: Backend = new Backend();
 
   @Output('stateMode') outgoingData = new EventEmitter<boolean>();
 
@@ -25,7 +24,7 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.accounts$ = this.actions.fetchAll<Account>(this.backend.baseUrl);
+    this.accounts$ = this.actions.fetchAll<Account>(baseUrl);
   }
 
   public sendState(data: any) {

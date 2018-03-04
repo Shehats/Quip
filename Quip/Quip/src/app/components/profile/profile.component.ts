@@ -152,5 +152,4 @@ export class ProfileComponent implements OnInit {
     console.log(profile);
   }
 
-
 }

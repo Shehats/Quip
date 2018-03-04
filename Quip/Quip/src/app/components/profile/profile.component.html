@@ -78,11 +78,12 @@
                         <div class="label col-1 mr-2">
                             <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-1-mini.jpg" class="rounded-circle d-flex align-self-start mr-3">
                         </div>
-                        <div class="col">
-                            <!--Title-->
-                            <h4 class="card-title">Card title</h4>
-                            <!--Text-->
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <div *ngIf="posts">
+                            <ul>
+                                <li *ngFor="let post of profile.posts">
+                                    <app-post [post]="post" [acc]="acc"></app-post>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                     <!--Card image-->
