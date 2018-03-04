@@ -46,11 +46,10 @@ export class ProfileComponent implements OnInit {
   submitPost() {
     if (this.postForm.valid) {
       if (this.fileToUpload) {
-        this.postService.uploadPostPicture(this.fileToUpload);
+        this.postService.uploadPostPicture(this.fileToUpload).subscribe(x => console.log(x));
         // this.postService.savePost(new Post(null,this.postForm.controls['postText'].value,null,null,null,null,null));
       } else {
-        this.profile$ = this.postService.savePost(new Post(null,this.postForm.controls['postText'].value,null,null,null,null,null))
-                        .do(_ => console.log(this.profile$))
+        this.profile$ = this.postService.savePost(new Post(null,null,null, this.postForm.controls['postText'].value,null,null,null,null))
                         .flatMap(_ => this.profileService.getUserProfile());
 
       }
@@ -84,8 +83,10 @@ export class ProfileComponent implements OnInit {
 
   uploadProfilePic() {
     if (this.profileUpload) {
-      this.profile$.do(x => this.profileToUpdate = x);
-      this.profileService.updateProfilePicture(this.profileUpload);
+      console.log('sdfdfdjfhdjfhjfhfjhdf');
+      this.profileService.updateProfilePicture(this.profileUpload).subscribe(x => console.log(x));
+      // this.profile$.do(x => this.profileToUpdate = x);
+      // this.profileService.updateProfilePicture(this.profileUpload);
     }
   }
 
