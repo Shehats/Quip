@@ -5,10 +5,7 @@ import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Observable';
 import { Post } from '../../models/Post';
-import { post } from '../../Interfaces/Backend'
-import { addImage } from '../../Interfaces/Backend'
-import { likePost } from '../../Interfaces/Backend';
-import { disLikePost } from '../../Interfaces/Backend';
+import { post, feed, addImage, likePost, disLikePost } from '../../Interfaces/Backend'
 
 @Injectable()
 export class PostService {
@@ -23,14 +20,11 @@ export class PostService {
                       x['mediaUrl'], x['title']));
   }
 
-//   public getAllPosts (): Observable<Post[]> {
-//     return this.action.fetchAll<Post[]>(feed)
-//             .map(y => {
-//               return y.map(x => new Post(x['owner'],x['comments'], x['postText'],
-//               x['dislikes'], x['id'], x['likes'],
-//               x['mediaUrl'], x['title'])
-//   }));
-// }
+  public getAllPosts (): Observable<Post[]> {
+    return this.action.fetchAll<Post[]>(feed)
+            .map(y => y.map(x => new Post(x['owner'],x['comments'], x['postText'],
+                                x['dislikes'], x['id'], x['likes'],x['mediaUrl'], x['title'])));
+}
   public getPostById (id: number): Observable<Post> {
     return this.action.fetchById<Post>(post,id)
                       .map(x => new Post(x['owner'],x['comments'], x['postText'],
