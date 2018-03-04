@@ -26,8 +26,9 @@ export class ProfileService {
   public getFeed(): Observable<Post[]> {
     return this.actions.fetchAll<Post>(feed)
           .map(y => {
-            return y.map(x => new Post(x['comments'], x['descriptlion'], x['dislikes'],
-                                       x['id'], x['likes'], x['mediaUrl'], x['title']));
+            return y.map(x => new Post(x['owner'],x['comments'], x['postText'],
+                      x['dislikes'], x['id'], x['likes'],
+                      x['mediaUrl'], x['title']));
           })
   }
 
