@@ -6,7 +6,11 @@
 
             <!--Card image-->
             <input type="image" data-toggle="modal" data-target="#basicExample" (click)="profilePictureModal.show()" mdbRippleRadius
+<<<<<<< HEAD
+                class="img-fluid" src="https://s3.us-east-2.amazonaws.com/quip-test-bucket/profile_placeholder.png" alt="Card image cap">
+=======
             class="img-fluid" [src]="((profile$|async)?.account.profilePic)?(profile$|async)?.account.profilePic:'https://s3.us-east-2.amazonaws.com/quip-test-bucket/profile_placeholder.png'" alt="Card image cap">
+>>>>>>> 5338a837056762bd9b68999db155a817bd8f2225
             <!--Card image-->
 
             <!--Card content-->
@@ -67,7 +71,7 @@
             </div>
         </form>
         <div class="pre-scrollable mx-auto" id="postFeed" *ngIf="profile$">
-            <app-post-list  [posts]="(profile$|async)?.posts" [picture]="(profile$|async)?.account.profilePic"></app-post-list>
+            <app-post-list [posts]="(profile$|async)?.posts" [picture]="(profile$|async)?.account.profilePic"></app-post-list>
         </div>
     </div>
     <div class="container col-4">
@@ -77,73 +81,75 @@
 
 <!-- Change Profile Pic Modal -->
 <div mdbModal #profilePictureModal="mdb-modal" class="modal fade" id="basicExample" tabindex="-1" role="dialog" aria-labelledby="profilePicModal"
-aria-hidden="true">
-<div class="modal-dialog modal-sm" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h4 class="modal-title w-100" id="profilePicModal">Select New Profile Pic</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="profilePictureModal.hide()">
-                <span aria-hidden="true">×</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <div class="form-group">
-                <label class="fa fa-photo" aria-hidden="true" id="fileInput">
-                    <input type="file" id="file" (change)="handleProfilePicInput($event)">
-                </label>
+    aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title w-100" id="profilePicModal">Select New Profile Pic</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="profilePictureModal.hide()">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="fa fa-photo" aria-hidden="true" id="fileInput">
+                        <input type="file" id="file" (change)="handleProfilePicInput($event)">
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm waves-light" (click)="uploadProfilePic(); profilePictureModal.hide()" mdbRippleRadius>Submit</button>
             </div>
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-sm waves-light" (click)="uploadProfilePic(); profilePictureModal.hide()" mdbRippleRadius>Submit</button>
-        </div>
     </div>
-</div>
 </div>
 
 <!-- Edit information Modal -->
 <div mdbModal #profileInfoModal="mdb-modal" class="modal fade" id="basicExample" tabindex="-1" role="dialog" aria-labelledby="profileInfoModal"
-aria-hidden="true">
-<div class="modal-dialog modal-sm" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h4 class="modal-title w-100" id="profileInfoModal">Edit Description</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="profileInfoModal.hide()">
-                <span aria-hidden="true">×</span>
-            </button>
-        </div>
-        <div class="modal-body" *ngIf="profile$">
-            <input type="text" placeholder="New Description" class="form-control" (value)="descText" [value]="(profile$|async)?.description">
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-sm waves-light" mdbRippleRadius (click)="submitDesc(); profileInfoModal.hide()">Submit</button>
+    aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title w-100" id="profileInfoModal">Edit Description</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="profileInfoModal.hide()">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body" *ngIf="profile$">
+                <form [formGroup]="descForm">
+                    <input type="text" placeholder="New Description" class="form-control" formControlName="desc" [value]="(profile$|async)?.description">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm waves-light" mdbRippleRadius (click)="submitDesc(); profileInfoModal.hide()">Submit</button>
+            </div>
         </div>
     </div>
-</div>
 </div>
 
 <!-- Friends Display Modal -->
 <div mdbModal #displayFriends="mdb-modal" class="modal fade" id="basicExample" tabindex="-1" role="dialog" aria-labelledby="displayFriends"
-aria-hidden="true">
-<div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h4 class="modal-title w-100" id="displayFriends">Friends of
-                <!-- {{user.fname}} {{user.lname}} -->
-            </h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="displayFriends.hide()">
-                <span aria-hidden="true">×</span>
-            </button>
-        </div>
-        <div class="modal-body">
-
-            <div class="container mx-3" *ngFor="let friend of friends$">
-                <span *ngIf="friends$">
-
-                </span>
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title w-100" id="displayFriends">Friends of
+                    <!-- {{user.fname}} {{user.lname}} -->
+                </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="displayFriends.hide()">
+                    <span aria-hidden="true">×</span>
+                </button>
             </div>
+            <div class="modal-body">
+
+                <div class="container mx-3" *ngFor="let friend of friends$">
+                    <span *ngIf="friends$">
+
+                    </span>
+                </div>
 
 
-        </div>
+            </div>
             <!-- <div class="modal-footer">
                 <button type="button" class="btn btn-sm waves-light" data-dismiss="modal" (click)="displayFriends.hide()" mdbRippleRadius>Close</button>
                 <button type="button" class="btn btn-sm waves-light" mdbRippleRadius>Submit</button>
