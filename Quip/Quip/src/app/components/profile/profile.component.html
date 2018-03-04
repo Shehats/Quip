@@ -94,8 +94,7 @@ aria-hidden="true">
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-sm waves-light" data-dismiss="modal" (click)="profilePictureModal.hide()" mdbRippleRadius>Close</button>
-            <button type="button" class="btn btn-sm waves-light" (click)="uploadProfilePic()" mdbRippleRadius>Submit</button>
+            <button type="button" class="btn btn-sm waves-light" (click)="uploadProfilePic(); profilePictureModal.hide()" mdbRippleRadius>Submit</button>
         </div>
     </div>
 </div>
@@ -116,8 +115,7 @@ aria-hidden="true">
             <input type="text" placeholder="New Description" class="form-control" (value)="descText" [value]="(profile$|async)?.description">
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-sm waves-light" data-dismiss="modal" (click)="profileInfoModal.hide()" mdbRippleRadius>Close</button>
-            <button type="button" class="btn btn-sm waves-light" mdbRippleRadius (click)="submitDesc()">Submit</button>
+            <button type="button" class="btn btn-sm waves-light" mdbRippleRadius (click)="submitDesc(); profileInfoModal.hide()">Submit</button>
         </div>
     </div>
 </div>

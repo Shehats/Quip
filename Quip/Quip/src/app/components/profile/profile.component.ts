@@ -51,6 +51,7 @@ export class ProfileComponent implements OnInit {
         // this.postService.savePost(new Post(null,this.postForm.controls['postText'].value,null,null,null,null,null));
       } else {
         this.profile$ = this.postService.savePost(new Post(null,this.postForm.controls['postText'].value,null,null,null,null,null))
+                        .do(_ => console.log(this.profile$))
                         .flatMap(_ => this.profileService.getUserProfile());
 
       }
