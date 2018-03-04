@@ -45,7 +45,6 @@ export class ProfileComponent implements OnInit {
 
   submitPost() {
     if (this.postForm.valid) {
-      console.log('ssdjfdfdjsfdhsfdj');
       if (this.fileToUpload) {
         this.postService.uploadPostPicture(this.fileToUpload).subscribe(x => console.log(x));
         // this.postService.savePost(new Post(null,this.postForm.controls['postText'].value,null,null,null,null,null));
@@ -60,6 +59,7 @@ export class ProfileComponent implements OnInit {
   submitDesc() {
     if (this.descForm.valid) {
       this.profile$.do(x => this.profileToUpdate = x);
+      console.log(this.descForm.controls['desc'].value);
       this.profile$ = this.profileService.updateProfile(this.profileToUpdate);
     }
   }
