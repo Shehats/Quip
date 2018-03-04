@@ -50,7 +50,7 @@ export class ProfileComponent implements OnInit {
         this.postService.uploadPostPicture(this.fileToUpload).subscribe(x => console.log(x));
         // this.postService.savePost(new Post(null,this.postForm.controls['postText'].value,null,null,null,null,null));
       } else {
-        this.profile$ = this.postService.savePost(new Post(null,this.postForm.controls['postText'].value,null,null,null,null,null))
+        this.profile$ = this.postService.savePost(new Post(null,null,null, this.postForm.controls['postText'].value,null,null,null,null))
                         .flatMap(_ => this.profileService.getUserProfile());
 
       }
