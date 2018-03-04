@@ -20,6 +20,7 @@ import javax.annotation.Resource;
 import static com.evil.scheme.Quip.views.ProfileView.refactorToken;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("")
 public class BucketView {
 	private AmazonClient amazonClient;

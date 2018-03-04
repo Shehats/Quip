@@ -18,6 +18,7 @@ import java.util.List;
 import static com.evil.scheme.Quip.views.ProfileView.refactorToken;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping(value = "accounts")
 public class AccountsView {
     @Autowired

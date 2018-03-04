@@ -25,6 +25,7 @@ export class ProfileComponent implements OnInit {
   username: string;
   //backend: Backend = new Backend(); // access to backend data.
   profile$: Observable<Profile>; // Profile data.
+  posts$: Observable<Post[]>;
   profileToUpdate: Profile;
   state: boolean; // sets the state of either being a profile or a dashboard
 
@@ -40,19 +41,20 @@ export class ProfileComponent implements OnInit {
       desc: new FormControl()
     })
 
-    this.profile$ = this.profileService.getUserProfile();
+    this.profile$ = this.profileService.getUserProfile()
+                    .do(x => this.posts$ = Observable.of(x.posts));
   }
 
   submitPost() {
     if (this.postForm.valid) {
-      console.log('ssdjfdfdjsfdhsfdj');
       if (this.fileToUpload) {
-        this.postService.uploadPostPicture(this.fileToUpload).subscribe(x => console.log(x));
+        this.postService.uploadPostPicture(this.fileToUpload)
+        .flatMap(_ => this.profileService.getUserProfile())
+        .do(x => this.posts$ = Observable.of(x.posts));
         // this.postService.savePost(new Post(null,this.postForm.controls['postText'].value,null,null,null,null,null));
       } else {
-        this.profile$ = this.postService.savePost(new Post(null,null,null, this.postForm.controls['postText'].value,null,null,null,null))
-                        .flatMap(_ => this.profileService.getUserProfile());
-
+        this.postService.savePost(new Post(null,null,null, this.postForm.controls['postText'].value,null,null,null,null))
+          .flatMap(_ => this.profileService.getUserProfile()).do(x => this.posts$ = Observable.of(x.posts));
       }
     }
   }
@@ -60,6 +62,7 @@ export class ProfileComponent implements OnInit {
   submitDesc() {
     if (this.descForm.valid) {
       this.profile$.do(x => this.profileToUpdate = x);
+      this.profileToUpdate.description = this.descForm['']
       this.profile$ = this.profileService.updateProfile(this.profileToUpdate);
     }
   }
@@ -83,10 +86,8 @@ export class ProfileComponent implements OnInit {
 
   uploadProfilePic() {
     if (this.profileUpload) {
-      console.log('sdfdfdjfhdjfhjfhfjhdf');
-      this.profileService.updateProfilePicture(this.profileUpload).subscribe(x => console.log(x));
-      // this.profile$.do(x => this.profileToUpdate = x);
-      // this.profileService.updateProfilePicture(this.profileUpload);
+      this.profileService.updateProfilePicture(this.profileUpload)
+      .subscribe(x => console.log(x));
     }
   }
 
