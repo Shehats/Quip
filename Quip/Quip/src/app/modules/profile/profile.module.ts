@@ -10,7 +10,7 @@ import { ProfileComponent } from '../../components/profile/profile.component';
 import { SearchPipe } from 'app/pipes/search.pipe';
 import { NavbarComponent } from 'app/components/navbar/navbar.component';
 import { DashboardComponent } from '../../components/dashboard/dashboard.component';
-
+import { PostListComponent } from '../../components/post-list/post-list.component';
 
 @NgModule({
   imports: [
@@ -26,7 +26,8 @@ import { DashboardComponent } from '../../components/dashboard/dashboard.compone
     ProfileComponent,
     SearchPipe,
     NavbarComponent,
-    DashboardComponent
+    DashboardComponent,
+    PostListComponent
   ]
 })
 export class ProfileModule { }
