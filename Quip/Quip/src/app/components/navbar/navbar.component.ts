@@ -23,7 +23,8 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.accounts$ = this.actions.fetchAll<Account>(account);
+    this.accounts$ = this.actions.fetchAll<Account>(account)
+                      .map(x => x.map(y => new Account(y['number'], y['username'], y['fname'], y['lname'], y['profilePic'], y['email'])))
   }
 
   public sendState(data: any) {

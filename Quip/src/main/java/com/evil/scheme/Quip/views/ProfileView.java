@@ -3,10 +3,12 @@ package com.evil.scheme.Quip.views;
 import com.evil.scheme.Quip.entities.accounts.Account;
 import com.evil.scheme.Quip.entities.posts.Post;
 import com.evil.scheme.Quip.entities.profiles.Profile;
+import com.evil.scheme.Quip.exceptions.AuthException;
 import com.evil.scheme.Quip.repositories.AccountRepository;
 import com.evil.scheme.Quip.repositories.ProfileRepository;
 import com.evil.scheme.Quip.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import com.evil.scheme.Quip.services.ProfileServiceImpl;
 import com.evil.scheme.Quip.exceptions.ProfileNotFoundException;
@@ -31,19 +33,26 @@ public class ProfileView {
     private JwtTokenProvider tokenProvider;
 
     @RequestMapping(value = "/{username}", method = RequestMethod.GET)
-    public Profile getProfileByUsername(@PathVariable String username) {
-        return this.profileRepository.findByUser(username);
+    public Profile getProfileByUsername(@PathVariable String username) throws AuthException {
+        Profile p = this.profileRepository.findByUser(username);
+        if (p != null)
+            return p;
+        else
+            throw new AuthException("User not found", HttpStatus.NOT_FOUND);
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public Profile getProfile(@RequestHeader("Authorization") String token) {
+    public Profile getProfile(@RequestHeader("Authorization") String token) throws AuthException {
         Account account = this.accountRepository
                 .findByUsername(this.tokenProvider.getUsername(refactorToken(token)));
         Profile profile = this.profileRepository.findByUser(this.tokenProvider.getUsername(refactorToken(token)));
-        return profile;
+        if (profile != null)
+            return profile;
+        else
+            throw new AuthException("User not found", HttpStatus.NOT_FOUND);       
     }
 
-    @RequestMapping(value = "", method = RequestMethod.PUT)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     public Profile updateProfile(@RequestHeader("Authorization") String token, @RequestBody Profile val) throws ProfileNotFoundException {
         Account account = this.accountRepository
                 .findByUsername(this.tokenProvider.getUsername(refactorToken(token)));
@@ -51,7 +60,7 @@ public class ProfileView {
         return this.profileService.update(val);
     }
 
-    @RequestMapping(value = "feed", method = RequestMethod.GET)
+    @RequestMapping(value = "/feed", method = RequestMethod.GET)
     public List<Post> getFreed(@RequestHeader("Authorization") String token) {
         Account account = this.accountRepository
                 .findByUsername(this.tokenProvider.getUsername(refactorToken(token)));
@@ -66,7 +75,7 @@ public class ProfileView {
         return posts;
     }
 
-    @RequestMapping(value = "/addFriend/{username}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/addFriend/{username}", method = RequestMethod.GET)
     public Profile addFriend(@RequestHeader("Authorization") String token, @PathVariable String username) throws ProfileNotFoundException{
         Account account = this.accountRepository
                 .findByUsername(this.tokenProvider.getUsername(refactorToken(token)));
@@ -76,7 +85,7 @@ public class ProfileView {
         return profileService.update(profile);
     }
 
-    @RequestMapping(value = "/unFriend/{username}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/unFriend/{username}", method = RequestMethod.GET)
     public Profile unFriend(@RequestHeader("Authorization") String token, @PathVariable String username) throws ProfileNotFoundException{
         Account account = this.accountRepository
                 .findByUsername(this.tokenProvider.getUsername(refactorToken(token)));

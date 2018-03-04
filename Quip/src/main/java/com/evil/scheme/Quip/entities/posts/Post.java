@@ -50,7 +50,7 @@ public class Post implements Serializable{
         this.id = id;
     }
 
-    @OneToOne(targetEntity = Account.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(targetEntity = Account.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     public Account getOwner() {
         return owner;
     }

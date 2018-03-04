@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-@CrossOrigin(origins = "*")
 @SpringBootApplication
 @EnableConfigurationProperties
 @EntityScan(basePackages = {"com.evil.scheme.Quip.entities"})

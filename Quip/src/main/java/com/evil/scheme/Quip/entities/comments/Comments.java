@@ -42,7 +42,7 @@ public class Comments implements Serializable{
 		this.description = description;
 	}
 
-	@OneToOne(targetEntity = Account.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(targetEntity = Account.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	public Account getOwner() {
 		return owner;
 	}

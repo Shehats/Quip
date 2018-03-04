@@ -8,9 +8,8 @@ import { DashboardComponent } from '../../components/dashboard/dashboard.compone
 
 const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
+  { path: 'profile/:username', component: ProfileComponent },
   { path: 'dashboard', component: DashboardComponent }
-
-  
 ];
 
 @NgModule({

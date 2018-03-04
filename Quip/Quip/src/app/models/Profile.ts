@@ -9,7 +9,7 @@ export class Profile implements Instance {
     recommendedFriends: Account[];
     description: string;
 
-    constructor(acc: Account, posted: Post[], friendly: Account[], recomm: Account[], desc?: string) {
+    constructor(acc?: Account, posted?: Post[], friendly?: Account[], recomm?: Account[], desc?: string) {
         this.account = acc;
         this.posts = posted;
         this.friends = friendly;
@@ -18,7 +18,7 @@ export class Profile implements Instance {
     }
 
     getFilter(): string {
-        return this.account.getFilter();
+        return (this.account)?this.account.getFilter():'';
     }
 
 }

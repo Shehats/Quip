@@ -1,4 +1,6 @@
 <app-navbar></app-navbar>
-<div>
-  <app-post-list  [posts]="post$|async"></app-post-list>
+<div class="container col-6" id="feed" style="margin-top: 10%;">
+	<div class="pre-scrollable mx-auto" id="postFeed">
+		<app-post-list  [posts]="post$|async"></app-post-list>
+	</div>
 </div>

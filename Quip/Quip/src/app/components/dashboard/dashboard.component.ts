@@ -9,7 +9,7 @@ import { Observable } from 'rxjs/Observable'
 })
 export class DashboardComponent implements OnInit {
   post$: Observable<Post[]>;
-
+  
   constructor(private postService: PostService) { }
 
   ngOnInit() {

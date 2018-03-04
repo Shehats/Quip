@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-// import { Backend } from 'app/Interfaces/Backend';
 import { Post } from '../../models/Post';
 import { Profile } from '../../models/Profile';
 import { Observable } from 'rxjs/Observable';
 import { ProfileService } from '../../services/profile/profile.service';
 import { PostService } from 'app/services/post/post.service'
-// import { NavbarComponent } from 'app/components/navbar/navbar.component'
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -15,7 +14,10 @@ import { PostService } from 'app/services/post/post.service'
 })
 
 export class ProfileComponent implements OnInit {
-  constructor(private profileService: ProfileService, private postService: PostService) { }
+  constructor(private profileService: ProfileService, 
+    private postService: PostService,
+    private route: ActivatedRoute,
+    private router: Router) { }
 
   postForm: FormGroup; // Post Form values
   descForm: FormGroup; // Description data
@@ -28,9 +30,10 @@ export class ProfileComponent implements OnInit {
   posts$: Observable<Post[]>;
   profileToUpdate: Profile;
   state: boolean; // sets the state of either being a profile or a dashboard
-
+  profilePic: string;
   descText: string = "This is a test";
   friends$: Profile[];
+  sub: any;
 
   ngOnInit() {
     this.postForm = new FormGroup({
@@ -40,21 +43,38 @@ export class ProfileComponent implements OnInit {
     this.descForm = new FormGroup({
       desc: new FormControl()
     })
-
-    this.profile$ = this.profileService.getUserProfile()
-                    .do(x => this.posts$ = Observable.of(x.posts));
+    this.sub = this.route.params.subscribe(params => {
+      this.username = params['username'];
+      if (this.username) {
+        console.log('here')
+        this.profileService.getUserProfileByUsername(this.username)
+          .subscribe(_=> {
+            this.profile$ = this.profileService.getUserProfileByUsername(this.username);
+          },
+            _ => this.router.navigate(['notfound'])
+          )
+        this.profile$.forEach(x => {
+          if (!x.account)
+            this.router.navigate(['notfound'])
+        });
+      }
+      else {
+        this.profile$ = this.profileService.getUserProfile();
+        this.profile$.forEach(x => console.log(x));
+        this.profileService.getUserProfileByUsername(this.username);
+      }
+    });
+    this.profile$.forEach(x => this.posts$ = Observable.of(x.posts));
   }
 
   submitPost() {
     if (this.postForm.valid) {
       if (this.fileToUpload) {
-        this.postService.uploadPostPicture(this.fileToUpload)
-        .flatMap(_ => this.profileService.getUserProfile())
-        .do(x => this.posts$ = Observable.of(x.posts));
-        // this.postService.savePost(new Post(null,this.postForm.controls['postText'].value,null,null,null,null,null));
+        this.posts$ = this.postService.uploadPostPicture(this.fileToUpload, this.postForm.controls['postText'].value);
       } else {
-        this.postService.savePost(new Post(null,null,null, this.postForm.controls['postText'].value,null,null,null,null))
-          .flatMap(_ => this.profileService.getUserProfile()).do(x => this.posts$ = Observable.of(x.posts));
+        let x = new Post();
+        x.description = this.postForm.controls['postText'].value;
+        this.posts$ =this.postService.savePost(x);
       }
     }
   }
@@ -86,13 +106,9 @@ export class ProfileComponent implements OnInit {
 
   uploadProfilePic() {
     if (this.profileUpload) {
-      this.profileService.updateProfilePicture(this.profileUpload)
-      .subscribe(x => console.log(x));
+      this.profile$ = this.profileService.updateProfilePicture(this.profileUpload)
+      .flatMap(_ => this.profileService.getUserProfile());
+      this.profile$.forEach(x => this.posts$ = Observable.of(x.posts));
     }
   }
-
-  handleProfileInfo(data) {
-    console.log(data);
-  }
-
 }

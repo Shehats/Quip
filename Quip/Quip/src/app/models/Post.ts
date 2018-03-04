@@ -13,7 +13,7 @@ export class Post implements Instance{
     mediaUrl: string;
     title: string;
 
-    constructor(owner:Account, comments?: Comment[], description?: string, dislikes?: Account[],
+    constructor(owner?:Account, comments?: Comment[], description?: string, dislikes?: Account[],
                 id?: number, likes?: Account[], mediaUrl?: string, title?: string) {
 
         this.id = id;

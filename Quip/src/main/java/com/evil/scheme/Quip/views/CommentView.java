@@ -45,7 +45,7 @@ public class CommentView {
         return this.postService.update(post);
     }
 
-    @RequestMapping(value = "/like/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/like/{id}", method = RequestMethod.GET)
     public Comments like (@RequestHeader("Authorization") String token, @PathVariable Long id) throws CommentNotFoundException {
         Account account = this.accountRepository.findByUsername(this.tokenProvider.getUsername(refactorToken(token)));
         Comments post = this.commentService.findById(id);
@@ -66,7 +66,7 @@ public class CommentView {
         return this.commentService.update(post);
     }
 
-    @RequestMapping(value = "/dislike/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/dislike/{id}", method = RequestMethod.GET)
     public Comments dislike (@RequestHeader("Authorization") String token, @PathVariable Long id) throws CommentNotFoundException {
         Account account = this.accountRepository.findByUsername(this.tokenProvider.getUsername(refactorToken(token)));
         Comments post = this.commentService.findById(id);

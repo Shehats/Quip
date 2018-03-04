@@ -39,7 +39,7 @@
 
     <div class="container col-6" id="feed">
         <!-- [formGroup]="loginForm" (ngSubmit)="onSubmit()" -->
-        <form [formGroup]="postForm" (ngSubmit)="submitPost()" id="postForm">
+        <form *ngIf="!username" [formGroup]="postForm" (ngSubmit)="submitPost()" id="postForm">
             <!--Header-->
             <div class="form-header">
                 <h4>Posts</h4>
@@ -67,8 +67,8 @@
                 </div>
             </div>
         </form>
-        <div class="pre-scrollable mx-auto" id="postFeed" *ngIf="profile$">
-            <app-post-list [posts]="(profile$|async)?.posts" [picture]="(profile$|async)?.account.profilePic"></app-post-list>
+        <div class="pre-scrollable mx-auto" id="postFeed" *ngIf="posts$">
+            <app-post-list [posts]="posts$|async" [picture]="(profile$|async)?.account.profilePic"></app-post-list>
         </div>
     </div>
     <div class="container col-4">

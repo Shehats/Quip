@@ -5,8 +5,9 @@ import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Observable';
 import { Post } from '../../models/Post';
-import { post, feed, addImage, likePost, disLikePost } from '../../Interfaces/Backend'
+import { post, addImage, likePost, disLikePost } from '../../Interfaces/Backend'
 
+// , feed
 @Injectable()
 export class PostService {
 
@@ -21,9 +22,10 @@ export class PostService {
   }
 
   public getAllPosts (): Observable<Post[]> {
-    return this.action.fetchAll<Post[]>(feed)
+    return this.action.fetchAll<Post[]>(post)
             .map(y => y.map(x => new Post(x['owner'],x['comments'], x['description'],
-                                x['dislikes'], x['id'], x['likes'],x['mediaUrl'], x['title'])));
+                                x['dislikes'], x['id'], x['likes'],x['mediaUrl'], x['title'])))
+            .catch(err => Observable.throw(err));
 }
   public getPostById (id: number): Observable<Post> {
     return this.action.fetchById<Post>(post,id)
@@ -32,11 +34,11 @@ export class PostService {
                       x['mediaUrl'], x['title']));
 }
 
-  public savePost (obj: Post): Observable<Post> {
-    return this.action.save<Post>(post, obj)
-                      .map(x => new Post(x['owner'],x['comments'], x['description'],
-                      x['dislikes'], x['id'], x['likes'],
-                      x['mediaUrl'], x['title']));
+  public savePost (obj: Post): Observable<Post[]> {
+    return this.action.save<any>(post, obj)
+               .map(y => y.map(x => new Post(x['owner'],x['comments'], x['description'],
+                                x['dislikes'], x['id'], x['likes'],x['mediaUrl'], x['title'])))
+               .catch(err => Observable.throw(err));
 }
 
   public updatePost (obj: Post):Observable<Post> {
@@ -59,20 +61,26 @@ export class PostService {
                       x['mediaUrl'], x['title']));
   }
 
-  public uploadPostPicture(fileToUpload: File): Observable<Post> {
+  public uploadPostPicture(fileToUpload: File, desc?: string): Observable<Post[]> {
     return this.uploadFile.uploadPostPicture(fileToUpload)
-                          .flatMap(x => this.action.save<Post>(addImage, x));
+                          .flatMap(x => {
+                            x['description'] = desc;
+                            return this.action.save<any>(addImage, x)
+                            .map(y => y.map(x => new Post(x['owner'],x['comments'], x['description'],
+                                x['dislikes'], x['id'], x['likes'],x['mediaUrl'], x['title'])))
+                             .catch(err => Observable.throw(err));
+                          });
   }
 
   public likePost(id:number): Observable<Post>{
-    return this.action.updateById(likePost, id, null)
+    return this.action.fetchById(likePost, id)
                       .map(x => new Post(x['owner'],x['comments'], x['description'],
                       x['dislikes'], x['id'], x['likes'],
                       x['mediaUrl'], x['title']));
   }
 
   public dislikePost(id:number): Observable<Post>{
-    return this.action.updateById(disLikePost, id, null)
+    return this.action.fetchById(disLikePost, id)
                       .map(x => new Post(x['owner'],x['comments'], x['description'],
                       x['dislikes'], x['id'], x['likes'],
                       x['mediaUrl'], x['title']));

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth/auth.service';
+import { ProfileService } from '../../services/profile/profile.service';
 
 @Component({
   selector: 'app-login',
@@ -17,9 +18,12 @@ export class LoginComponent implements OnInit {
   passField: boolean;
   
   constructor(private auth: AuthService,
-    private router: Router) { }
+              private router: Router,
+              private profile: ProfileService) { }
     
     ngOnInit() {
+      this.profile.getUserProfile()
+        .subscribe(_ => this.router.navigate(['']))
       this.loginForm = new FormGroup({
         email: new FormControl("", Validators.compose([
           Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"),
