@@ -5,7 +5,7 @@ import { ActionsService } from '../../services/http/actions.service';
 import { Post } from '../../models/Post';
 import { Profile } from '../../models/Profile';
 import { FileUploadService } from '../../services/file-upload/file-upload.service';
-// import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 // import { NavbarComponent } from 'app/components/navbar/navbar.component'
 
 @Component({
@@ -15,7 +15,7 @@ import { FileUploadService } from '../../services/file-upload/file-upload.servic
 })
 
 export class ProfileComponent implements OnInit {
-  constructor(private action: ActionsService, private uploadFile: FileUploadService/*, private router: Router, private actRoute: ActivatedRoute*/) { }
+  constructor(private action: ActionsService, private uploadFile: FileUploadService, private router: Router, private actRoute: ActivatedRoute) { }
 
   postForm: FormGroup; // Post Form values
   descForm: FormGroup; // Description data
@@ -116,11 +116,11 @@ export class ProfileComponent implements OnInit {
         profile => { this.profile = profile; console.log(profile); }
       )
 
-    // this.action.fetch(this.backend.profile) // Fetching Username
-    //   .subscribe(
-    //     () => console.log(this.actRoute), // this.username = this.actRoute
-    //     () => this.router.navigate(['login'])
-    //   )
+    this.action.fetch(this.backend.profile) // Fetching Username
+      .subscribe(
+        () => console.log(this.actRoute), // this.username = this.actRoute
+        () => this.router.navigate(['login'])
+      )
   }
 
 }
