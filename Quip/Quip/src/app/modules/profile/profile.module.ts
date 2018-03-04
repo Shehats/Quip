@@ -9,8 +9,10 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { ProfileComponent } from '../../components/profile/profile.component';
 import { SearchPipe } from 'app/pipes/search.pipe';
 import { NavbarComponent } from 'app/components/navbar/navbar.component';
-import { DashboardComponent } from '../../components/dashboard/dashboard.component';
+// import { DashboardComponent } from '../../components/dashboard/dashboard.component';
 import { PostListComponent } from '../../components/post-list/post-list.component';
+import { ProfileService } from '../../services/profile/profile.service';
+import { PostService } from '../../services/post/post.service';
 
 @NgModule({
   imports: [
@@ -26,8 +28,12 @@ import { PostListComponent } from '../../components/post-list/post-list.componen
     ProfileComponent,
     SearchPipe,
     NavbarComponent,
-    DashboardComponent,
+    // DashboardComponent,
     PostListComponent
+  ],
+  providers: [
+    ProfileService,
+    PostService
   ]
 })
 export class ProfileModule { }

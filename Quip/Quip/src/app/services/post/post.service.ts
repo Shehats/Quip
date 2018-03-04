@@ -3,7 +3,7 @@ import { ActionsService } from '../http/actions.service';
 import { FileUploadService } from '../../services/file-upload/file-upload.service';
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/throw';
+// import 'rxjs/add/operator/throw';
 import { Observable } from 'rxjs/Observable';
 import { Post } from '../../models/Post';
 import { post } from '../../Interfaces/Backend'
@@ -19,8 +19,7 @@ export class PostService {
     return this.action.fetch<Post>(post)
                       .map(x => new Post(x['comments'], x['postText'],
                       x['dislikes'], x['id'], x['likes'],
-                      x['mediaUrl'], x['title']))
-                      .catch((e) => Observable.throw(e));
+                      x['mediaUrl'], x['title']));
   }
 
   public getAllPosts (): Observable<Post[]> {
@@ -29,14 +28,14 @@ export class PostService {
               return y.map(x => new Post(x['comments'], x['postText'],
               x['dislikes'], x['id'], x['likes'],
               x['mediaUrl'], x['title']))
-            }).catch((e) => Observable.throw(e));
+            });
   }
 
   public getPostById <Post> (id: number): Observable<Post> {
     return this.action.fetchById<Post>(post,id)
                       .map(x => new Post(x['comments'], x['postText'],
-                      x['dislikes'], x['id'], x['likes'],
-                      x['mediaUrl'], x['title']))
+                          x['dislikes'], x['id'], x['likes'],
+                            x['mediaUrl'], x['title']))
                       .catch((e) => Observable.throw(e));
   }
 
