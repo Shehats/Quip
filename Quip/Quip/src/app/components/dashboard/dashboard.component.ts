@@ -81,19 +81,6 @@ export class DashboardComponent implements OnInit {
     console.log(data);
   }
 
-  like(id) {
-    this.action.fetch<Post>(this.backend.post + "/like/" +id)
-    .subscribe(
-      ()=>console.log("Liked")
-    );
-  }
-
-  dislike(id){
-    this.action.fetch<Post>(this.backend.post + "/dislike/" + id)
-    .subscribe(
-      ()=>console.log("Disliked")
-    );
-  }
   buildFeed (){
     this.action.fetch<Post[]>(this.backend.post)
               .subscribe(
