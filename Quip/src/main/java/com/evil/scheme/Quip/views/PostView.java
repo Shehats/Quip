@@ -25,7 +25,6 @@ import javax.annotation.Resource;
 import static com.evil.scheme.Quip.views.ProfileView.refactorToken;
 
 @RestController
-@CrossOrigin(origins = "*")
 @RequestMapping(value = "posts")
 public class PostView {
     @Resource
