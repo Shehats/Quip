@@ -4,11 +4,11 @@ import { Routes, RouterModule } from '@angular/router';
 
 // Local Components
 import { ProfileComponent } from '../../components/profile/profile.component';
-import { DashboardComponent } from '../../components/dashboard/dashboard.component';
+// import { DashboardComponent } from '../../components/dashboard/dashboard.component';
 
 const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
-  { path: 'dashboard', component: DashboardComponent }
+  // { path: 'dashboard', component: DashboardComponent }
 
   
 ];
