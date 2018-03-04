@@ -67,7 +67,7 @@
             </div>
         </form>
         <div class="pre-scrollable mx-auto" id="postFeed" *ngIf="profile$">
-            <app-post-list  [posts]="(profile$|async)?.posts"></app-post-list>
+            <app-post-list  [posts]="(profile$|async)?.posts" [picture]="(profile$|async)?.account.profilePic"></app-post-list>
         </div>
     </div>
     <div class="container col-4">
