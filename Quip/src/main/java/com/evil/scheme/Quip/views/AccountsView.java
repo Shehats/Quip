@@ -54,7 +54,7 @@ public class AccountsView {
         }
     }
 
-    @RequestMapping(value = "/updatePicture", method = RequestMethod.PUT)
+    @RequestMapping(value = "/updatePicture", method = RequestMethod.POST)
     public Account updatePicture(@RequestHeader("Authorization") String token, @RequestBody PictureForm pictureForm) throws AccountNotFoundException {
         Account account = this.accountRepository
                 .findByUsername(this.tokenProvider.getUsername(refactorToken(token)));
@@ -67,7 +67,7 @@ public class AccountsView {
         return this.accountService.findById(id);
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     public Account update(@RequestBody Account account) {
         try {
             return this.accountService.update(account);

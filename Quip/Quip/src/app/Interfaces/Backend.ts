@@ -34,5 +34,5 @@ export const comment: string = baseUrl + 'comments'; // POST + post id adds comm
 export const commentUpdate: string = comment + '/update';
 // ...................................................
 // File uploads:
-export const uploadProfilePic: string = this.baseUrl + 'uploadProfile'; // POST
-export const uploadPostPic: string = this.baseUrl + 'uploadMedia'; // POST
+export const uploadProfilePic: string = baseUrl + 'uploadProfile'; // POST
+export const uploadPostPic: string = baseUrl + 'uploadMedia'; // POST
