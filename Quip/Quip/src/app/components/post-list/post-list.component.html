@@ -4,6 +4,7 @@
     <div class="card-body">
         <div class="row">
             <div class="label col-1 mr-2">
+                <img [src]="post.owner.profilePic" class="rounded-circle d-flex align-self-start mr-3">
                 <img src="{{profilePicture}}" class="rounded-circle d-flex align-self-start mr-3">
             </div>
             <div class="col">
@@ -14,10 +15,10 @@
             </div>
         </div>
         <!--Card image-->
-        <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/43.jpg" alt="Card image cap">
+        <img class="img-fluid" [src]="post.mediaUrl" alt="Card image cap">
         <div class="btn-group mx-auto mt-2">
-            <button class="btn-sm"><i class="fa fa-thumbs-o-up"></i></button>
-            <button class="btn-sm"><i class="fa fa-thumbs-o-down"></i></button>
+            <button class="btn-sm" (click)="liked(post.id)"><i class="fa fa-thumbs-o-up"></i></button>
+            <button class="btn-sm" (click)="disliked(post.id)"><i class="fa fa-thumbs-o-down"></i></button>
         </div>
     </div>
 </div>
