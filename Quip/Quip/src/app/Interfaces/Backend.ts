@@ -1,4 +1,4 @@
-export const baseUrl: string = 'http://localhost:8990/';
+export const baseUrl: string = 'http://ec2-18-217-35-135.us-east-2.compute.amazonaws.com:8990/';
 // Authentication:
 export const signUp: string = baseUrl + 'signup';
 export const signIn: string = baseUrl + 'signin';
