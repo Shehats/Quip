@@ -1,20 +1,21 @@
 import { Instance } from "app/Interfaces/Instance";
-
+import { Account } from './Account';
+import { Profile } from './Profile';
 export class Comment implements Instance{
     id: number;
-    owner: number;
-    parentId: number;
+    owner: Account;
+    parentId: Profile;
     description: string;
-    likes: number;
-    dislikes: number;
+    likes: Account[];
+    dislikes: Account[];
 
-    constructor(identifier: number, owner:number, parent: number, desc: string, like: number, disl: number) {
-        this.id = identifier;
+    constructor(id: number, owner:Account, parentId: Profile, description: string, likes: Account[], dislikes: Account[]) {
+        this.id = id;
         this.owner = owner;
-        this.description = desc;
-        this.parentId = parent;
-        this.likes = like;
-        this.dislikes = disl;
+        this.parentId = parentId;
+        this.description = description;
+        this.likes = likes;
+        this.dislikes = dislikes;
 
     }
 
