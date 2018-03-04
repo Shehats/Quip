@@ -1,0 +1,23 @@
+
+<div class="card" *ngFor="let post of posts">
+    <!--Card content-->
+    <div class="card-body">
+        <div class="row">
+            <div class="label col-1 mr-2">
+                <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-1-mini.jpg" class="rounded-circle d-flex align-self-start mr-3">
+            </div>
+            <div class="col">
+                <!--Title-->
+                <h4 class="card-title">{{post.title}}</h4>
+                <!--Text-->
+                <p class="card-text">{{post.description}}</p>
+            </div>
+        </div>
+        <!--Card image-->
+        <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/43.jpg" alt="Card image cap">
+        <div class="btn-group mx-auto mt-2">
+            <button class="btn-sm">like</button>
+            <button class="btn-sm">dislike</button>
+        </div>
+    </div>
+</div>
