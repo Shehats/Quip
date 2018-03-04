@@ -6,11 +6,8 @@
 
             <!--Card image-->
             <input type="image" data-toggle="modal" data-target="#basicExample" (click)="profilePictureModal.show()" mdbRippleRadius
-<<<<<<< HEAD
-                class="img-fluid" src="https://s3.us-east-2.amazonaws.com/quip-test-bucket/profile_placeholder.png" alt="Card image cap">
-=======
             class="img-fluid" [src]="((profile$|async)?.account.profilePic)?(profile$|async)?.account.profilePic:'https://s3.us-east-2.amazonaws.com/quip-test-bucket/profile_placeholder.png'" alt="Card image cap">
->>>>>>> 5338a837056762bd9b68999db155a817bd8f2225
+
             <!--Card image-->
 
             <!--Card content-->
