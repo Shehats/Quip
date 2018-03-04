@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { profile, feed, addFriend, unFriend, updateProfilePic } from '../../Interfaces/Backend';
+import { profile, feed, addFriend, unFriend, updateProfilePic, updateProfile } from '../../Interfaces/Backend';
 import { Post } from '../../models/Post';
 import { Profile } from '../../models/Profile';
 import { Account } from '../../models/Account';
@@ -26,8 +26,9 @@ export class ProfileService {
   public getFeed(): Observable<Post[]> {
     return this.actions.fetchAll<Post>(feed)
           .map(y => {
-            return y.map(x => new Post(x['comments'], x['descriptlion'], x['dislikes'],
-                                       x['id'], x['likes'], x['mediaUrl'], x['title']));
+            return y.map(x => new Post(x['owner'],x['comments'], x['postText'],
+                      x['dislikes'], x['id'], x['likes'],
+                      x['mediaUrl'], x['title']));
           })
   }
 
@@ -52,5 +53,10 @@ export class ProfileService {
           err => console.log(err)
         );
 
+  }
+  public updateProfile(profile: Profile): Observable<Profile> {
+    return this.actions.update(updateProfile, profile)
+                .map(x => new Profile(x['account'], x['posts'], x['friends'], 
+                                  x['recomendedFriends'], x['description']));
   }
 }
