@@ -8,6 +8,7 @@ import { Post } from '../../models/Post';
 })
 export class PostListComponent implements OnInit {
   @Input('posts') posts: Post[];
+  @Input('picture') profilePicture: string;
   constructor() { }
   ngOnInit() {
   }

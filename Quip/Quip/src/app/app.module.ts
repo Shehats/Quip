@@ -45,7 +45,8 @@ import { CommentListComponent } from './components/comment-list/comment-list.com
     MDBBootstrapModule.forRoot()
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS,
+    {
+      provide: HTTP_INTERCEPTORS,
       useClass: ReqInterceptorService,
       multi: true
     },
@@ -55,6 +56,6 @@ import { CommentListComponent } from './components/comment-list/comment-list.com
     FileUploadService
   ],
   bootstrap: [AppComponent],
-  schemas: [ NO_ERRORS_SCHEMA ]
+  schemas: [NO_ERRORS_SCHEMA]
 })
 export class AppModule { }
