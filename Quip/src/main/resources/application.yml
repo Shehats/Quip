@@ -1,6 +1,6 @@
 amazonProperties:
-  endpointUrl: https://s3.us-east-2.amazonaws.com
-  accessKey: AKIAJM7V5BYKL6HP54JA
-  secretKey: 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
+  endpointUrl: <--endpointUrl-->
+  accessKey: <accessKey>
+  secretKey: <accessKey>
   bucketName: quip-test-bucket
 
