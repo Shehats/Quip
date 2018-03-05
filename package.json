@@ -10,8 +10,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "aot:build": "ng build --prod --sm=false --aot=true --output-path=dist",
-    "pre-commit": "ng lint",
-    "postinstall": "ng build --aot -prod"
+    "pre-commit": "ng lint"
   },
   "engines": {
     "node": "8.9.4",
