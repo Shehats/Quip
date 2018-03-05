@@ -21,18 +21,10 @@ export class ForgotPasswordConfirmationComponent implements OnInit {
         Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"),
         Validators.required
       ])),
-      // passwordconf: new FormControl("", Validators.compose([
-      //   Validators.pattern("/^"+this.forgotPasswordConfirmation.value["password"]+"$/"),
-      //   Validators.required
-      // ])),
-
     });
   }
 
   onSubmitReset() {
-    //
-    // console.log(this.forgotPasswordConfirmation.value["password"]);
-    // console.log(this.active.snapshot.params.token);
     this.authService.updatePassword(this.active.snapshot.params.token, this.forgotPasswordConfirmation.value["password"]);
   }
 

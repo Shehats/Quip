@@ -7,5 +7,5 @@ import com.evil.scheme.Quip.entities.comments.Comments;
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comments, Long>{
-//	@Query("select a from Account a where a.username = :username")
+	
 }
