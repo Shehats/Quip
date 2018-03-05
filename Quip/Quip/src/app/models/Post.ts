@@ -28,7 +28,7 @@ export class Post implements Instance{
     }
 
     getFilter(): string{
-        return this.description + ' ' + this.owner.getFilter();
+        return this.description;
     }
 
 }

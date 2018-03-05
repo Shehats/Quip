@@ -24,6 +24,8 @@ export class ProfileComponent implements OnInit {
   fileToUpload: File; // actual file to upload
   profileUpload: File; // profile picture to upload
   localUrl; // To display the image preview
+  localFileUrl; // To display the image preview
+  localProfileUrl;
   username: string;
   friendzy: boolean = true;
   //backend: Backend = new Backend(); // access to backend data.
@@ -35,10 +37,7 @@ export class ProfileComponent implements OnInit {
   descText: string = "I am lonely";
   friends$: Profile[];
   sub: any;
-  dashboard: boolean = false;
-  dashboard$: Observable<Post[]>;
-  searchArg: string;
-
+  
   ngOnInit() {
     this.postForm = new FormGroup({
       postText: new FormControl("", Validators.required)
@@ -66,7 +65,6 @@ export class ProfileComponent implements OnInit {
         this.profile$ = this.profileService.getUserProfile();
         this.posts$ = this.postService.getFeed();
       }
-      this.dashboard$ = this.postService.getAllPosts();
     });
     
   }
@@ -87,14 +85,9 @@ export class ProfileComponent implements OnInit {
     if (this.descForm.valid) {
       this.profile$.forEach(x => {
         x.description = this.descText;
-        console.log(x);
         this.profile$ = this.profileService.updateProfile(x);
       });
     }
-  }
-
-  toggle () {
-    this.dashboard = !this.dashboard;
   }
 
   handleFileInput(event: any) {
@@ -102,16 +95,32 @@ export class ProfileComponent implements OnInit {
       var reader = new FileReader();
       this.fileToUpload = event.target.files.item(0);
       reader.onload = (event: any) => {
-        this.localUrl = event.target.result;
+        this.localFileUrl = event.target.result;
       }
+      reader.readAsDataURL(event.target.files[0]);
     }
+  }
+
+  clearPostImagePreview() {
+    this.localFileUrl = null;
+    this.fileToUpload = null;
   }
 
 
   handleProfilePicInput(event: any) {
     if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
       this.profileUpload = event.target.files.item(0);
+      reader.onload = (event: any) => {
+        this.localProfileUrl = event.target.result;
+      }
+      reader.readAsDataURL(event.target.files[0]);
     }
+  }
+
+  clearProfilePreview(){
+    this.localProfileUrl = null;
+    this.profileUpload = null;
   }
 
   uploadProfilePic() {
@@ -119,6 +128,7 @@ export class ProfileComponent implements OnInit {
       this.profile$ = this.profileService.updateProfilePicture(this.profileUpload)
       .flatMap(_ => this.profileService.getUserProfile());
       this.profile$.forEach(x => this.posts$ = Observable.of(x.posts));
+      this.posts$ = this.postService.getFeed();
     }
   }
 }
