@@ -39,3 +39,4 @@ export class AccountListComponent implements OnInit {
     this.router.navigate(['profile', account.username]);
   }
 }
+
