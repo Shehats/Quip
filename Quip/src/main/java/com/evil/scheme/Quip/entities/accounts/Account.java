@@ -9,7 +9,8 @@ import java.io.*;
 
 @Entity
 public class Account implements Serializable{
-    private Long id;
+
+	private Long id;
     private String username;
     private String password;
     private String fname;
