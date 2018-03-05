@@ -13,6 +13,7 @@ export class AccountListComponent implements OnInit {
   @Input('accounts') accounts: Account[];
   @Input('obsAccounts') accounts$: Observable<Account[]>;
   @Input('searchArg') searchArg: string;
+  @Input('friendzy') friendzy: string;
 
   constructor(private router: Router,
               private profileService: ProfileService) { }

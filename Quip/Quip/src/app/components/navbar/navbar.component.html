@@ -1,5 +1,5 @@
 <nav class="mb-1 navbar fixed-top navbar-expand-lg navbar-dark animate-bg scrolling-navbar lighten-1 animated fadeIn">
-  <a class="navbar-brand" (click)="sendState(false)">Quip</a>
+  <a class="navbar-brand" routerLink="/dashboard">Quip</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-5" aria-controls="navbarSupportedContent-5"
     aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -20,8 +20,8 @@
       <app-account-list *ngIf="searchArg" [obsAccounts]="accounts$" [searchArg]="searchArg"></app-account-list>
 
     <ul class="navbar-nav ml-auto nav-flex-icons">
-      <a (click)="sendState(true)" class="d-flex justify-content-between ">
-        <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-8" alt="avatar" class="avatar rounded-circle d-flex align-self-center mr-2 z-depth-1">
+      <a routerLink="/profile" (click)="sendState(true)" class="d-flex justify-content-between ">
+        <img [src]="((profile$|async)?.account.profilePic)?(profile$|async)?.account.profilePic:'https://s3.us-east-2.amazonaws.com/quip-test-bucket/profile_placeholder.png'" alt="avatar" class="avatar rounded-circle d-flex align-self-center mr-2 z-depth-1">
       </a>
       <li class="nav-item">
         <a class="nav-link waves-effect waves-light">

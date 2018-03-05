@@ -1,3 +1,4 @@
+<div *ngIf="posts">
 <div class="card" *ngFor="let post of posts" style="margin-bottom: 15px;">
     <!--Card content-->
     <div class="card-body">
@@ -22,3 +23,27 @@
         </div>
     </div>
 </div>
+</div>
+
+<div *ngIf="posts$">
+    <div class="card" *ngFor="let post of posts$ | search: searchArg :post| async" style="margin-bottom: 15px;">
+        <!--Card content-->
+    <div class="card-body">
+        <div class="row">
+           <div class="label col mr-2">
+                <img [src]="(post.owner.profilePic)?post.owner.profilePic:'https://s3.us-east-2.amazonaws.com/quip-test-bucket/profile_placeholder.png'" style="height: 100px;" class="rounded-circle d-flex align-self-start mr-3">
+                <h4 class="card-title">@{{post.owner.username}}</h4>
+                <h6 class="card-title">{{post.owner.fname}} {{post.owner.fname}}</h6>
+            </div>
+        </div>
+        <!--Card image-->
+        <img class="img-fluid" *ngIf="post.mediaUrl" [src]="post.mediaUrl" alt="Card image cap">
+        <hr>
+        <div><p class="card-text">{{post['description']}}</p></div>
+        <div class="btn-group mx-auto mt-2">
+            <button class="btn-sm" (click)="like(post)"><i class="fa fa-thumbs-o-up"></i><span *ngIf="post.likes">{{post.likes.length}}</span></button>
+            <button class="btn-sm" (click)="dislike(post)"><i class="fa fa-thumbs-o-down"></i><span *ngIf="post.dislikes">{{post.dislikes.length}}</span></button>
+        </div>
+    </div>
+    </div>
+<div>

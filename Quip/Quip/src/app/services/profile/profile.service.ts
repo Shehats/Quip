@@ -16,14 +16,14 @@ export class ProfileService {
   
   public getUserProfile(): Observable<Profile> {
     return this.actions.fetch<Profile>(profile)
-            .map(x => new Profile(x['account'], x['posts'], x['friends'], 
+            .map(x => new Profile(x['profileId'], x['account'], x['posts'], x['friends'], 
                                   x['recomendedFriends'], x['description']));
   }
 
   public getUserProfileByUsername (username: string): Observable<Profile> {
    return this.http.get(profile + '/' + username).map(res =>(res.status < 205)?res.json():res)
            .catch(err => Observable.throw(err))
-           .map(x => new Profile(x['account'], x['posts'], x['friends'], x['recomendedFriends'], x['description']));
+           .map(x => new Profile(x['profileId'],x['account'], x['posts'], x['friends'], x['recomendedFriends'], x['description']));
   }
 
   public getFeed(): Observable<Post[]> {
@@ -36,14 +36,14 @@ export class ProfileService {
   }
 
   public addFriend(username: string): Observable<Profile> {
-    return this.actions.update<Profile>(addFriend + '/' + username, null)
-            .map(x => new Profile(x['account'], x['posts'], x['friends'], 
+    return this.actions.fetch<Profile>(addFriend + '/' + username)
+            .map(x => new Profile(x['profileId'],x['account'], x['posts'], x['friends'], 
                                   x['recomendedFriends'], x['description']));
   }
 
   public unFriend(username: string): Observable<Profile> {
-    return this.actions.update<Profile>(unFriend + '/' + username, null)
-            .map(x => new Profile(x['account'], x['posts'], x['friends'], 
+    return this.actions.fetch<Profile>(unFriend + '/' + username)
+            .map(x => new Profile(x['profileId'],x['account'], x['posts'], x['friends'], 
                                   x['recomendedFriends'], x['description']));
   }
 
@@ -56,7 +56,7 @@ export class ProfileService {
   }
   public updateProfile(profile: Profile): Observable<Profile> {
     return this.actions.save(updateProfile, profile)
-                .map(x => new Profile(x['account'], x['posts'], x['friends'], 
+                .map(x => new Profile(x['profileId'],x['account'], x['posts'], x['friends'], 
                                   x['recomendedFriends'], x['description']));
   }
 }

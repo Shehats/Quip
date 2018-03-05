@@ -3,13 +3,15 @@ import { Post } from './Post';
 import { Instance } from 'app/Interfaces/Instance';
 
 export class Profile implements Instance {
+    profileId: number;
     account: Account;
     posts: Post[];
     friends: Account[];
     recommendedFriends: Account[];
     description: string;
 
-    constructor(acc?: Account, posted?: Post[], friendly?: Account[], recomm?: Account[], desc?: string) {
+    constructor(profileId?: number, acc?: Account, posted?: Post[], friendly?: Account[], recomm?: Account[], desc?: string) {
+        this.profileId = profileId;
         this.account = acc;
         this.posts = posted;
         this.friends = friendly;

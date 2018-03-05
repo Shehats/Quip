@@ -56,6 +56,7 @@ public class ProfileView {
     public Profile updateProfile(@RequestHeader("Authorization") String token, @RequestBody Profile val) throws ProfileNotFoundException {
         Account account = this.accountRepository
                 .findByUsername(this.tokenProvider.getUsername(refactorToken(token)));
+        System.out.println(val);
         Profile profile = this.profileRepository.findByUser(this.tokenProvider.getUsername(refactorToken(token)));
         return this.profileService.update(val);
     }

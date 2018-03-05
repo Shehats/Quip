@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Post } from '../../models/Post';
 import { PostService } from '../../services/post/post.service';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-post-list',
@@ -9,9 +10,9 @@ import { PostService } from '../../services/post/post.service';
 })
 export class PostListComponent implements OnInit {
   @Input('posts') posts: Post[];
-  postlist: any;
+  @Input('obsPosts') posts$: Observable<Post[]>;
+  @Input('searchArg') searchArg: string;
   @Input('picture') profilePicture: string;
-  searchArg: string;
   constructor(private postService: PostService) { }
   
   ngOnInit() {
