@@ -9,15 +9,17 @@
 
     <ul class="navbar-nav mr-auto ">
       <li class="nav-item">
-
+        <!-- Search form -->
+        <div class=" navbar-nav  nav-flex sd-form">
+          <input [(ngModel)]="searchArg" class="form-control" type="text" placeholder="Search" aria-label="Search" id="searchBar">
+        </div>
+            <div class="" id="">
+              <app-account-list class="card mb-1" *ngIf="searchArg" [obsAccounts]="accounts$" [searchArg]="searchArg"></app-account-list>
+            </div>
       </li>
     </ul>
 
-    <!-- Search form -->
-    <div class="sd-form">
-      <input [(ngModel)]="searchArg" class="form-control" type="text" placeholder="Search" aria-label="Search" id="searchBar">
-    </div>
-      <app-account-list *ngIf="searchArg" [obsAccounts]="accounts$" [searchArg]="searchArg"></app-account-list>
+    
 
     <ul class="navbar-nav ml-auto nav-flex-icons">
       <a (click)="sendState(true)" class="d-flex justify-content-between ">
@@ -37,3 +39,30 @@
     <a (click)="LogOut()" class="">logout</a>
   </div>
 </nav>
+
+<!-- Search People Modal -->
+<div mdbModal #searchModal="mdb-modal" class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModal"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <!-- <h4 class="modal-title w-100" id="searchModal">Friends of {{user.fname}} {{user.lname}} -->
+        <!-- </h4> -->
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="searchModal.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+
+
+
+
+      </div>
+      <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-sm waves-light" data-dismiss="modal" (click)="searchModal.hide()" mdbRippleRadius>Close</button>
+                <button type="button" class="btn btn-sm waves-light" mdbRippleRadius>Submit</button>
+            </div> -->
+    </div>
+  </div>
+</div>

@@ -1,7 +1,7 @@
 <div *ngIf="accounts$">
 	<div class="container mx-3" *ngFor="let user of accounts$ | search: searchArg :user| async">
 		<span>
-			{{user.username}}
+			<a routerLink="{{user.username}}">{{user.username}}</a>
 		</span>
 	</div>
 </div>
