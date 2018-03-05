@@ -48,7 +48,6 @@ public class PostView {
         Post post1 = new Post(post.getTitle(), post.getDescription(), post.getMedia());
         post1.setOwner(profile.getAccount());
         Post retVal = this.postService.create(post1);
-//        retVal.setParentId(profile);
         profile.getPosts().add(retVal);
         return this.profileService.update(profile).getPosts();
     }

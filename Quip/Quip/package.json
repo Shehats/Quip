@@ -4,16 +4,23 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng app.js",
     "build": "ng build",
     "test": "jasmine",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "aot:build": "ng build --prod --sm=false --aot=true --output-path=dist",
-    "pre-commit": "ng lint"
+    "pre-commit": "ng lint",
+    "postinstall": "ng build --aot -prod"
+  },
+  "engines": {
+    "node": "6.11.1",
+    "npm": "3.10.9"
   },
   "private": true,
   "dependencies": {
+    "@angular/cli": "1.5.0 - 1.6.5",
+    "@angular/compiler-cli": "5.0.0 - 5.2.1",
     "@agm/core": "^1.0.0-beta.2",
     "@angular/animations": "5.0.0 - 5.2.1",
     "@angular/common": "5.0.0 - 5.2.1",

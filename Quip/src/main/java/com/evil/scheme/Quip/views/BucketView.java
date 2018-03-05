@@ -49,7 +49,6 @@ public class BucketView {
 
 	@PostMapping("/uploadMedia")
 	public Post uploadMedia (@RequestPart (value = "file") MultipartFile file) {
-		// Post post = new Post(this.amazonClient.uploadFile(file));
 		return new Post(this.amazonClient.uploadFile(file));
 	}
 
@@ -63,10 +62,5 @@ public class BucketView {
 		return this.postService.update(post);
 	}
 
-//	@DeleteMapping("/deleteFile")
-//	public String deleteFile (@RequestPart (value = "url") String fileUrl) {
-//		return this.amazonClient.deleteFileFromS3Bucket (fileUrl);
-//	}
-	
 
 }
