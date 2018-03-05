@@ -3,7 +3,7 @@
 		<span>
 			<a routerLink="/profile/{{user.username}}">{{user.username}}</a>
 			 <button class="btn-sm" *ngIf="!friendzy" (click)="addFriend(user)"><i class="fa fa-thumbs-o-up"></i><</button>
-       <button class="btn-sm" *ngIf="friendzy" (click)="unFriend(user)"><i class="fa fa-thumbs-o-down"></i><</button>
+            <button class="btn-sm" *ngIf="friendzy" (click)="unFriend(user)"><i class="fa fa-thumbs-o-down"></i><</button>
 		</span>
 	</div>
 </div>

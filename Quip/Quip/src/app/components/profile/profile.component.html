@@ -6,8 +6,7 @@
 
             <!--Card image-->
             <input type="image" data-toggle="modal" data-target="#basicExample" (click)="profilePictureModal.show()" mdbRippleRadius
-                class="img-fluid" [src]="((profile$|async)?.account.profilePic)?(profile$|async)?.account.profilePic:'https://s3.us-east-2.amazonaws.com/quip-test-bucket/profile_placeholder.png'"
-                alt="Card image cap">
+            class="img-fluid" [src]="((profile$|async)?.account.profilePic)?(profile$|async)?.account.profilePic:'https://s3.us-east-2.amazonaws.com/quip-test-bucket/profile_placeholder.png'" alt="Card image cap">
 
             <!--Card image-->
 
@@ -57,7 +56,7 @@
                         <label class="fa fa-photo" aria-hidden="true" id="fileInput">
                             <input type="file" id="file" (change)="handleFileInput($event)">
                         </label>
-                        <input type="image" (click)="clearPostImagePreview()" [src]="localFileUrl" *ngIf="localFileUrl" style="width:64px">
+                        <img [src]="localUrl" *ngIf="localUrl" style="width:64px">
                     </div>
                 </div>
                 <div class="col">
@@ -105,7 +104,6 @@
                     <label class="fa fa-photo" aria-hidden="true" id="fileInput">
                         <input type="file" id="file" (change)="handleProfilePicInput($event)">
                     </label>
-                    <input type="image" [src]="localProfileUrl" *ngIf="localProfileUrl" style="width:64px" (click)="clearProfilePreview()">
                 </div>
             </div>
             <div class="modal-footer">

@@ -14,7 +14,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 
 export class ProfileComponent implements OnInit {
-  constructor(private profileService: ProfileService,
+  constructor(private profileService: ProfileService, 
     private postService: PostService,
     private route: ActivatedRoute,
     private router: Router) { }
@@ -23,8 +23,7 @@ export class ProfileComponent implements OnInit {
   descForm: FormGroup; // Description data
   fileToUpload: File; // actual file to upload
   profileUpload: File; // profile picture to upload
-  localFileUrl; // To display the image preview
-  localProfileUrl; // To display the image preview
+  localUrl; // To display the image preview
   username: string;
   friendzy: boolean = true;
   //backend: Backend = new Backend(); // access to backend data.
@@ -48,12 +47,11 @@ export class ProfileComponent implements OnInit {
     this.descForm = new FormGroup({
       desc: new FormControl()
     })
-
     this.sub = this.route.params.subscribe(params => {
       this.username = params['username'];
       if (this.username) {
         this.profileService.getUserProfileByUsername(this.username)
-          .subscribe(_ => {
+          .subscribe(_=> {
             this.profile$ = this.profileService.getUserProfileByUsername(this.username);
             this.profile$.forEach(x => this.posts$ = Observable.of(x.posts));
           },
@@ -80,7 +78,7 @@ export class ProfileComponent implements OnInit {
       } else {
         let x = new Post();
         x.description = this.postForm.controls['postText'].value;
-        this.posts$ = this.postService.savePost(x);
+        this.posts$ =this.postService.savePost(x);
       }
     }
   }
@@ -104,40 +102,22 @@ export class ProfileComponent implements OnInit {
       var reader = new FileReader();
       this.fileToUpload = event.target.files.item(0);
       reader.onload = (event: any) => {
-        this.localFileUrl = event.target.result;
-        console.log(this.localFileUrl);
+        this.localUrl = event.target.result;
       }
-      reader.readAsDataURL(event.target.files[0]);
     }
-  }
-
-  clearPostImagePreview() {
-    this.localFileUrl = null;
-    this.fileToUpload = null;
   }
 
 
   handleProfilePicInput(event: any) {
     if (event.target.files && event.target.files[0]) {
-      var reader = new FileReader();
       this.profileUpload = event.target.files.item(0);
-      console.log(this.profileUpload)
-      reader.onload = (event: any) => {
-        this.localProfileUrl = event.target.result;
-      }
-      reader.readAsDataURL(event.target.files[0]);
     }
-  }
-
-  clearProfilePreview(){
-    this.localProfileUrl = null;
-    this.profileUpload = null;
   }
 
   uploadProfilePic() {
     if (this.profileUpload) {
       this.profile$ = this.profileService.updateProfilePicture(this.profileUpload)
-        .flatMap(_ => this.profileService.getUserProfile());
+      .flatMap(_ => this.profileService.getUserProfile());
       this.profile$.forEach(x => this.posts$ = Observable.of(x.posts));
     }
   }
