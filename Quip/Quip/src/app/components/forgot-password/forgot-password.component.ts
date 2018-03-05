@@ -17,7 +17,11 @@ export class ForgotPasswordComponent implements OnInit {
 
   onSendRequest(user) {
     this.email = user["email"];
-   this.authService.forgetPassword(this.email);
+   this.authService.forgetPassword(this.email)
+                    .subscribe(
+                    _=>this.sent=true,
+                    _=>console.log("Error")
+                  );
   }
 
   toLogin(){
