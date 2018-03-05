@@ -1,1 +1,1 @@
-web: node Quip/Quip/app.js
+web: node app.js
