@@ -12,10 +12,11 @@ body {
     // background-color: $dark-blue;
     // background: linear-gradient(45deg, $lime-green, $dark-blue);
     height: 100vh;
-    h1 {
+    background: #ddd;
+    h1, h2, h3, h4 {
         font-family: 'Jura', sans-serif;
-        color: #cccccc;
-        font-size: 50pt;
+        color: $dark-blue;
+        // font-size: 50pt;
         strong {
             color: $lime-green;
             font-weight: 600;
@@ -95,4 +96,8 @@ body {
 
 .logo-128 {
     max-width: 128px;
+}
+
+.dark-blue {
+    background-color: $dark-blue;
 }

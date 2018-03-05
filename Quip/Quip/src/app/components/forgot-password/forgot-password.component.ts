@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {FormGroup, FormControl, Validators } from '@angular/forms';
+import { AuthService  } from 'app/services/auth/auth.service'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-forgot-password',
@@ -7,12 +9,23 @@ import {FormGroup, FormControl, Validators } from '@angular/forms';
   styleUrls: ['./forgot-password.component.scss']
 })
 export class ForgotPasswordComponent implements OnInit {
-
   forgotPassword;
+  @Input() sent:boolean = false;
+  email: string;
+  constructor(private router: Router,
+            private authService: AuthService){}
 
+  onSendRequest(user) {
+    this.email = user["email"];
+   this.authService.forgetPassword(this.email);
+  }
 
-  onSendRequest = function (user) {
-    console.log(user);
+  toLogin(){
+    this.router.navigate(['login']);
+  }
+
+  isSent() {
+    return this.sent;
   }
 
   ngOnInit() {

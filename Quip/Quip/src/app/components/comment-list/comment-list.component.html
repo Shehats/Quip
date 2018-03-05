@@ -1,0 +1,22 @@
+<div class="card" *ngFor="let comment of comments">
+    <!--Card content-->
+    <div class="card-body">
+        <div class="row">
+            <div class="label col-1 mr-2">
+                <img [src]="comment.owner.profilePic" class="rounded-circle d-flex align-self-start mr-3">
+            </div>
+            <div class="col">
+                <!--Title-->
+                <h4 class="card-title">{{comment.title}}</h4>
+                <!--Text-->
+                <p class="card-text">{{comment.description}}</p>
+            </div>
+        </div>
+        <!--Card image-->
+        <img class="img-fluid" [src]="comment.mediaUrl" alt="Card image cap">
+        <div class="btn-group mx-auto mt-2">
+            <button class="btn-sm" (click)="liked(comment.id)">like</button>
+            <button class="btn-sm" (click)="disliked(comment.id)">dislike</button>
+        </div>
+    </div>
+</div>

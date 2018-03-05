@@ -1,18 +1,30 @@
-import { Instance } from "app/Interfaces/Instance";
+import { Instance } from 'app/Interfaces/Instance';
+import { Account } from './Account';
+import { Comment } from './Comment';
+
 
 export class Post implements Instance{
-    id: number;
-    media: string;
+    owner: Account;
+    comments: Comment[];
     description: string;
-    likes: number;
-    dislikes: number;
+    dislikes: Account[];
+    id: number;
+    likes: Account[];
+    mediaUrl: string;
+    title: string;
 
-    constructor(ident: number, desc: string, like: number, disl: number, medi?: string) {
-        this.id = ident;
-        this.media = (medi) ? medi: '';
-        this.description = desc;
-        this.likes = like;
-        this.dislikes = disl;
+    constructor(owner?:Account, comments?: Comment[], description?: string, dislikes?: Account[],
+                id?: number, likes?: Account[], mediaUrl?: string, title?: string) {
+
+        this.id = id;
+        this.owner = owner;
+        this.title = title;
+        this.description =  description;
+        this.mediaUrl = mediaUrl;
+        this.dislikes = dislikes;
+        this.likes =  likes;
+        this.comments = comments;
+
     }
 
     getFilter(): string{

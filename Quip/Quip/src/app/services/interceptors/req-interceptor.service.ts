@@ -11,10 +11,12 @@ import {
 import { Observable } from 'rxjs/Observable';
 import { CacheService } from '../cache/cache.service';
 import { Token } from '../../Interfaces/Token';
+import { Router } from '@angular/router';
+
 
 @Injectable()
 export class ReqInterceptorService implements HttpInterceptor{
-  constructor(private cache: CacheService) { }
+  constructor(private cache: CacheService, private router: Router) { }
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
@@ -37,6 +39,7 @@ export class ReqInterceptorService implements HttpInterceptor{
       },
       (_: HttpErrorResponse) => {
         this.cache.removeToken();
+        this.router.navigate(['login'])
         });
     })
   }

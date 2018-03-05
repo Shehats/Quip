@@ -14,6 +14,8 @@
 
 .navbar-dark .navbar-brand {
     color: white;
+    padding-right: 16px;
+
 }
 
 a {
@@ -29,3 +31,22 @@ a {
     background-color: #ddd;
     padding: 3px 25%;
 }
+
+#searchBar {
+    padding: none;
+    margin: auto;
+    
+    max-width: 100%;
+    height: auto;
+    color: white;
+    input::placeholder{
+        color: white;
+    }
+}
+#searchResult {
+    display: block;
+    float: left;  
+    z-index: 3;
+    position: absolute; /*newly added*/
+    right: 5px; /*newly added*/
+    top: 5px;}

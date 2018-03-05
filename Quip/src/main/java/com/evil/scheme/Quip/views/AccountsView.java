@@ -4,11 +4,18 @@ import com.evil.scheme.Quip.control.AccountService;
 
 import com.evil.scheme.Quip.entities.accounts.Account;
 import com.evil.scheme.Quip.exceptions.AccountNotFoundException;
+import com.evil.scheme.Quip.forms.PasswordForm;
+import com.evil.scheme.Quip.forms.PictureForm;
+import com.evil.scheme.Quip.repositories.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import com.evil.scheme.Quip.security.JwtTokenProvider;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
+
+import static com.evil.scheme.Quip.views.ProfileView.refactorToken;
 
 @RestController
 @RequestMapping(value = "accounts")
@@ -16,14 +23,43 @@ public class AccountsView {
     @Autowired
     private AccountService accountService;
 
+    @Autowired
+    private JwtTokenProvider tokenProvider;
+
+    @Resource
+    private AccountRepository accountRepository;
+
+    @Resource
+    private BCryptPasswordEncoder passwordEncoder;
+
     @RequestMapping(value = "", method = RequestMethod.GET)
     public List<Account> getAll() {
         return this.accountService.findAll();
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public Account add(@ModelAttribute Account account) {
+    public Account add(@RequestBody Account account) {
         return this.accountService.create(account);
+    }
+
+    @RequestMapping(value = "/forget-password", method = RequestMethod.POST)
+    public Account updatePassword(@RequestBody PasswordForm passwordForm) throws AccountNotFoundException{
+        Account account = this.accountRepository.findByUsername(this.tokenProvider.getUsername(refactorToken(passwordForm.getToken())));
+        if (account != null) {
+            this.accountRepository.updatePassword(account.getId(),this.passwordEncoder.encode(passwordForm.getPassword()));
+            return account;
+        }
+        else {
+            throw new AccountNotFoundException("Account not found");
+        }
+    }
+
+    @RequestMapping(value = "/updatePicture", method = RequestMethod.POST)
+    public Account updatePicture(@RequestHeader("Authorization") String token, @RequestBody PictureForm pictureForm) throws AccountNotFoundException {
+        Account account = this.accountRepository
+                .findByUsername(this.tokenProvider.getUsername(refactorToken(token)));
+        account.setProfilePic(pictureForm.getPicUrl());
+        return this.accountService.update(account);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -31,8 +67,8 @@ public class AccountsView {
         return this.accountService.findById(id);
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.PUT)
-    public Account update(@ModelAttribute Account account) {
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public Account update(@RequestBody Account account) {
         try {
             return this.accountService.update(account);
         } catch (AccountNotFoundException e) {

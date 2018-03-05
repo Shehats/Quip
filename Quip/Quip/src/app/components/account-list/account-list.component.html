@@ -1,0 +1,16 @@
+<div *ngIf="accounts$">
+	<div class="container mx-3" *ngFor="let user of accounts$ | search: searchArg :user| async">
+		<span>
+			<a routerLink="/profile/{{user.username}}">{{user.username}}</a>
+			 <button class="btn-sm btn-info" *ngIf="!friendzy" (click)="addFriend(user)"><i class="fa fa-thumbs-o-up"></i><</button>
+		</span>
+	</div>
+</div>
+<div *ngIf="accounts">
+	<div class="container mx-3" *ngFor="let user of accounts">
+		<span>
+			<a routerLink="{{user.username}}">{{user.username}}</a>
+			 <button class="btn-sm btn-danger" (click)="unFriend(user)"><i class="fa fa-thumbs-o-down"></i><</button>
+		</span>
+	</div>
+<div>
