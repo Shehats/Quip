@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Observable';
 import { Post } from '../../models/Post';
-import { post, addImage, likePost, disLikePost } from '../../Interfaces/Backend'
+import { post, feed, addImage, likePost, disLikePost } from '../../Interfaces/Backend'
 
 // , feed
 @Injectable()
@@ -27,6 +27,13 @@ export class PostService {
                                 x['dislikes'], x['id'], x['likes'],x['mediaUrl'], x['title'])))
             .catch(err => Observable.throw(err));
 }
+  
+  public getFeed(): Observable<Post[]> {
+    return this.action.fetchAll<Post[]>(feed)
+            .map(y => y.map(x => new Post(x['owner'],x['comments'], x['description'],
+                                x['dislikes'], x['id'], x['likes'],x['mediaUrl'], x['title'])))
+            .catch(err => Observable.throw(err));
+  }
   public getPostById (id: number): Observable<Post> {
     return this.action.fetchById<Post>(post,id)
                       .map(x => new Post(x['owner'],x['comments'], x['description'],

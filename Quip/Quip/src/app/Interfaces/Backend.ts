@@ -13,7 +13,7 @@ export const accountUpdate: string = account + '/update'; // PUT
 // ..................................................
 // Profile:
 export const profile: string = baseUrl + 'profile'; // GET && same route by adding username to it.
-export const updateProfile: string = profile; // PUT update profile
+export const updateProfile: string = profile+'/update'; // PUT update profile
 export const feed: string = profile + '/feed'; // GET
 export const addFriend: string = profile + '/addFriend'; // PUT and append username to it
 export const unFriend: string = profile + '/unFriend'; // PUT and append username to it

@@ -1,6 +1,11 @@
 <app-navbar></app-navbar>
+<!-- Search form -->
+
 <div class="container col-6" id="feed" style="margin-top: 10%;">
+	 <div class="sd-form">
+      <input [(ngModel)]="searchArg" class="form-control" type="text" placeholder="Search" aria-label="Search" id="searchBar">
+    </div>
 	<div class="pre-scrollable mx-auto" id="postFeed">
-		<app-post-list  [posts]="post$|async"></app-post-list>
+		<app-post-list [obsPosts]="post$" [searchArg]="searchArg"></app-post-list>
 	</div>
 </div>

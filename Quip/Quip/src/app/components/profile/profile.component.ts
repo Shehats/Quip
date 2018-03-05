@@ -26,15 +26,19 @@ export class ProfileComponent implements OnInit {
   localFileUrl; // To display the image preview
   localProfileUrl; // To display the image preview
   username: string;
+  friendzy: boolean = true;
   //backend: Backend = new Backend(); // access to backend data.
   profile$: Observable<Profile>; // Profile data.
   posts$: Observable<Post[]>;
   profileToUpdate: Profile;
   state: boolean; // sets the state of either being a profile or a dashboard
   profilePic: string;
-  descText: string = "This is a test";
+  descText: string = "I am lonely";
   friends$: Profile[];
   sub: any;
+  dashboard: boolean = false;
+  dashboard$: Observable<Post[]>;
+  searchArg: string;
 
   ngOnInit() {
     this.postForm = new FormGroup({
@@ -48,10 +52,10 @@ export class ProfileComponent implements OnInit {
     this.sub = this.route.params.subscribe(params => {
       this.username = params['username'];
       if (this.username) {
-        console.log('here')
         this.profileService.getUserProfileByUsername(this.username)
           .subscribe(_ => {
             this.profile$ = this.profileService.getUserProfileByUsername(this.username);
+            this.profile$.forEach(x => this.posts$ = Observable.of(x.posts));
           },
             _ => this.router.navigate(['notfound'])
           )
@@ -62,11 +66,11 @@ export class ProfileComponent implements OnInit {
       }
       else {
         this.profile$ = this.profileService.getUserProfile();
-        this.profile$.forEach(x => console.log(x));
-        this.profileService.getUserProfileByUsername(this.username);
+        this.posts$ = this.postService.getFeed();
       }
+      this.dashboard$ = this.postService.getAllPosts();
     });
-    this.profile$.forEach(x => this.posts$ = Observable.of(x.posts));
+    
   }
 
   submitPost() {
@@ -83,10 +87,16 @@ export class ProfileComponent implements OnInit {
 
   submitDesc() {
     if (this.descForm.valid) {
-      this.profile$.do(x => this.profileToUpdate = x);
-      this.profileToUpdate.description = this.descForm['']
-      this.profile$ = this.profileService.updateProfile(this.profileToUpdate);
+      this.profile$.forEach(x => {
+        x.description = this.descText;
+        console.log(x);
+        this.profile$ = this.profileService.updateProfile(x);
+      });
     }
+  }
+
+  toggle () {
+    this.dashboard = !this.dashboard;
   }
 
   handleFileInput(event: any) {

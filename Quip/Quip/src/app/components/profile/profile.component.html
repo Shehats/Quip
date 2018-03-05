@@ -20,8 +20,8 @@
                 <p class="card-meta" *ngIf="profile$">@{{(profile$|async)?.account.username}}</p>
 
                 <!--Text-->
-                <p ng-disabled="true" class="card-text" *ngIf="descText">{{descText}}</p>
-                <button class="btn btn-sm mx-auto" data-toggle="modal" data-target="#basicExample" (click)="profileInfoModal.show()" mdbRippleRadius>Edit Description</button>
+                <p ng-disabled="true" class="card-text" *ngIf="descText">{{(profile$|async)?.description}}</p>
+                <button class="btn btn-sm mx-auto" data-toggle="modal" data-target="#basicExample" *ngIf="!username" (click)="profileInfoModal.show()" mdbRippleRadius>Edit Description</button>
                 <hr>
                 <div class="card-meta" (click)="displayFriends.show()">
                     <a class="btn btn-sm ">
@@ -68,19 +68,31 @@
                 </div>
             </div>
         </form>
-        <div class="pre-scrollable mx-auto" id="postFeed" *ngIf="posts$">
-            <app-post-list [posts]="posts$|async" [picture]="(profile$|async)?.account.profilePic"></app-post-list>
+        <div class="row mx-auto">
+            <button (click)="toggle()" class="btn btn-default waves-effect waves-light">Dashboard</button>
+            <button (click)="toggle()" class="btn btn-default waves-effect waves-light">Feed</button>
         </div>
+        <hr>
+        <div class="pre-scrollable mx-auto" id="postFeed" *ngIf="posts$">
+            <div class="sd-form" *ngIf="dashboard">
+                <input [(ngModel)]="searchArg" class="form-control" type="text" placeholder="Search" aria-label="Search" id="searchBar">
+            </div>
+            <app-post-list *ngIf="!dashboard" [posts]="posts$|async" [picture]="(profile$|async)?.account.profilePic"></app-post-list>
+            <app-post-list *ngIf="dashboard"[obsPosts]="dashboard$" [searchArg]="searchArg"></app-post-list>
+        </div>
+
     </div>
     <div class="container col-4">
-
+        <div class="row mx-auto">
+          
+        </div>
     </div>
 </section>
 
 <!-- Change Profile Pic Modal -->
-<div mdbModal #profilePictureModal="mdb-modal" class="modal fade" id="basicExample" tabindex="-1" role="dialog" aria-labelledby="profilePicModal"
+<div mdbModal  #profilePictureModal="mdb-modal" class="modal fade" id="basicExample" tabindex="-1" role="dialog" aria-labelledby="profilePicModal"
     aria-hidden="true">
-    <div class="modal-dialog modal-sm" role="document">
+    <div *ngIf="!username" class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title w-100" id="profilePicModal">Select New Profile Pic</h4>
@@ -116,7 +128,7 @@
             </div>
             <div class="modal-body" *ngIf="profile$">
                 <form [formGroup]="descForm">
-                    <input type="text" placeholder="New Description" class="form-control" formControlName="desc" [value]="(profile$|async)?.description">
+                    <input type="text" placeholder="New Description" class="form-control" formControlName="desc" [(ngModel)]="descText">
                 </form>
             </div>
             <div class="modal-footer">
@@ -133,21 +145,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title w-100" id="displayFriends">Friends of
-                    <!-- {{user.fname}} {{user.lname}} -->
+                    {{(profile$|async)?.account.username}}
                 </h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="displayFriends.hide()">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
             <div class="modal-body">
-
-                <div class="container mx-3" *ngFor="let friend of friends$">
-                    <span *ngIf="friends$">
-
-                    </span>
-                </div>
-
-
+                <app-account-list [accounts]="(profile$|async)?.friends" [friendzy]="friendzy"></app-account-list>
             </div>
             <!-- <div class="modal-footer">
                 <button type="button" class="btn btn-sm waves-light" data-dismiss="modal" (click)="displayFriends.hide()" mdbRippleRadius>Close</button>
