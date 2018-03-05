@@ -101,6 +101,11 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  clearPostImagePreview() {
+    this.localFileUrl = null;
+    this.fileToUpload = null;
+  }
+
 
   handleProfilePicInput(event: any) {
     if (event.target.files && event.target.files[0]) {
@@ -112,6 +117,11 @@ export class ProfileComponent implements OnInit {
       }
       reader.readAsDataURL(event.target.files[0]);
     }
+  }
+
+  clearProfilePreview(){
+    this.localProfileUrl = null;
+    this.profileUpload = null;
   }
 
   uploadProfilePic() {

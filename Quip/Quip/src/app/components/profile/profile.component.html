@@ -57,7 +57,7 @@
                         <label class="fa fa-photo" aria-hidden="true" id="fileInput">
                             <input type="file" id="file" (change)="handleFileInput($event)">
                         </label>
-                        <img [src]="localFileUrl" *ngIf="localFileUrl" style="width:64px">
+                        <input type="image" (click)="clearPostImagePreview()" [src]="localFileUrl" *ngIf="localFileUrl" style="width:64px">
                     </div>
                 </div>
                 <div class="col">
@@ -93,7 +93,7 @@
                     <label class="fa fa-photo" aria-hidden="true" id="fileInput">
                         <input type="file" id="file" (change)="handleProfilePicInput($event)">
                     </label>
-                    <img [src]="localProfileUrl" *ngIf="localProfileUrl" style="width:64px">
+                    <input type="image" [src]="localProfileUrl" *ngIf="localProfileUrl" style="width:64px" (click)="clearProfilePreview()">
                 </div>
             </div>
             <div class="modal-footer">

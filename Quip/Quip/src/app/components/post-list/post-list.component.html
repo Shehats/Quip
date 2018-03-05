@@ -7,7 +7,7 @@
                     style="height: 100px;" class="rounded-circle d-flex align-self-start mr-3">
             </div>
             <div class="col">
-                <h2 class="card-title mb-0">{{post.owner.fname}} {{post.owner.lname}}</h2>
+                <h4 class="card-title mb-0">{{post.owner.fname}} {{post.owner.lname}}</h4>
                 <p class="" id="tagText">@{{post.owner.username}}</p>
                 <p class="card-text" id="descText">{{post['description']}}</p>
             </div>
@@ -16,7 +16,7 @@
 
             <!--Card image-->
             <hr *ngIf="post.mediaUrl">
-            <img class="img-fluid" *ngIf="post.mediaUrl" [src]="post.mediaUrl" alt="Card image cap">
+            <img class="img-fluid" *ngIf="post.mediaUrl" [src]="post.mediaUrl" alt="Card image cap" id="imagePost">
 
             <hr>
             <div class="btn-group mx-auto mt-2">
