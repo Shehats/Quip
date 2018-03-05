@@ -11,7 +11,7 @@ import java.io.*;
 @Entity
 public class Post implements Serializable{
     private Long id;
-//    private Profile parentId;
+    private Account owner;
     private String title;
     private String description;
     private String mediaUrl;
@@ -50,15 +50,13 @@ public class Post implements Serializable{
         this.id = id;
     }
 
-//    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL,targetEntity = Profile.class)
-////    @JoinColumn(name = "profileId")
-//	public Profile getParentId() {
-//		return parentId;
-//	}
-//
-//	public void setParentId(Profile parentId) {
-//		this.parentId = parentId;
-//	}
+    @OneToOne(targetEntity = Account.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    public Account getOwner() {
+        return owner;
+    }
+    public void setOwner(Account owner) {
+        this.owner = owner;
+    }
 
     @Column(name = "media")
     public String getMediaUrl() {
@@ -84,7 +82,7 @@ public class Post implements Serializable{
         this.description = description;
     }
 
-    @ManyToOne(targetEntity = Account.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(targetEntity = Account.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public List<Account> getLikes() {
         return likes;
     }
@@ -92,7 +90,7 @@ public class Post implements Serializable{
         this.likes = likes;
     }
 
-    @ManyToOne(targetEntity = Account.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(targetEntity = Account.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public List<Account> getDislikes() {
         return dislikes;
     }

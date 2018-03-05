@@ -4,6 +4,7 @@ import com.evil.scheme.Quip.entities.accounts.Account;
 import com.evil.scheme.Quip.entities.posts.Post;
 import com.evil.scheme.Quip.entities.profiles.Profile;
 import com.evil.scheme.Quip.exceptions.PostNotFoundException;
+import com.evil.scheme.Quip.forms.PictureForm;
 import com.evil.scheme.Quip.repositories.AccountRepository;
 import com.evil.scheme.Quip.repositories.ProfileRepository;
 import com.evil.scheme.Quip.security.JwtTokenProvider;
@@ -42,17 +43,12 @@ public class BucketView {
 	}
 
 	@PostMapping("/uploadProfile")
-	public Profile uploadFile(@RequestHeader("Authorization") String token, @RequestPart (value = "file") MultipartFile file) {
-		Account account = this.accountRepository
-				.findByUsername(this.tokenProvider.getUsername(refactorToken(token)));
-		this.amazonClient.deleteFileFromS3Bucket(account.getProfilePic());
-		account.setProfilePic(this.amazonClient.uploadFile(file));
-		return this.profileRepository.findByUser(account.getUsername());
+	public PictureForm uploadFile(@RequestPart (value = "file") MultipartFile file) {
+		return new PictureForm(this.amazonClient.uploadFile(file));
 	}
 
 	@PostMapping("/uploadMedia")
 	public Post uploadMedia (@RequestPart (value = "file") MultipartFile file) {
-		// Post post = new Post(this.amazonClient.uploadFile(file));
 		return new Post(this.amazonClient.uploadFile(file));
 	}
 
@@ -66,10 +62,5 @@ public class BucketView {
 		return this.postService.update(post);
 	}
 
-//	@DeleteMapping("/deleteFile")
-//	public String deleteFile (@RequestPart (value = "url") String fileUrl) {
-//		return this.amazonClient.deleteFileFromS3Bucket (fileUrl);
-//	}
-	
 
 }

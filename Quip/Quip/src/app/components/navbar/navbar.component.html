@@ -1,47 +1,39 @@
 <nav class="mb-1 navbar fixed-top navbar-expand-lg navbar-dark animate-bg scrolling-navbar lighten-1 animated fadeIn">
-  <a class="navbar-brand" (click)="sendState(false)">Quip</a>
+  <a class="navbar-brand" routerLink="/dashboard">Quip</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-5" aria-controls="navbarSupportedContent-5"
-    aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+  aria-expanded="false" aria-label="Toggle navigation">
+  <span class="navbar-toggler-icon"></span>
+</button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent-5">
+<div class="collapse navbar-collapse" id="navbarSupportedContent-5">
 
-    <ul class="navbar-nav mr-auto ">
+  <ul class="navbar-nav mr-auto ">
       <li class="nav-item">
-
+        <!-- Search form -->
+        <div class=" navbar-nav  nav-flex sd-form">
+          <input [(ngModel)]="searchArg" class="form-control" type="text" placeholder="Search" aria-label="Search" id="searchBar">
+        </div>
+            <div class="" id="">
+              <app-account-list class="card mb-1" *ngIf="searchArg" [obsAccounts]="accounts$" [searchArg]="searchArg"></app-account-list>
+            </div>
       </li>
     </ul>
 
-    <!-- Search form -->
-    <div class="sd-form">
-      <input [(ngModel)]="searchArg" class="form-control" type="text" placeholder="Search" aria-label="Search" id="searchBar">
-    </div>
-    <ul class="list-group list-group-flush" *ngIf="searchArg">
-      <li class="list-group-item" *ngFor="let user of accounts$ | search: searchArg :user| async">
-        <p>{{user.username}}</p>
-        <p>{{user.fname}}</p>
-        <p>{{user.lname}}</p>
-        <p>{{user.email}}</p>
-      </li>
-    </ul>
-
-
-    <ul class="navbar-nav ml-auto nav-flex-icons">
-      <a (click)="sendState(true)" class="d-flex justify-content-between ">
-        <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-8" alt="avatar" class="avatar rounded-circle d-flex align-self-center mr-2 z-depth-1">
+  <ul class="navbar-nav ml-auto nav-flex-icons">
+    <a routerLink="/profile" (click)="sendState(true)" class="d-flex justify-content-between ">
+      <img [src]="((profile$|async)?.account.profilePic)?(profile$|async)?.account.profilePic:'https://s3.us-east-2.amazonaws.com/quip-test-bucket/profile_placeholder.png'" alt="avatar" class="avatar rounded-circle d-flex align-self-center mr-2 z-depth-1">
+    </a>
+    <li class="nav-item">
+      <a class="nav-link waves-effect waves-light">
+        <i class="fa fa-envelope" aria-hidden="true"></i>
       </a>
-      <li class="nav-item">
-        <a class="nav-link waves-effect waves-light">
-          <i class="fa fa-envelope" aria-hidden="true"></i>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link waves-effect waves-light">
-          <i class="fa fa-user-plus" aria-hidden="true"></i>
-        </a>
-      </li>
-    </ul>
-    <a (click)="LogOut()" class="">logout</a>
-  </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link waves-effect waves-light">
+        <i class="fa fa-user-plus" aria-hidden="true"></i>
+      </a>
+    </li>
+  </ul>
+  <a (click)="LogOut()" class="">logout</a>
+</div>
 </nav>

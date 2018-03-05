@@ -4,6 +4,7 @@ import { Comment } from './Comment';
 
 
 export class Post implements Instance{
+    owner: Account;
     comments: Comment[];
     description: string;
     dislikes: Account[];
@@ -12,16 +13,18 @@ export class Post implements Instance{
     mediaUrl: string;
     title: string;
 
-    constructor(comments?: Comment[], description?: string, dislikes?: Account[], 
+    constructor(owner?:Account, comments?: Comment[], description?: string, dislikes?: Account[],
                 id?: number, likes?: Account[], mediaUrl?: string, title?: string) {
 
-        this.comments = comments;
-        this.description =  description;
-        this.dislikes = dislikes;
         this.id = id;
-        this.likes =  likes;
+        this.owner = owner;
+        this.title = title;
+        this.description =  description;
         this.mediaUrl = mediaUrl;
-        this,title = title;
+        this.dislikes = dislikes;
+        this.likes =  likes;
+        this.comments = comments;
+
     }
 
     getFilter(): string{

@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Backend } from 'app/Interfaces/Backend';
-import { ActionsService } from '../../services/http/actions.service';
 import { Post } from '../../models/Post';
 import { Profile } from '../../models/Profile';
-import { FileUploadService } from '../../services/file-upload/file-upload.service';
-// import { Router, ActivatedRoute } from '@angular/router';
-// import { NavbarComponent } from 'app/components/navbar/navbar.component'
+import { Observable } from 'rxjs/Observable';
+import { ProfileService } from '../../services/profile/profile.service';
+import { PostService } from 'app/services/post/post.service'
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -15,84 +14,30 @@ import { FileUploadService } from '../../services/file-upload/file-upload.servic
 })
 
 export class ProfileComponent implements OnInit {
-  constructor(private action: ActionsService, private uploadFile: FileUploadService/*, private router: Router, private actRoute: ActivatedRoute*/) { }
+  constructor(private profileService: ProfileService, 
+    private postService: PostService,
+    private route: ActivatedRoute,
+    private router: Router) { }
 
   postForm: FormGroup; // Post Form values
   descForm: FormGroup; // Description data
   fileToUpload: File; // actual file to upload
+  profileUpload: File; // profile picture to upload
   localUrl; // To display the image preview
-
+  localFileUrl; // To display the image preview
+  localProfileUrl;
   username: string;
-  backend: Backend = new Backend(); // access to backend data.
-
-  profile: Profile; // Profile data.
+  friendzy: boolean = true;
+  //backend: Backend = new Backend(); // access to backend data.
+  profile$: Observable<Profile>; // Profile data.
+  posts$: Observable<Post[]>;
+  profileToUpdate: Profile;
   state: boolean; // sets the state of either being a profile or a dashboard
-
-  descText: string = "This is a test";
+  profilePic: string;
+  descText: string = "I am lonely";
   friends$: Profile[];
-
-  submitPost() {
-    if (this.postForm.valid) {
-      if (this.uploadFile) {
-        console.log('skkdfkjkgkjg');
-        console.log(this.postForm.controls['postText'].value);
-        this.uploadFile.uploadPostPicture(this.fileToUpload)
-        .subscribe(
-          x => {
-            this.action.save<Post>(this.backend.post + '/image', new Post(x['comments'], this.postForm.controls['postText'].value, x['dislikes'],
-                                                            x['id'], x['likes'], x['mediaUrl'], x['title']))
-                                                            .subscribe(x => console.log(x));
-          },
-          err => console.log(err)
-        );
-      } else {
-        console.log('here');
-        this.action.save<Post>(this.backend.post, new Post(null, this.postForm.controls['postText'].value, null, null, null, null, null))
-          .subscribe(
-            _ => this.postForm.reset()
-          );
-      }
-    }
-  }
-
-  submitDesc() {
-    if (this.descForm.valid) {
-      this.action.update<Profile>(this.backend.profile, this.profile);
-    }
-  }
-
-  handleFileInput(event: any) {
-    if (event.target.files && event.target.files[0]) {
-      var reader = new FileReader();
-      this.fileToUpload = event.target.files.item(0);
-      reader.onload = (event: any) => {
-        this.localUrl = event.target.result;
-      }
+  sub: any;
   
-    }
-  }
-
-
-  handleProfilePicInput(files: FileList) {
-    console.log(files);
-  }
-
-  updateDesc(data) {
-    if (data) {
-      this.profile.description = data;
-      console.log(data);
-    }
-  }
-
-  handleProfileInfo(data) {
-    console.log(data);
-  }
-
-  handleEvent(stateMode: any) {
-    this.state = stateMode;
-    console.log(this.state);
-  }
-
   ngOnInit() {
     this.postForm = new FormGroup({
       postText: new FormControl("", Validators.required)
@@ -101,17 +46,89 @@ export class ProfileComponent implements OnInit {
     this.descForm = new FormGroup({
       desc: new FormControl()
     })
-
-    this.action.fetch<Profile>(this.backend.profile)
-      .subscribe(
-        profile => { this.profile = profile; console.log(profile); }
-      )
-
-    // this.action.fetch(this.backend.profile) // Fetching Username
-    //   .subscribe(
-    //     () => console.log(this.actRoute), // this.username = this.actRoute
-    //     () => this.router.navigate(['login'])
-    //   )
+    this.sub = this.route.params.subscribe(params => {
+      this.username = params['username'];
+      if (this.username) {
+        this.profileService.getUserProfileByUsername(this.username)
+          .subscribe(_=> {
+            this.profile$ = this.profileService.getUserProfileByUsername(this.username);
+            this.profile$.forEach(x => this.posts$ = Observable.of(x.posts));
+          },
+            _ => this.router.navigate(['notfound'])
+          )
+        this.profile$.forEach(x => {
+          if (!x.account)
+            this.router.navigate(['notfound'])
+        });
+      }
+      else {
+        this.profile$ = this.profileService.getUserProfile();
+        this.posts$ = this.postService.getFeed();
+      }
+    });
+    
   }
 
+  submitPost() {
+    if (this.postForm.valid) {
+      if (this.fileToUpload) {
+        this.posts$ = this.postService.uploadPostPicture(this.fileToUpload, this.postForm.controls['postText'].value);
+      } else {
+        let x = new Post();
+        x.description = this.postForm.controls['postText'].value;
+        this.posts$ =this.postService.savePost(x);
+      }
+    }
+  }
+
+  submitDesc() {
+    if (this.descForm.valid) {
+      this.profile$.forEach(x => {
+        x.description = this.descText;
+        this.profile$ = this.profileService.updateProfile(x);
+      });
+    }
+  }
+
+  handleFileInput(event: any) {
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+      this.fileToUpload = event.target.files.item(0);
+      reader.onload = (event: any) => {
+        this.localFileUrl = event.target.result;
+      }
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  }
+
+  clearPostImagePreview() {
+    this.localFileUrl = null;
+    this.fileToUpload = null;
+  }
+
+
+  handleProfilePicInput(event: any) {
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+      this.profileUpload = event.target.files.item(0);
+      reader.onload = (event: any) => {
+        this.localProfileUrl = event.target.result;
+      }
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  }
+
+  clearProfilePreview(){
+    this.localProfileUrl = null;
+    this.profileUpload = null;
+  }
+
+  uploadProfilePic() {
+    if (this.profileUpload) {
+      this.profile$ = this.profileService.updateProfilePicture(this.profileUpload)
+      .flatMap(_ => this.profileService.getUserProfile());
+      this.profile$.forEach(x => this.posts$ = Observable.of(x.posts));
+      this.posts$ = this.postService.getFeed();
+    }
+  }
 }

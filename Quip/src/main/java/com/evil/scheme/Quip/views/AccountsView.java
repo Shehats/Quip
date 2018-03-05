@@ -5,6 +5,7 @@ import com.evil.scheme.Quip.control.AccountService;
 import com.evil.scheme.Quip.entities.accounts.Account;
 import com.evil.scheme.Quip.exceptions.AccountNotFoundException;
 import com.evil.scheme.Quip.forms.PasswordForm;
+import com.evil.scheme.Quip.forms.PictureForm;
 import com.evil.scheme.Quip.repositories.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.evil.scheme.Quip.security.JwtTokenProvider;
@@ -53,12 +54,20 @@ public class AccountsView {
         }
     }
 
+    @RequestMapping(value = "/updatePicture", method = RequestMethod.POST)
+    public Account updatePicture(@RequestHeader("Authorization") String token, @RequestBody PictureForm pictureForm) throws AccountNotFoundException {
+        Account account = this.accountRepository
+                .findByUsername(this.tokenProvider.getUsername(refactorToken(token)));
+        account.setProfilePic(pictureForm.getPicUrl());
+        return this.accountService.update(account);
+    }
+
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Account getById(@PathVariable Long id) {
         return this.accountService.findById(id);
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     public Account update(@RequestBody Account account) {
         try {
             return this.accountService.update(account);

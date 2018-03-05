@@ -1,0 +1,77 @@
+<div *ngIf="posts">
+    <div class="card" *ngFor="let post of posts" style="margin-bottom: 15px;">
+        <div class="card-header">
+            <div class="row">
+                <!--Title-->
+                <div class="col-2 mr-3">
+                    <img [src]="(post.owner.profilePic)?post.owner.profilePic:'https://s3.us-east-2.amazonaws.com/quip-test-bucket/profile_placeholder.png'"
+                    style="height: 100px;" class="rounded-circle d-flex align-self-start mr-3">
+                </div>
+                <div class="col">
+                    <h4 class="card-title mb-0">{{post.owner.fname}} {{post.owner.lname}}</h4>
+                    <p class="" id="tagText">@{{post.owner.username}}</p>
+                    <p class="card-text" id="descText">{{post['description']}}</p>
+                </div>
+            </div>
+            <div class="card-body">
+
+                <!--Card image-->
+                <hr *ngIf="post.mediaUrl">
+                <img class="img-fluid" *ngIf="post.mediaUrl" [src]="post.mediaUrl" alt="Card image cap" id="imagePost">
+
+                <hr>
+                <div class="btn-group mx-auto mt-2">
+                    <button class="btn-sm" (click)="like(post)">
+                        <i class="fa fa-thumbs-o-up"></i>
+                        <span *ngIf="post.likes">{{post.likes.length}}</span>
+                    </button>
+                    <button class="btn-sm" (click)="dislike(post)">
+                        <i class="fa fa-thumbs-o-down"></i>
+                        <span *ngIf="post.dislikes">{{post.dislikes.length}}</span>
+                    </button>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+ 
+<div *ngIf="posts$">
+    <div class="card" *ngFor="let post of posts$ | search: searchArg :post| async" style="margin-bottom: 15px;">
+        <div class="card-header">
+            <div class="row">
+                <!--Title-->
+                <div class="col-2 mr-3">
+                    <img [src]="(post.owner.profilePic)?post.owner.profilePic:'https://s3.us-east-2.amazonaws.com/quip-test-bucket/profile_placeholder.png'"
+                    style="height: 100px;" class="rounded-circle d-flex align-self-start mr-3">
+                </div>
+                <div class="col">
+                    <h4 class="card-title mb-0">{{post.owner.fname}} {{post.owner.lname}}</h4>
+                    <p class="" id="tagText">@{{post.owner.username}}</p>
+                    <p class="card-text" id="descText">{{post['description']}}</p>
+                </div>
+            </div>
+            <div class="card-body">
+
+                <!--Card image-->
+                <hr *ngIf="post.mediaUrl">
+                <img class="img-fluid" *ngIf="post.mediaUrl" [src]="post.mediaUrl" alt="Card image cap" id="imagePost">
+
+                <hr>
+                <div class="btn-group mx-auto mt-2">
+                    <button class="btn-sm" (click)="like(post)">
+                        <i class="fa fa-thumbs-o-up"></i>
+                        <span *ngIf="post.likes">{{post.likes.length}}</span>
+                    </button>
+                    <button class="btn-sm" (click)="dislike(post)">
+                        <i class="fa fa-thumbs-o-down"></i>
+                        <span *ngIf="post.dislikes">{{post.dislikes.length}}</span>
+                    </button>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>

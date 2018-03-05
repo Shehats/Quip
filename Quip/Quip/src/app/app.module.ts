@@ -15,20 +15,20 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 // Local modules
 import { ProfileModule } from './modules/profile/profile.module';
-// import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ForgotPasswordConfirmationComponent } from './forgot-password-confirmation/forgot-password-confirmation.component';
 import { AuthModule } from './modules/auth/auth.module';
 import { FileUploadService } from './services/file-upload/file-upload.service';
 import { NotfoundComponent } from './components/notfound/notfound.component';
-
+import { CommentListComponent } from './components/comment-list/comment-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    // ForgotPasswordComponent,
+    ForgotPasswordComponent,
     ForgotPasswordConfirmationComponent,
     NotfoundComponent,
-    // SearchPipe,
+    CommentListComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +43,8 @@ import { NotfoundComponent } from './components/notfound/notfound.component';
     MDBBootstrapModule.forRoot()
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS,
+    {
+      provide: HTTP_INTERCEPTORS,
       useClass: ReqInterceptorService,
       multi: true
     },
@@ -53,6 +54,6 @@ import { NotfoundComponent } from './components/notfound/notfound.component';
     FileUploadService
   ],
   bootstrap: [AppComponent],
-  schemas: [ NO_ERRORS_SCHEMA ]
+  schemas: [NO_ERRORS_SCHEMA]
 })
 export class AppModule { }

@@ -8,7 +8,7 @@ import { MDBBootstrapModule } from '../../typescripts/free';
 // Local declarations
 import { LoginComponent } from '../../components/login/login.component';
 import { RegisterComponent } from '../../components/register/register.component';
-import { ForgotPasswordComponent } from '../../components/forgot-password/forgot-password.component';
+// import { ForgotPasswordComponent } from '../../components/forgot-password/forgot-password.component';
 import { SplashComponent } from '../../components/splash/splash.component';
 
 @NgModule({
@@ -22,7 +22,7 @@ import { SplashComponent } from '../../components/splash/splash.component';
   declarations: [
     LoginComponent,
     RegisterComponent,
-    ForgotPasswordComponent,
+    // ForgotPasswordComponent,
     SplashComponent
   ],
   schemas: [ NO_ERRORS_SCHEMA ]
